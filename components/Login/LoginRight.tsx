@@ -1,12 +1,11 @@
-import Link from "next/link";
+import React from "react";
 
-export default function LoginRight() {
-    return (
-        <div className="flex flex-row min-h-screen justify-center items-center bg-teal-700">
-        <input className="block" type="text" />
-        <input className="block" type="text" />
-        <Link href="/forget-password">Forget password?</Link>
-        <input type="button" value="Button" />
-        </div>
-    )
-}
+const LoginRight = () => {
+  return (
+    <div className="h-full min-h-screen w-full bg-[url('/patterns/pattern-light.png')]">
+      <div>Login Right</div>
+    </div>
+  );
+};
+
+export default LoginRight;
