@@ -21,6 +21,7 @@ const FormInput = (props: FormProps) => {
         placeholder={props.placeholder}
         value={props.value}
         name={props.name}
+        handleChange={props.handleChange}
       />
     </>
   );

@@ -1,9 +1,9 @@
-import userAuthentication from "@/components/users/userAuthentication";
+import userAuthentication from "@/components/users/UserAuthentication";
 
-export async function GET() {   
+export async function GET() {
     try {
-        await userAuthentication({email:"admin1@gmail.com", password:"12345"})
-                .then((res) => {if (res === false) throw new Error()});
+        await userAuthentication("admin1@gmail.com", "12345")
+            .then((res) => { if (res === false) throw new Error() });
         return new Response("ok");
     } catch (e) {
         return new Response("nuh-uh");

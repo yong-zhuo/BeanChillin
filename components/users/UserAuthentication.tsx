@@ -1,23 +1,18 @@
+"use server"
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-interface IProps {
-    email: string;
-    password: string;
-}
-
-export default function userAuthentication(params: IProps) : Promise<boolean> {
-    const { email, password } = params;
-    return validateUser(email, password)
+const prisma = new PrismaClient();
+export default async function userAuthentication(email: string, password: string): Promise<boolean> {
+    return validateUser(email, password);
 }
 
 async function validateUser(email: string, password: string) {
-    const prisma = new PrismaClient();
-    
+
     if (email === null || password === null || password === "" || email === "") {
         return false;
     }
-    
+
     const user = await prisma.user.findUnique({
         where: {
             email: email

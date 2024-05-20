@@ -1,7 +1,7 @@
-import createUser from "@/components/users/createUser";
+import createUser from "@/components/users/CreateUser";
 
 export async function POST(request: Request) {
-    const code = await createUser("admin1@gmail.com", "12345");
+    const code = await createUser("admin2@gmail.com", "12345");
     let msg = '';
     if (code === 201) {
         msg = 'user has been created';
@@ -10,5 +10,5 @@ export async function POST(request: Request) {
     } else {
         msg = 'Invalid email or password!';
     }
-    return new Response(JSON.stringify(msg), {headers: {"Content-Type": "application/json"}})
+    return new Response(JSON.stringify(msg), { headers: { "Content-Type": "application/json" } })
 }
