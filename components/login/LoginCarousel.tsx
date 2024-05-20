@@ -10,14 +10,14 @@ const LoginCarousel = () => {
       <Carousel
         autoPlay
         infiniteLoop
-        interval={10000}
+        interval={5000}
         showThumbs={false}
         showStatus={false}
         showArrows={false}
       >
         {images.map((image, id) => (
           <div key={id} className="relative flex h-screen flex-col">
-            <div className="m-auto h-2/3 py-20">
+            <div className="flex-grow flex items-center justify-center m-auto h-2/3 py-20">
               <Image
                 src={image.src}
                 alt={`Image ${id}`}

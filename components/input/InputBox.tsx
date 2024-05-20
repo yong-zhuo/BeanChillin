@@ -6,6 +6,7 @@ export interface InputProps {
   id: string;
   type: string;
   isRequired: boolean;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const fixedInputClass =
@@ -21,6 +22,7 @@ const InputBox = (props: InputProps) => {
         name={props.name}
         type={props.type}
         required={props.isRequired}
+        onChange={props.handleChange}
       />
     </div>
   );

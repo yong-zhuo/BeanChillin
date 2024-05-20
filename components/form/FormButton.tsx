@@ -1,7 +1,6 @@
 interface ButtonProps {
   action: "submit" | "reset" | "button";
   text: string;
-  handleSubmit: (event: React.FormEvent<HTMLButtonElement>) => void;
 }
 
 const formButtonClass =
@@ -12,7 +11,6 @@ export default function FormButton(props: ButtonProps) {
     <button
       type={props.action}
       className={formButtonClass}
-      onSubmit={props.handleSubmit}
     >
       {props.text}
     </button>
