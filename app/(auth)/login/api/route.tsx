@@ -1,4 +1,4 @@
-import userAuthentication from "@/components/Users/userAuthentication";
+import userAuthentication from "@/components/users/userAuthentication";
 
 export async function GET() {   
     try {

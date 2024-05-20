@@ -1,4 +1,4 @@
-import createUser from "@/components/Users/createUser";
+import createUser from "@/components/users/createUser";
 
 export async function POST(request: Request) {
     const code = await createUser("admin1@gmail.com", "12345");
