@@ -2,11 +2,11 @@
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import images from "./carousel-content/carouselContent"
+import images from "@/constants/carouselContent"
 
 const LoginCarousel = () => {
   return (
-    <div className="grid h-screen grid-cols-1 bg-[#4D869C]">
+    <div className="grid h-screen grid-cols-1 bg-primary">
       <Carousel
         autoPlay
         infiniteLoop
