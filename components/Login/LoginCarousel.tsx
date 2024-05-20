@@ -21,8 +21,8 @@ const LoginCarousel = () => {
               <Image
                 src={image.src}
                 alt={`Image ${id}`}
-                width={600}
-                height={600}
+                width={500}
+                height={500}
               />
             </div>
             <div className="flex h-1/3 justify-center py-20">

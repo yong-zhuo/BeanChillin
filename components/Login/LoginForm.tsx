@@ -36,7 +36,7 @@ const LoginForm = () => {
           />
         ))}
 
-        <div className="flex justify-end text-sm">
+        <div className="flex justify-end text-sm -mt-5">
           <Link
             href="/forgot-password"
             className="font-medium text-primary hover:underline"

@@ -6,7 +6,7 @@ interface ButtonProps {
 }
 
 const formButtonClass =
-  "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-black mt-10";
+  "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-black mt-9";
 
 export default function FormButton(props: ButtonProps) {
   return (
