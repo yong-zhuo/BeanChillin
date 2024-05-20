@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginRight = () => {
+const LoginForm = () => {
   return (
     <div className="h-full min-h-screen w-full bg-[url('/patterns/pattern-light.png')]">
       <div>Login Right</div>
@@ -8,4 +8,4 @@ const LoginRight = () => {
   );
 };
 
-export default LoginRight;
+export default LoginForm;

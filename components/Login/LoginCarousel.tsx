@@ -2,18 +2,9 @@
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import images from "./carousel-content/carouselContent"
 
-interface Image {
-  src: string;
-  text: string;
-}
-
-const images: Image[] = [
-  { src: "/carousel/community.png", text: "Lorem Ipsum" },
-  { src: "/carousel/discussion.png", text: "Lorem" },
-];
-
-const LoginLeft = () => {
+const LoginCarousel = () => {
   return (
     <div className="grid h-screen grid-cols-1 bg-[#4D869C]">
       <Carousel
@@ -25,15 +16,17 @@ const LoginLeft = () => {
         showArrows={false}
       >
         {images.map((image, id) => (
-          <div key={id} className="h-100 relative">
-            <div className="relative h-full w-full">
+          <div key={id} className="relative flex h-screen flex-col">
+            <div className="m-auto h-2/3 py-20">
               <Image
                 src={image.src}
                 alt={`Image ${id}`}
-                width={400}
-                height={400}
+                width={600}
+                height={600}
               />
-              <div className="absolute bottom-0 h-2/5 w-full bg-opacity-50 p-4 text-center text-white">
+            </div>
+            <div className="flex h-1/3 justify-center py-20">
+              <div className="md:xl max-w-sm py-10 text-center text-lg font-semibold text-[#EEF7FF] md:max-w-md lg:max-w-lg lg:text-3xl ">
                 {image.text}
               </div>
             </div>
@@ -44,4 +37,4 @@ const LoginLeft = () => {
   );
 };
 
-export default LoginLeft;
+export default LoginCarousel;
