@@ -1,16 +1,23 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 export default async function createUser(email: string, password: string) {
     const prisma = new PrismaClient();
-    const user = await prisma.user.create({ data: {
+
+    try {
+        const hashedPass = await bcrypt.hash(password, 10);
+        const user = await prisma.user.create({ data: {
             name: "",
             email,
-            password,
-        }}).then((res) => {
-            return(res.email + " has been created");
-        }).catch((err) => {
-            prisma.user.findMany().then((res) => {for(let i = 0; i < res.length; i++) {
-                console.log(res[i]);
-            }});
-        });
+            password: hashedPass,
+        }})
+        return 201;
+    } catch(err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError) {
+                if (err.code === 'P2002') {
+                    return 2002;
+                }
+            }
+            return 1001;
+        }
 }

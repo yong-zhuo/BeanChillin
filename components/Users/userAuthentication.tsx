@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 interface IProps {
     email: string;
@@ -20,7 +21,13 @@ async function validateUser(email: string, password: string) {
     const user = await prisma.user.findUnique({
         where: {
             email: email
-        }});
-    return user !== null && (user.password === password) && (user.email === email);
+        }
+    });
+
+    if (user !== null) {
+        const decodePass = await bcrypt.compare(password, user.password);
+        return decodePass && (user.email === email);
+    }
+    return false;
 }
 
