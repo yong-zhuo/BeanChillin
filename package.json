@@ -16,7 +16,8 @@
     "next-auth": "^4.24.7",
     "pg": "^8.11.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-responsive-carousel": "^3.2.23"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

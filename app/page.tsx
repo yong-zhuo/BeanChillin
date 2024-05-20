@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -9,9 +9,9 @@ export default function Root() {
 
   useEffect(() => {
     if (!loggedIn) {
-      router.push('/login', undefined);
+      router.push("/login", undefined);
     } else {
-      router.push('/home',undefined);
+      router.push("/home", undefined);
     }
-  }, [])
+  }, []);
 }
