@@ -13,7 +13,7 @@ const ForgetForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     //TODO: add forget password logic here
-  }
+  };
   return (
     <>
       <Header
@@ -32,8 +32,8 @@ const ForgetForm = () => {
           value={formState}
           placeholder="e.g. bean@chillin.com"
         />
-        <div className="px-5 mx-3">
-            <FormButton action="submit" text="Email me the link"/>
+        <div className="mx-3 px-5">
+          <FormButton action="submit" text="Email me the link" addClass=" text-white bg-primary hover:bg-slate-400" />
         </div>
       </form>
     </>

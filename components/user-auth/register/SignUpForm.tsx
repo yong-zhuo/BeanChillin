@@ -47,8 +47,12 @@ const SignUpForm = () => {
             placeholder={field.placeholder}
           ></FormInput>
         ))}
-        <div className="py-3 px-5 mx-3">
-            <FormButton text="Create Account" action="submit" />
+        <div className="mx-3 px-5 py-1">
+          <FormButton
+            text="Create Account"
+            action="submit"
+            addClass=" text-white bg-primary hover:bg-slate-400"
+          />
         </div>
       </form>
     </>
