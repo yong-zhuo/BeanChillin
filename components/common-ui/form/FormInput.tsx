@@ -1,5 +1,5 @@
-import InputBox from "../input/InputBox";
-import { InputProps } from "../input/InputBox";
+import InputBox from "@/components/common-ui/input/InputBox";
+import { InputProps } from "@/components/common-ui/input/InputBox";
 
 interface FormProps extends InputProps {
   labelText: string;
