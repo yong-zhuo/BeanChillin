@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "@/components/logo/Logo";
+import Logo from "@/components/common-ui/logo/Logo";
 
 /**
  * Header can be used for Onboarding Pages, disclude linkname and linkUrl
@@ -28,7 +28,6 @@ export default function Header(props: HeaderProps) {
       </h2>
       <p className="mt-2 text-center text-sm text-gray-600">
         {props.paragraph}{" "}
-        
         {props.linkUrl && props.linkName && (
           <Link
             href={props.linkUrl}
