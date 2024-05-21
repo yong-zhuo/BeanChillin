@@ -29,7 +29,7 @@ export default function FormButton(props: ButtonProps) {
           height={props.height}
         />
       )}
-      {props.text}
+      <div className="whitespace-nowrap overflow-hidden text-ellipsis">{props.text}</div>
     </button>
   );
 }
