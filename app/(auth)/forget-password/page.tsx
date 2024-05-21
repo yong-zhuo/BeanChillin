@@ -1,3 +1,5 @@
+import ForgetForm from "@/components/user-auth/forget-password/ForgetForm";
+
 export default function ForgetPassword() {
-    return <h1>forget-password</h1>
+  return <ForgetForm />;
 }

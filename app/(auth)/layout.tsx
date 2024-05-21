@@ -11,7 +11,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         <AuthCarousel />
       </div>
       <div className="flex w-2/5 items-center justify-center">
-        <div className="h-full min-h-screen w-full bg-[url('/patterns/pattern-light.png')]">{children}</div>
+        <div className="h-full min-h-screen w-full bg-[url('/patterns/pattern-light.png')]">
+          {children}
+        </div>
       </div>
     </main>
   );

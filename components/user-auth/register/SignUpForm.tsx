@@ -20,7 +20,10 @@ const SignUpForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //to add createAccount upon submit
+
+    //TODO: Add createAccount upon submit
+
+    //TODO: Add logic to check if password and confirm password is the same
   };
   return (
     <>
