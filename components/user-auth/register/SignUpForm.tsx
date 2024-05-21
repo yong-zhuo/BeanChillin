@@ -6,6 +6,8 @@ import Header from "@/components/common-ui/form/Header";
 import FormButton from "@/components/common-ui/form/FormButton";
 import FormInput from "@/components/common-ui/form/FormInput";
 import { fieldState } from "@/types/formFieldsState";
+import CreateAccount from "../users/CreateAccount";
+import { useRouter } from "next/navigation";
 
 const fields = signupFields;
 
@@ -13,13 +15,25 @@ let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const SignUpForm = () => {
+  const router = useRouter();
   const [signUpState, setSignUpState] = useState(fieldsState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSignUpState({ ...signUpState, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const res = await CreateAccount(formData) as string;
+      if (res !== 'ok') {
+        throw new Error(res);
+      }
+      router.push('/login');//change to onboarding
+    } catch (e) {
+      alert(e);
+    }
 
     //TODO: Add createAccount upon submit
 
@@ -48,7 +62,7 @@ const SignUpForm = () => {
           ></FormInput>
         ))}
         <div className="py-3 px-5 mx-3">
-            <FormButton text="Create Account" action="submit" />
+          <FormButton text="Create Account" action="submit" />
         </div>
       </form>
     </>

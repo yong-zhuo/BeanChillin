@@ -6,7 +6,7 @@ import Header from "@/components/common-ui/form/Header";
 import Link from "next/link";
 import FormButton from "@/components/common-ui/form/FormButton";
 import { useState } from "react";
-import userAuthentication from "../users/UserAuthentication";
+import { LoginUser } from "../users/LoginUser";
 import { useRouter } from "next/navigation";
 import { fieldState } from "@/types/formFieldsState";
 const fields = loginFields;
@@ -26,54 +26,52 @@ const LoginForm = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const email = formData.get('Email') as string;
-      const password = formData.get('Password') as string;
-      const isAuth = await userAuthentication(email, password);
+      const isAuth = await LoginUser(formData);
       if (!isAuth) {
-        throw new Error("Authentication failed");
+        throw new Error("Invalid login! Please check your email or password!");
       }
-      router.push("/home");
+      router.push('/home');
     } catch (e) {
-      console.log("unsuccessful login. Please try again!", e);
+      alert(e);
     }
   };
 
   return (
-    
-      <>
-        <Header
-          heading="Login to your account"
-          paragraph="Don't have an account yet? "
-          linkName="Sign up now"
-          linkUrl="/register"
-        />
-        <form onSubmit={handleSubmit} className="mb-4 px-40 pb-8 pt-6">
-          {fields.map((field) => (
-            <FormInput
-              key={field.id}
-              handleChange={handleChange}
-              value={loginState[field.id]}
-              labelText={field.labelText}
-              id={field.id}
-              name={field.name}
-              type={field.type}
-              isRequired={field.isRequired}
-              placeholder={field.placeholder}
-            />
-          ))}
-          <div className="flex justify-end text-sm -mt-5">
-            <Link
-              href="/forget-password"
-              className="font-medium text-primary hover:underline"
-            >
-              Forgot your Password?
-            </Link>
-          </div>
-          <div className="py-3 px-5 mx-3">
-            <FormButton text="Sign In" action="submit" />
-          </div>
-        </form>
-      </>
+
+    <>
+      <Header
+        heading="Login to your account"
+        paragraph="Don't have an account yet? "
+        linkName="Sign up now"
+        linkUrl="/register"
+      />
+      <form onSubmit={handleSubmit} className="mb-4 px-40 pb-8 pt-6">
+        {fields.map((field) => (
+          <FormInput
+            key={field.id}
+            handleChange={handleChange}
+            value={loginState[field.id]}
+            labelText={field.labelText}
+            id={field.id}
+            name={field.name}
+            type={field.type}
+            isRequired={field.isRequired}
+            placeholder={field.placeholder}
+          />
+        ))}
+        <div className="flex justify-end text-sm -mt-5">
+          <Link
+            href="/forget-password"
+            className="font-medium text-primary hover:underline"
+          >
+            Forgot your Password?
+          </Link>
+        </div>
+        <div className="py-3 px-5 mx-3">
+          <FormButton text="Sign In" action="submit" />
+        </div>
+      </form>
+    </>
 
   );
 };
