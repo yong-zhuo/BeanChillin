@@ -21,8 +21,8 @@ const AuthCarousel = () => {
               <Image
                 src={image.src}
                 alt={`Image ${id}`}
-                width={500}
-                height={500}
+                width={400}
+                height={400}
               />
             </div>
             <div className="flex h-1/3 justify-center py-10">
