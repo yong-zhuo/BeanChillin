@@ -6,7 +6,7 @@ import Header from "@/components/common-ui/form/Header";
 import Link from "next/link";
 import FormButton from "@/components/common-ui/form/FormButton";
 import { useState } from "react";
-import userAuthentication from "../users/UserAuthentication";
+import { LoginUser } from "../users/LoginUser";
 import { useRouter } from "next/navigation";
 import { fieldState } from "@/types/formFieldsState";
 import GoogleButton from "../common-auth-ui/GoogleButton";
@@ -30,15 +30,14 @@ const LoginForm = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const email = formData.get("Email") as string;
-      const password = formData.get("Password") as string;
-      const isAuth = await userAuthentication(email, password);
+      const isAuth = await LoginUser(formData);
+
       if (!isAuth) {
-        throw new Error("Authentication failed");
+        throw new Error("Invalid login! Please check your email or password!");
       }
-      router.push("/home");
+      router.push('/home');
     } catch (e) {
-      console.log("unsuccessful login. Please try again!", e);
+      alert(e);
     }
   };
 
@@ -50,6 +49,7 @@ const LoginForm = () => {
         linkName="Sign up now"
         linkUrl="/register"
       />
+
       <form onSubmit={handleSubmit} className="mb-5 px-40 pb-2 pt-6">
         {fields.map((field) => (
           <FormInput
@@ -64,6 +64,7 @@ const LoginForm = () => {
             placeholder={field.placeholder}
           />
         ))}
+
         <div className="-mt-5 flex justify-end text-sm">
           <Link
             href="/forget-password"
