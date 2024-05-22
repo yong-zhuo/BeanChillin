@@ -11,14 +11,14 @@ interface ButtonProps {
   height?: number;
 }
 
-const formButtonClass =
+const buttonClass =
   "group shadow relative w-full flex justify-center border border-transparent text-sm font-medium py-2 px-4 rounded-md mt-9 ";
 
-export default function FormButton(props: ButtonProps) {
+export default function Button(props: ButtonProps) {
   return (
     <button
       type={props.action}
-      className={formButtonClass + props.addClass}
+      className={buttonClass + props.addClass}
       onClick={props.handleClick}
     >
       {props.alt && props.src && props.width && props.height && (

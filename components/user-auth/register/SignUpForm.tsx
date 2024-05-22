@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signupFields } from "@/constants/formFields";
 import Header from "@/components/common-ui/form/Header";
-import FormButton from "@/components/common-ui/form/FormButton";
+import FormButton from "@/components/common-ui/button/Button";
 import FormInput from "@/components/common-ui/form/FormInput";
 import { fieldState } from "@/types/formFieldsState";
 import CreateAccount from "../users/CreateAccount";
