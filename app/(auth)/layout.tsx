@@ -6,7 +6,7 @@ type AuthLayoutProps = {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <main className="flex min-h-screen overflow-hidden bg-primary">
+    <main className="flex flex-1 min-h-screen overflow-hidden bg-primary">
       <div className="w-3/5">
         <AuthCarousel />
       </div>
