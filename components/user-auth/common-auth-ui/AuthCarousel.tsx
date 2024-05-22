@@ -17,11 +17,8 @@ const AuthCarousel = () => {
         className="h-full w-full"
       >
         {images.map((image, id) => (
-          <div
-            key={id}
-            className="flex h-screen flex-col items-center justify-between p-4 sm:flex xl:flex"
-          >
-            <div className="m-auto flex h-2/3 flex-grow items-center justify-center pt-10">
+          <div key={id} className="flex h-screen flex-col items-center">
+            <div className="flex h-3/5 flex-grow items-center justify-center">
               <Image
                 src={image.src}
                 alt={`Image ${id}`}
@@ -29,10 +26,8 @@ const AuthCarousel = () => {
                 height={400}
               />
             </div>
-            <div className="flex h-1/3 justify-center py-10">
-              <div className="max-w-sm py-10 text-center sm:text-xl text-xl font-semibold text-[#EEF7FF] md:max-w-md lg:max-w-lg lg:text-3xl ">
-                {image.text}
-              </div>
+            <div className="flex h-1/3 max-w-sm justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] sm:pt-5 sm:text-xl md:max-w-md lg:max-w-lg lg:text-3xl ">
+              {image.text}
             </div>
           </div>
         ))}

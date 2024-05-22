@@ -1,17 +1,9 @@
 import Image from "next/image";
-
+import Logo from "@/components/common-ui/logo/Logo";
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[url('/patterns/pattern-light.png')]">
-      <h1 className="text-center text-primary">Error 404: Page Not Found</h1>
-      <div className="my-20 flex justify-center">
-        <Image
-          src="/not-found/notfound404.png"
-          alt="Picture of Kafka"
-          width={300}
-          height={300}
-        />
-      </div>
-    </div>
+    <main className="min-h-screen bg-[url('/patterns/pattern-light.png')]">
+      <Logo src="/logo/logo.svg" width={200} height={200} />
+    </main>
   );
 }
