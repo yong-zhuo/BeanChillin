@@ -1,13 +1,13 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import FormButton from "@/components/common-ui/form/FormButton";
+import Button from "@/components/common-ui/button/Button";
 
 const GoogleButton = () => {
   const { data: session } = useSession();
 
   if (session) {
     return (
-      <FormButton
+      <Button
         handleClick={() => signOut()}
         text="Sign Out with Google"
         src="/misc/Google.png"
@@ -19,7 +19,7 @@ const GoogleButton = () => {
     );
   }
   return (
-    <FormButton
+    <Button
       handleClick={() => signIn()}
       text="Sign In with Google"
       src="/misc/Google.png"

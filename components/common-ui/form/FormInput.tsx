@@ -3,6 +3,7 @@ import { InputProps } from "@/components/common-ui/input/InputBox";
 
 interface FormProps extends InputProps {
   labelText: string;
+  forRegister?: boolean
 }
 
 const FormInput = (props: FormProps) => {
@@ -12,7 +13,7 @@ const FormInput = (props: FormProps) => {
         htmlFor={props.id}
         className="text-md text-black-700 mb-2 block font-bold"
       >
-        {props.labelText}
+        {props.labelText} {props.forRegister && <span className="text-primary">*</span>}
       </label>
       <InputBox
         isRequired={props.isRequired}
