@@ -4,7 +4,7 @@ import FormInput from "@/components/common-ui/form/FormInput";
 import { loginFields } from "@/constants/formFields";
 import Header from "@/components/common-ui/form/Header";
 import Link from "next/link";
-import FormButton from "@/components/common-ui/button/Button";
+import Button from "@/components/common-ui/button/Button";
 import { useState } from "react";
 import { LoginUser } from "../users/LoginUser";
 import { useRouter } from "next/navigation";
@@ -79,7 +79,7 @@ const LoginForm = () => {
           </Link>
         </div>
         <div className="mx-3 px-5 my-3">
-          <FormButton
+          <Button
             text="Sign In"
             action="submit"
             addClass="text-white bg-primary hover:bg-slate-400"

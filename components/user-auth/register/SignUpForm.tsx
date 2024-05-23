@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signupFields } from "@/constants/formFields";
 import Header from "@/components/common-ui/form/Header";
-import FormButton from "@/components/common-ui/button/Button";
+import Button from "@/components/common-ui/button/Button";
 import FormInput from "@/components/common-ui/form/FormInput";
 import { fieldState } from "@/types/formFieldsState";
 import CreateAccount from "../users/CreateAccount";
@@ -63,7 +63,7 @@ const SignUpForm = () => {
           ></FormInput>
         ))}
         <div className="mx-3 px-5 py-1">
-          <FormButton
+          <Button
             text="Create Account"
             action="submit"
             addClass=" text-white bg-primary hover:bg-slate-400"
