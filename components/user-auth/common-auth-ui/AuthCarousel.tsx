@@ -2,11 +2,11 @@
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import images from "@/constants/carouselContent"
+import images from "@/constants/carouselContent";
 
 const AuthCarousel = () => {
   return (
-    <div className="grid h-screen grid-cols-1 bg-primary">
+    <div className="flex h-screen items-center justify-center bg-primary">
       <Carousel
         autoPlay
         infiniteLoop
@@ -14,10 +14,11 @@ const AuthCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showArrows={false}
+        className="h-full w-full"
       >
         {images.map((image, id) => (
-          <div key={id} className="relative flex h-screen flex-col">
-            <div className="flex-grow flex items-center justify-center m-auto h-2/3 pt-10">
+          <div key={id} className="flex h-screen flex-col items-center">
+            <div className="flex h-3/5 flex-grow items-center justify-center">
               <Image
                 src={image.src}
                 alt={`Image ${id}`}
@@ -25,10 +26,8 @@ const AuthCarousel = () => {
                 height={400}
               />
             </div>
-            <div className="flex h-1/3 justify-center py-10">
-              <div className="md:xl max-w-sm py-10 text-center text-lg font-semibold text-[#EEF7FF] md:max-w-md lg:max-w-lg lg:text-3xl ">
-                {image.text}
-              </div>
+            <div className="flex h-1/3 max-w-sm justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] sm:pt-5 sm:text-xl md:max-w-md lg:max-w-lg lg:text-3xl ">
+              {image.text}
             </div>
           </div>
         ))}

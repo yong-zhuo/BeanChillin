@@ -27,7 +27,8 @@ const signupFields = [
         name: "email",
         type: "email",
         isRequired: true,
-        placeholder: "Enter email address"
+        placeholder: "Enter email address",
+        forRegister: true
     },
     {
         labelText: "Password",
@@ -35,7 +36,8 @@ const signupFields = [
         name: "password",
         type: "password",
         isRequired: true,
-        placeholder: "Enter password"
+        placeholder: "Enter password",
+        forRegister: true
     },
     {
         labelText: "Confirm Password",
@@ -43,7 +45,8 @@ const signupFields = [
         name: "confirm-password",
         type: "password",
         isRequired: true,
-        placeholder: "Confirm password"
+        placeholder: "Confirm password",
+        forRegister: true
     }
 ]
 

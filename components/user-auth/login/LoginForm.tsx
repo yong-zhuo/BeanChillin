@@ -4,7 +4,7 @@ import FormInput from "@/components/common-ui/form/FormInput";
 import { loginFields } from "@/constants/formFields";
 import Header from "@/components/common-ui/form/Header";
 import Link from "next/link";
-import FormButton from "@/components/common-ui/form/FormButton";
+import FormButton from "@/components/common-ui/button/Button";
 import { useState } from "react";
 import { LoginUser } from "../users/LoginUser";
 import { useRouter } from "next/navigation";
@@ -70,7 +70,7 @@ const LoginForm = () => {
           />
         ))}
 
-        <div className="-mt-5 flex justify-end text-sm">
+        <div className="-mt-5 flex justify-end text-sm sm:text-xs">
           <Link
             href="/forget-password"
             className="font-medium text-primary hover:underline"
@@ -85,7 +85,7 @@ const LoginForm = () => {
             addClass="text-white bg-primary hover:bg-slate-400"
           />
         </div>
-        <Divider text="or" color="primary" textColor="primary" />
+        <Divider text="or" borderColor="border-primary" textColor="primary" />
       </form>
       <div className="mb-4 px-40 pb-8 -pt-6 -mt-10">
         <div className="mx-3 px-5 -py-2">

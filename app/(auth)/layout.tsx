@@ -6,12 +6,12 @@ type AuthLayoutProps = {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <main className="flex min-h-screen overflow-hidden bg-primary">
-      <div className="w-3/5">
+    <main className="flex flex-1 min-h-screen overflow-hidden bg-[url('/patterns/pattern-light.png')]">
+      <div className="w-3/5 bg-primary">
         <AuthCarousel />
       </div>
       <div className="flex w-2/5 items-center justify-center">
-        <div className="h-full min-h-screen w-full bg-[url('/patterns/pattern-light.png')]">
+        <div className="h-full w-full bg-[url('/patterns/pattern-light.png')]">
           {children}
         </div>
       </div>
