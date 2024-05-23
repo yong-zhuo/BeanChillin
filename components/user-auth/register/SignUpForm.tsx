@@ -59,6 +59,7 @@ const SignUpForm = () => {
             type={field.type}
             isRequired={field.isRequired}
             placeholder={field.placeholder}
+            forRegister={field.forRegister}
           ></FormInput>
         ))}
         <div className="mx-3 px-5 py-1">

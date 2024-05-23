@@ -18,9 +18,9 @@ export default function Header(props: HeaderProps) {
       <div className="flex justify-center">
         <Logo
           src="/logo/logo.svg"
-          width={250}
-          height={200}
-          className="flex justify-center p-3"
+          width={230}
+          height={20}
+          className="flex justify-center p-10"
         />
       </div>
       <h2 className="text-center text-3xl font-extrabold text-gray-900">

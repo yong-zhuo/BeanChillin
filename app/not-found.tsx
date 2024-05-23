@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <main className="flex min-h-screen flex-col overflow-hidden bg-[url('/patterns/pattern-light.png')]">
       <div className="flex items-center justify-center">
-        <Logo src="/logo/logo.svg" width={200} height={200} />
+        <Logo src="/logo/logo.svg" width={200} height={200} className="mt-3"/>
       </div>
       <div className="mx-auto mb-20 flex flex-1 items-center justify-between">
         <div className="flex h-4/5 w-4/5 flex-1">
