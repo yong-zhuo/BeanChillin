@@ -6,6 +6,7 @@ export interface InputProps {
   id: string;
   type: string;
   isRequired: boolean;
+  height?: number;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

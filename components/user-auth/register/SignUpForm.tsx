@@ -30,7 +30,7 @@ const SignUpForm = () => {
       if (res !== 'ok') {
         throw new Error(res);
       }
-      router.push('/login');//change to onboarding
+      router.push('/onboard');//change to onboarding
     } catch (e) {
       alert(e);
     }

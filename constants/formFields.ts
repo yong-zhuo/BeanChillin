@@ -50,4 +50,39 @@ const signupFields = [
     }
 ]
 
-export { loginFields, signupFields }
+const profileFields = [
+
+    {
+        labelText: "First Name",
+        id: "first-name",
+        name: "first-name",
+        type: "first-name",
+        isRequired: true,
+        placeholder: "John",
+        forRegister: true
+    },
+    {
+        labelText: "Last Name",
+        id: "last-name",
+        name: "last-name",
+        type: "last-name",
+        isRequired: true,
+        placeholder: "Doe",
+        forRegister: true
+    },
+]
+
+const bioFields = [
+
+    {
+        labelText: "Bio",
+        id: "bio",
+        name: "bio",
+        type: "bio",
+        isRequired: true,
+        placeholder: "Add a short description of yourself",
+        forRegister: true
+    },
+]
+
+export { loginFields, signupFields, profileFields, bioFields }

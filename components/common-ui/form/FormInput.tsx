@@ -3,7 +3,7 @@ import { InputProps } from "@/components/common-ui/input/InputBox";
 
 interface FormProps extends InputProps {
   labelText: string;
-  forRegister?: boolean
+  forRegister?: boolean;
 }
 
 const FormInput = (props: FormProps) => {
