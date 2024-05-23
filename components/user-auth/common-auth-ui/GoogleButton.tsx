@@ -20,7 +20,7 @@ const GoogleButton = () => {
   }
   return (
     <FormButton
-      handleClick={() => signIn()}
+      handleClick={() => signIn('google', { callbackUrl: '/home' })}
       text="Sign In with Google"
       src="/misc/Google.png"
       alt="Google"

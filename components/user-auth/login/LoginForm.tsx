@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { fieldState } from "@/types/formFieldsState";
 import GoogleButton from "../common-auth-ui/GoogleButton";
 import Divider from "@/components/common-ui/misc/Divider";
+import { useSession, signIn } from "next-auth/react";
 const fields = loginFields;
 
 let fieldsState: fieldState = {};
@@ -18,6 +19,10 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const LoginForm = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+  if (session) {
+    router.push('/home');
+  }
   const [loginState, setLoginState] = useState(fieldsState);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setLoginState({ ...loginState, [e.target.name]: e.target.value });
@@ -31,7 +36,7 @@ const LoginForm = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const isAuth = await LoginUser(formData);
-
+      const email = formData.get('email');
       if (!isAuth) {
         throw new Error("Invalid login! Please check your email or password!");
       }
@@ -80,7 +85,7 @@ const LoginForm = () => {
             addClass="text-white bg-primary hover:bg-slate-400"
           />
         </div>
-        <Divider text="or" color="primary" textColor="primary"/>
+        <Divider text="or" color="primary" textColor="primary" />
       </form>
       <div className="mb-4 px-40 pb-8 -pt-6 -mt-10">
         <div className="mx-3 px-5 -py-2">

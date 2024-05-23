@@ -6,8 +6,6 @@ export async function LoginUser(credentials: FormData): Promise<boolean> {
     const email = credentials.get('email') as string;
     const password = credentials.get('password') as string;
     const isAuth = await userAuthentication(email, password);
-    console.log(email);
-    console.log(password);
     if (!isAuth) {
         return false;
     }
