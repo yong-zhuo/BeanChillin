@@ -1,9 +1,12 @@
 import GoogleProvider from 'next-auth/providers/google'
 import { NextAuthOptions } from "next-auth";
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const Oauth: NextAuthOptions = {
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
+        maxAge: 5, //5 seconds. Set to 4 hours on production.
+        updateAge: 60 * 60, //1 hour
     },
     providers: [
         GoogleProvider({
