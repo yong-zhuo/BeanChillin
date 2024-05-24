@@ -18,19 +18,6 @@ export function useMultistepForm(steps: ReactElement[]) {
         });
     }
 
-    function isFirstStep() {
-        setStepIndex(i => {
-            if (i <= 0) return i;
-            return i + 1;
-        });
-    }
-
-    function isLastStep() {
-        setStepIndex(i => {
-            if (i <= 0) return i;
-            return i + 1;
-        });
-    }
 
     return {
         StepIndex,

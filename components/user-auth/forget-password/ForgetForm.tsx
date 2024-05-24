@@ -19,6 +19,7 @@ const ForgetForm = () => {
       <Header
         heading="Forgot Password?"
         paragraph="Enter your registered email address to reset your password"
+        logo
       />
       <form onSubmit={handleSubmit} className="mb-4 px-40 pb-8 pt-6">
         <FormInput
@@ -33,7 +34,7 @@ const ForgetForm = () => {
           placeholder="e.g. bean@chillin.com"
         />
         <div className="mx-3 px-5">
-          <Button action="submit" text="Email me the link" addClass=" text-white bg-primary hover:bg-slate-400" />
+          <Button action="submit" text="Email me the link" addClass=" text-white bg-pri hover:bg-slate-400" />
         </div>
       </form>
     </>

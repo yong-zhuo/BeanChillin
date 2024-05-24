@@ -6,7 +6,7 @@ import Header from "@/components/common-ui/form/Header";
 import Button from "@/components/common-ui/button/Button";
 import FormInput from "@/components/common-ui/form/FormInput";
 import { fieldState } from "@/types/formFieldsState";
-import CreateAccount from "../users/CreateAccount";
+import CreateAccount from "../../../lib/users/CreateAccount";
 import { useRouter } from "next/navigation";
 
 const fields = signupFields;
@@ -26,11 +26,11 @@ const SignUpForm = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const res = await CreateAccount(formData) as string;
-      if (res !== 'ok') {
+      const res = (await CreateAccount(formData)) as string;
+      if (res !== "ok") {
         throw new Error(res);
       }
-      router.push('/onboard');//change to onboarding
+      router.push("/onboard"); //change to onboarding
     } catch (e) {
       alert(e);
     }
@@ -46,6 +46,7 @@ const SignUpForm = () => {
         paragraph="Already have an account? "
         linkName="Login Now"
         linkUrl="/login"
+        logo
       />
       <form onSubmit={handleSubmit} className="mb-4 px-40 pb-8 pt-6">
         {fields.map((field) => (
@@ -66,7 +67,7 @@ const SignUpForm = () => {
           <Button
             text="Create Account"
             action="submit"
-            addClass=" text-white bg-primary hover:bg-slate-400"
+            addClass=" text-white bg-pri hover:bg-slate-400"
           />
         </div>
       </form>

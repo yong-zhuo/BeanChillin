@@ -11,7 +11,7 @@ export interface InputProps {
 }
 
 const fixedInputClass =
-  "shadow rounded-md appearance-none relative block w-full px-3 py-2 border placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm";
+  "shadow rounded-md appearance-none relative block w-full px-3 py-2 border placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-pri focus:border-pri focus:z-10 sm:text-sm";
 
 const InputBox = (props: InputProps) => {
   return (

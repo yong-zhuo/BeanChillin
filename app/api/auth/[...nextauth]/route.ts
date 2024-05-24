@@ -1,4 +1,4 @@
-import { Oauth } from "@/components/user-auth/users/OAuth";
+import { Oauth } from "@/lib/users/OAuth";
 import NextAuth from "next-auth/next";
 
 const handler = NextAuth(Oauth);

@@ -1,5 +1,5 @@
 "use server"
-import { prisma } from "@/constants/prisma";
+import { prisma } from "@/lib/prisma";
 import bcrypt from 'bcrypt';
 
 export async function LoginUser(credentials: FormData): Promise<boolean> {

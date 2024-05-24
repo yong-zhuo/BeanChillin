@@ -59,7 +59,7 @@ const profileFields = [
         type: "first-name",
         isRequired: true,
         placeholder: "John",
-        forRegister: true
+        forRegister: false
     },
     {
         labelText: "Last Name",
@@ -68,7 +68,7 @@ const profileFields = [
         type: "last-name",
         isRequired: true,
         placeholder: "Doe",
-        forRegister: true
+        forRegister: false
     },
 ]
 
@@ -81,7 +81,7 @@ const bioFields = [
         type: "bio",
         isRequired: true,
         placeholder: "Add a short description of yourself",
-        forRegister: true
+        forRegister: false
     },
 ]
 

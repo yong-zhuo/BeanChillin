@@ -13,7 +13,7 @@ const FormInput = (props: FormProps) => {
         htmlFor={props.id}
         className="text-md text-black-700 mb-2 block font-bold"
       >
-        {props.labelText} {props.forRegister && <span className="text-primary">*</span>}
+        {props.labelText} {props.forRegister && <span className="text-pri">*</span>}
       </label>
       <InputBox
         isRequired={props.isRequired}

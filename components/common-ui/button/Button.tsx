@@ -9,6 +9,7 @@ interface ButtonProps {
   src?: string;
   width?: number;
   height?: number;
+  orientation?: "left" | "right";
 }
 
 const buttonClass =
@@ -21,15 +22,33 @@ export default function Button(props: ButtonProps) {
       className={buttonClass + props.addClass}
       onClick={props.handleClick}
     >
-      {props.alt && props.src && props.width && props.height && (
-        <Image
-          src={props.src}
-          alt={props.alt}
-          width={props.width}
-          height={props.height}
-        />
-      )}
-      <div className="whitespace-nowrap overflow-hidden text-ellipsis">{props.text}</div>
+      {props.alt &&
+        props.src &&
+        props.width &&
+        props.height &&
+        props.orientation === "left" && (
+          <Image
+            src={props.src}
+            alt={props.alt}
+            width={props.width}
+            height={props.height}
+          />
+        )}
+      <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+        {props.text}
+      </div>
+      {props.alt &&
+        props.src &&
+        props.width &&
+        props.height &&
+        props.orientation === "right" && (
+          <Image
+            src={props.src}
+            alt={props.alt}
+            width={props.width}
+            height={props.height}
+          />
+        )}
     </button>
   );
 }

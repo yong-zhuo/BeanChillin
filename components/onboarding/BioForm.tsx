@@ -1,45 +1,29 @@
 "use client";
 
-import FormInput from "@/components/common-ui/form/FormInput";
 import Header from "@/components/common-ui/form/Header";
-import { bioFields } from "@/constants/formFields";
-import { fieldState } from "@/types/formFieldsState";
 import { useState } from "react";
-
-const fields = bioFields;
-
-let fieldsState: fieldState = {};
-fields.forEach((field) => (fieldsState[field.id] = ""));
+import { Textarea } from "../common-ui/shadcn-ui/textarea";
 
 const BioForm = () => {
-    const [profileState, setProfileState] = useState(fieldsState);
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setProfileState({ ...setProfileState, [e.target.name]: e.target.value });
-
-    const handleClick = () => document.getElementById('upload')?.click();
-    return (
-        <>
-            <Header
-                heading="Customise your profile"
-                paragraph="Enter your registered email address to reset your password"
-            />
-            {fields.map((field) => (
-                <FormInput
-                    key={field.id}
-                    handleChange={handleChange}
-                    value={profileState[field.id]}
-                    labelText={field.labelText}
-                    name={field.name}
-                    id={field.id}
-                    type={field.type}
-                    isRequired={field.isRequired}
-                    placeholder={field.placeholder}
-                    forRegister={field.forRegister}
-                    height={50}
-                ></FormInput>
-            ))}
-        </>
-    );
+  return (
+    <>
+      <Header
+        heading="2. Tell us about yourself"
+        paragraph="Add a short description of yourself"
+      />
+      <label className="text-md font-semibold text-black" htmlFor="bio">
+        Your Bio
+      </label>
+      <Textarea
+        className="resize-none"
+        name="bio"
+        placeholder="Add your bio here"
+      />
+      <p className="text-sm text-muted-foreground">
+        Your bio will be added to your profile.
+      </p>
+    </>
+  );
 };
 
 export default BioForm;

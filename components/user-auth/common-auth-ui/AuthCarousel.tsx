@@ -6,7 +6,7 @@ import images from "@/constants/carouselContent";
 
 const AuthCarousel = () => {
   return (
-    <div className="flex h-screen items-center justify-center bg-primary">
+    <div className="flex h-screen items-center justify-center bg-pri">
       <Carousel
         autoPlay
         infiniteLoop

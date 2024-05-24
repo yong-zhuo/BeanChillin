@@ -10,18 +10,19 @@ interface HeaderProps {
   paragraph: string;
   linkName?: string;
   linkUrl?: string;
+  logo?: boolean
 }
 
 export default function Header(props: HeaderProps) {
   return (
     <div className="mb-5">
       <div className="flex justify-center">
-        <Logo
+        {props.logo &&<Logo
           src="/logo/logo.svg"
           width={230}
           height={20}
           className="flex justify-center p-10"
-        />
+        />}
       </div>
       <h2 className="text-center text-3xl font-extrabold text-gray-900">
         {props.heading}
@@ -31,7 +32,7 @@ export default function Header(props: HeaderProps) {
         {props.linkUrl && props.linkName && (
           <Link
             href={props.linkUrl}
-            className="font-medium text-primary hover:underline"
+            className="font-medium text-pri hover:underline"
           >
             {props.linkName}
           </Link>
