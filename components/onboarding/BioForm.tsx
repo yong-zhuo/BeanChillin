@@ -4,7 +4,15 @@ import Header from "@/components/common-ui/form/Header";
 import { useState } from "react";
 import { Textarea } from "../common-ui/shadcn-ui/textarea";
 
-const BioForm = () => {
+type bioData = {
+  bio: string
+}
+
+type bioFormProps = bioData & {
+  updateFields: (fields: Partial<bioData>) => void;
+};
+
+const BioForm = ({bio, updateFields}:bioFormProps) => {
   return (
     <>
       <Header
@@ -18,6 +26,8 @@ const BioForm = () => {
         className="resize-none"
         name="bio"
         placeholder="Add your bio here"
+        onChange={e => updateFields({bio:e.target.value})}
+        value={bio}
       />
       <p className="text-sm text-muted-foreground">
         Your bio will be added to your profile.

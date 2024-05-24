@@ -17,6 +17,7 @@ export default async function CreateAccount(formData: FormData) {
                 name: "",
                 email,
                 password: hashedPass,
+                signinType: true
             }
         })
         return 'ok';

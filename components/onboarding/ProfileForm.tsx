@@ -4,7 +4,7 @@ import FormInput from "@/components/common-ui/form/FormInput";
 import Header from "@/components/common-ui/form/Header";
 import { profileFields } from "@/constants/formFields";
 import { fieldState } from "@/types/formFieldsState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const fields = profileFields;
@@ -12,11 +12,33 @@ const fields = profileFields;
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
-const ProfileForm = () => {
-  const [profileState, setProfileState] = useState(fieldsState);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setProfileState({ ...setProfileState, [e.target.name]: e.target.value });
+type profileData = {
+  firstName: string;
+  lastName: string;
+  image: string;
+};
 
+type profileFormProps = profileData & {
+  updateFields: (fields: Partial<profileData>) => void;
+};
+
+const ProfileForm = ({
+  firstName,
+  lastName,
+  image,
+  updateFields,
+}: profileFormProps) => {
+  const [profileState, setProfileState] = useState({
+    firstName,
+    lastName,
+    image,
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileState((prevState) => ({...prevState, [e.target.name]: e.target.value }));
+    updateFields({[e.target.name]: e.target.value});
+    console.log(e.target.value)
+  };
+  
   const handleClick = () => document.getElementById("upload")?.click();
   return (
     <>
@@ -47,7 +69,7 @@ const ProfileForm = () => {
             <FormInput
               key={field.id}
               handleChange={handleChange}
-              value={profileState[field.id]}
+              value={profileState[field.name as keyof profileData]}
               labelText={field.labelText}
               name={field.name}
               id={field.id}

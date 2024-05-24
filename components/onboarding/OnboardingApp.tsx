@@ -6,18 +6,38 @@ import BioForm from "./BioForm";
 import WelcomePage from "./WelcomePage";
 import { useRouter } from "next/navigation";
 import Button from "../common-ui/button/Button";
+import { useState } from "react";
+import { FormData } from "@/types/formData";
+import { onboardAuth } from "@/lib/users/OnboardAuth";
+
+const INITIAL_DATA: FormData = {
+  firstName: "",
+  lastName: "",
+  image: "",
+  bio: "",
+};
 
 export default function OnboardingApp() {
+  const [data, setData] = useState(INITIAL_DATA);
+  function updateFields(fields: Partial<FormData>) {
+    setData((prev) => {
+      return { ...prev, ...fields };
+    });
+    console.log(data);
+  }
   const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } =
     useMultistepForm([
-      <ProfileForm key={0} />,
-      <BioForm key={1} />,
+      <ProfileForm key={0} {...data} updateFields={updateFields} />,
+      <BioForm key={1} {...data} updateFields={updateFields} />,
       <WelcomePage key={2} />,
     ]);
   const router = useRouter();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLastStep) return next;
+
+    onboardAuth(data, 'lol@gmail.com');
+
     router.push("/home");
   };
 

@@ -54,18 +54,18 @@ const profileFields = [
 
     {
         labelText: "First Name",
-        id: "first-name",
-        name: "first-name",
-        type: "first-name",
+        id: "firstName",
+        name: "firstName",
+        type: "text",
         isRequired: true,
         placeholder: "John",
         forRegister: false
     },
     {
         labelText: "Last Name",
-        id: "last-name",
-        name: "last-name",
-        type: "last-name",
+        id: "lastName",
+        name: "lastName",
+        type: "text",
         isRequired: true,
         placeholder: "Doe",
         forRegister: false
@@ -78,7 +78,7 @@ const bioFields = [
         labelText: "Bio",
         id: "bio",
         name: "bio",
-        type: "bio",
+        type: "text",
         isRequired: true,
         placeholder: "Add a short description of yourself",
         forRegister: false
