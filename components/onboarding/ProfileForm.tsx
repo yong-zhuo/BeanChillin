@@ -5,6 +5,7 @@ import Header from "@/components/common-ui/form/Header";
 import { profileFields } from "@/constants/formFields";
 import { fieldState } from "@/types/formFieldsState";
 import { useState } from "react";
+import Image from "next/image";
 
 const fields = profileFields;
 
@@ -25,7 +26,7 @@ const ProfileForm = () => {
             />
             <div className="flex justify-center">
                 <input id='upload' type="file" accept="image/*" className="hidden"></input>
-                <button onClick={handleClick}><img src="/hi.png" alt="" height="500" width="500" className="border rounded-full" /></button>
+                <button onClick={handleClick}><Image src="/hi.png" alt="" height={500} width={500} className="border rounded-full" /></button>
             </div>
             {fields.map((field) => (
                 <FormInput

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import FormInput from "@/components/common-ui/form/FormInput";
 import Header from "@/components/common-ui/form/Header";
-import FormButton from "@/components/common-ui/button/Button";
+import Button from "@/components/common-ui/button/Button";
 
 const ForgetForm = () => {
   const [formState, setFormState] = useState("");
@@ -33,7 +33,7 @@ const ForgetForm = () => {
           placeholder="e.g. bean@chillin.com"
         />
         <div className="mx-3 px-5">
-          <FormButton action="submit" text="Email me the link" addClass=" text-white bg-primary hover:bg-slate-400" />
+          <Button action="submit" text="Email me the link" addClass=" text-white bg-primary hover:bg-slate-400" />
         </div>
       </form>
     </>

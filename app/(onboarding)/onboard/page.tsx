@@ -1,5 +1,5 @@
-import StepsBox from "@/components/onboarding/StepsBox";
-import OnboardingApp from "@/components/onboarding/OnboardingApp";
+import Stepper from "@/components/onboarding/Stepper";
+
 export default function NamePage() {
-    return <OnboardingApp />
+  return <Stepper />;
 }

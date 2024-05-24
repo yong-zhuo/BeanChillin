@@ -7,7 +7,12 @@ import WelcomePage from "./WelcomePage";
 import { useRouter } from "next/navigation";
 
 export default function OnboardingApp() {
-    const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } = useMultistepForm([<ProfileForm />, <BioForm />, <WelcomePage />]);
+    const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } = useMultistepForm([
+        <ProfileForm key={0} />,
+        <BioForm key={1} />,
+        <WelcomePage key={2} />
+    ]);
+
     const router = useRouter();
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
