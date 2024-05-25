@@ -1,4 +1,5 @@
 import OnboardingApp from "@/components/onboarding/OnboardingApp";
-export default function NamePage() {
+export default async function NamePage() {
+  
   return <OnboardingApp />;
 }

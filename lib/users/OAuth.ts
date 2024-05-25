@@ -2,13 +2,12 @@ import GoogleProvider from 'next-auth/providers/google'
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from '../prisma';
-import { DefaultArgs } from '@prisma/client/runtime/library';
 import bcrypt from 'bcrypt' 
 
 export const Oauth: NextAuthOptions = {
     session: {
         strategy: 'jwt',
-        maxAge: 5, //5 seconds. Set to 4 hours on production.
+        maxAge: 60 * 60, //5 seconds. Set to 4 hours on production.
         updateAge: 60 * 60, //1 hour
     },
     providers: [
@@ -80,4 +79,6 @@ export const Oauth: NextAuthOptions = {
         },
        
     }
+
+    
 }
