@@ -5,44 +5,48 @@ import { loginFields } from "@/constants/formFields";
 import Header from "@/components/common-ui/form/Header";
 import Link from "next/link";
 import Button from "@/components/common-ui/button/Button";
-import { useState } from "react";
-import { LoginUser } from "../../../lib/users/LoginUser";
 import { useRouter } from "next/navigation";
 import { fieldState } from "@/types/formFieldsState";
 import GoogleButton from "../common-auth-ui/GoogleButton";
 import Divider from "@/components/common-ui/misc/Divider";
 import { useSession, signIn } from "next-auth/react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type login } from "@/lib/schemas/loginSchema";
+
 const fields = loginFields;
 
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<login>({ resolver: zodResolver(loginSchema) });
+
   const router = useRouter();
   const { data: session } = useSession();
   if (session) {
     router.push("/home");
   }
-  const [loginState, setLoginState] = useState(fieldsState);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setLoginState({ ...loginState, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
-    e.preventDefault();
-
+  //changed return type to fit react-hook-form
+  const onSubmit: SubmitHandler<login> = async (data) => {
+    
     try {
-      const formData = new FormData(e.currentTarget);
-      const isAuth = await LoginUser(formData);
-      const email = formData.get("email");
-      if (!isAuth) {
-        throw new Error("Invalid login! Please check your email or password!");
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+        callbackUrl: "/home",
+      });
+      if (!result?.ok) {
+        throw new Error(result?.error?.toString());
       }
-      router.push("/home");
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   };
 
@@ -56,18 +60,17 @@ const LoginForm = () => {
         logo
       />
 
-      <form onSubmit={handleSubmit} className="mb-5 px-40 pb-2 pt-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-5 px-40 pb-2 pt-6">
         {fields.map((field) => (
           <FormInput
             key={field.id}
-            handleChange={handleChange}
-            value={loginState[field.id]}
             labelText={field.labelText}
             id={field.id}
-            name={field.name}
             type={field.type}
-            isRequired={field.isRequired}
             placeholder={field.placeholder}
+            register={register}
+            name={field.name as keyof login}
+            error={errors[field.name as keyof login]}
           />
         ))}
 

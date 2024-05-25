@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { signupFields } from "@/constants/formFields";
 import Header from "@/components/common-ui/form/Header";
 import Button from "@/components/common-ui/button/Button";
@@ -8,7 +7,9 @@ import FormInput from "@/components/common-ui/form/FormInput";
 import { fieldState } from "@/types/formFieldsState";
 import CreateAccount from "../../../lib/users/CreateAccount";
 import { useRouter } from "next/navigation";
-
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema, type signup } from "@/lib/schemas/signupSchema";
 
 const fields = signupFields;
 
@@ -17,17 +18,17 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const SignUpForm = () => {
   const router = useRouter();
-  const [signUpState, setSignUpState] = useState(fieldsState);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setSignUpState({ ...signUpState, [e.target.name]: e.target.value });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<signup>({ resolver: zodResolver(signupSchema) });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit:SubmitHandler<signup> = async (data) => {
+    
     try {
-      const formData = new FormData(e.currentTarget);
-      const res = (await CreateAccount(formData)) as string;
+      const res = (await CreateAccount(data)) as string;
       if (res !== "ok") {
         throw new Error(res);
       }
@@ -35,11 +36,9 @@ const SignUpForm = () => {
     } catch (e) {
       alert(e);
     }
-
-    //TODO: Add createAccount upon submit
-
-    //TODO: Add logic to check if password and confirm password is the same
+    //TODO: Email exist toast
   };
+
   return (
     <>
       <Header
@@ -49,20 +48,19 @@ const SignUpForm = () => {
         linkUrl="/login"
         logo
       />
-      <form onSubmit={handleSubmit} className="mb-4 px-40 pb-8 pt-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-4 px-40 pb-8 pt-6">
         {fields.map((field) => (
           <FormInput
             key={field.id}
-            handleChange={handleChange}
-            value={signUpState[field.id]}
             labelText={field.labelText}
-            name={field.name}
+            name={field.name as keyof signup}
             id={field.id}
             type={field.type}
-            isRequired={field.isRequired}
             placeholder={field.placeholder}
             forRegister={field.forRegister}
-          ></FormInput>
+            register={register}
+            error={errors[field.name as keyof signup]}
+          />
         ))}
         <div className="mx-3 px-5 py-1">
           <Button

@@ -1,11 +1,10 @@
 "use server"
 import { prisma } from "@/lib/prisma";
 import bcrypt from 'bcrypt';
+import { type login } from "../schemas/loginSchema";
 
-export async function LoginUser(credentials: FormData): Promise<boolean> {
-    const email = credentials.get('email') as string;
-    const password = credentials.get('password') as string;
-    const isAuth = await userAuthentication(email, password);
+export async function LoginUser(credentials: login): Promise<boolean> {
+    const isAuth = await userAuthentication(credentials.email, credentials.password);
     if (!isAuth) {
         return false;
     }

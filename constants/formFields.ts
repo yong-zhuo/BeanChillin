@@ -5,7 +5,7 @@ const loginFields = [
         name: "email",
         type: "email",
         placeholder: "e.g. bean@chillin.com",
-        isRequired: true
+        
 
     },
     {
@@ -14,7 +14,7 @@ const loginFields = [
         name: "password",
         type: "password",
         placeholder: "••••••••",
-        isRequired: true
+        
 
     }
 ]
@@ -26,7 +26,6 @@ const signupFields = [
         id: "email",
         name: "email",
         type: "email",
-        isRequired: true,
         placeholder: "Enter email address",
         forRegister: true
     },
@@ -35,16 +34,14 @@ const signupFields = [
         id: "password",
         name: "password",
         type: "password",
-        isRequired: true,
         placeholder: "Enter password",
         forRegister: true
     },
     {
         labelText: "Confirm Password",
-        id: "confirm-password",
-        name: "confirm-password",
+        id: "confirm",
+        name: "confirm",
         type: "password",
-        isRequired: true,
         placeholder: "Confirm password",
         forRegister: true
     }

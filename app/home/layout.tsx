@@ -1,13 +1,9 @@
-import NavBar from "@/components/home/navbar/NavBar"
+import NavBar from "@/components/home/navbar/NavBar";
 
-type Props = {}
+type Props = {};
 
 const layout = (props: Props) => {
-  return (
-    <main className="bg-[url('/patterns/pattern-light.png')]"> 
+  return <main className="bg-[url('/patterns/pattern-light.png')]"></main>;
+};
 
-    </main>
-  )
-}
-
-export default layout
+export default layout;

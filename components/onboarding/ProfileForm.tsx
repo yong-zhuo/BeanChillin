@@ -68,15 +68,13 @@ const ProfileForm = ({
           {fields.map((field) => (
             <FormInput
               key={field.id}
-              handleChange={handleChange}
-              value={profileState[field.name as keyof profileData]}
               labelText={field.labelText}
               name={field.name}
               id={field.id}
               type={field.type}
-              isRequired={field.isRequired}
               placeholder={field.placeholder}
               forRegister={field.forRegister}
+              
             />
           ))}
         </div>

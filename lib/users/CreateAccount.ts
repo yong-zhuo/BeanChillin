@@ -2,11 +2,12 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import bcrypt from 'bcrypt';
+import { signup } from "../schemas/signupSchema";
 
-export default async function CreateAccount(formData: FormData) {
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const confirmPassword = formData.get('confirm-password') as string;
+export default async function CreateAccount(data:signup) {
+    const email = data.email;
+    const password = data.password;
+    const confirmPassword = data.confirm;
     const msg = RegisterAuth(email, password, confirmPassword);
     if (msg !== 'ok') return msg;
 
