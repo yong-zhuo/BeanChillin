@@ -1,11 +1,6 @@
-import { login } from "@/lib/schemas/loginSchema";
+import { CircleAlert } from 'lucide-react';
 import { fieldState } from "@/types/formFieldsState";
-import {
-  FieldError,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
-
+import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 export interface FormProps<T extends fieldState> {
   labelText: string;
@@ -40,25 +35,20 @@ const FormInput = <T extends fieldState>({
           htmlFor={id}
           className="text-md text-black-700 mb-2 block font-bold"
         >
-          {labelText}{" "}
-          {forRegister && <span className="text-pri">*</span>}
+          {labelText} {forRegister && <span className="text-pri">*</span>}
         </label>
-        {error && (
-        <p className="text-sm text-red-400  ">{error.message}</p>
-      )}
+        
+        {error && <p className="text-sm text-red-400 flex justify-between font-semibold"><CircleAlert height={19}/>{error.message}</p>}
       </div>
 
       <div className="mb-7">
-      
         <input
           placeholder={placeholder}
           className={`${fixedInputClass} ${addClass || ""}`}
           type={type}
           {...(register && register(name))}
         />
-        
       </div>
-      
     </>
   );
 };

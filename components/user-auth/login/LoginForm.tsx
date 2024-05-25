@@ -13,6 +13,8 @@ import { useSession, signIn } from "next-auth/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type login } from "@/lib/schemas/loginSchema";
+import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 
 //login fields to be mapped
 const fields = loginFields;
@@ -27,13 +29,18 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<login>({ resolver: zodResolver(loginSchema) });
 
+  //to use shadcn-ui toast
+  const { toast } = useToast();
+
+  //reroute user to home if session detected
   const router = useRouter();
   const { data: session } = useSession();
   if (session) {
     router.push("/home");
   }
 
-  //changed return type to fit react-hook-form
+  //if login credentials match, send users to home
+  //else throw an error and display toast
   const onSubmit: SubmitHandler<login> = async (data) => {
     try {
       const result = await signIn("credentials", {
@@ -44,10 +51,16 @@ const LoginForm = () => {
       });
       if (!result?.ok) {
         throw new Error(result?.error?.toString());
-        //TODO: appear toast
       }
     } catch (e) {
       console.log(e);
+      toast({
+        variant: "destructive",
+        title: "Invalid email and password",
+        description:
+          "Please try again or register a new account if you have not done so.",
+          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
+      });
     }
   };
 
