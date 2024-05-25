@@ -1,9 +1,9 @@
 import GoogleProvider from 'next-auth/providers/google'
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { userAuthentication } from './LoginUser';
 import { prisma } from '../prisma';
 import { DefaultArgs } from '@prisma/client/runtime/library';
+import bcrypt from 'bcrypt' 
 
 export const Oauth: NextAuthOptions = {
     session: {
@@ -25,24 +25,29 @@ export const Oauth: NextAuthOptions = {
         }),
         CredentialsProvider({
             id: 'credentials',
-            name: 'Credentials',
+            name: 'credentials',
             async authorize(credentials, req) {
-                const user = await prisma.user.findFirst({
-                    where: {
-                        email: credentials?.email,
-                    },
-                    select: {
-                        id: true,
-                        email: true,
-                        password: true,
+                try {
+                    const user = await prisma.user.findFirst({
+                        where: {
+                            email: credentials?.email,
+                        },
+                        select: {
+                            id: true,
+                            email: true,
+                            password: true,
+                        }
+                    });
+                    const isAuth = await bcrypt.compare(credentials?.password as string, user?.password as string);
+                    if (isAuth) {
+                        return {
+                            id: user?.id.toString() as string,
+                            email: user?.email,
+                        };
+                    } else {
+                        return null;
                     }
-                })
-                if (user) {
-                    return {
-                        id: user.id.toString(),
-                        email: user.email,
-                    };
-                } else {
+                } catch (e) {
                     return null;
                 }
             },

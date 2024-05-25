@@ -4,42 +4,23 @@ import FormInput from "@/components/common-ui/form/FormInput";
 import Header from "@/components/common-ui/form/Header";
 import { profileFields } from "@/constants/formFields";
 import { fieldState } from "@/types/formFieldsState";
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { onboard } from "@/lib/schemas/onboardSchema";
 
 const fields = profileFields;
 
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
-type profileData = {
-  firstName: string;
-  lastName: string;
-  image: string;
-};
+interface ProfileProps {
+  register: UseFormRegister<onboard>;
+  errors?: FieldErrors<onboard>;
+}
 
-type profileFormProps = profileData & {
-  updateFields: (fields: Partial<profileData>) => void;
-};
-
-const ProfileForm = ({
-  firstName,
-  lastName,
-  image,
-  updateFields,
-}: profileFormProps) => {
-  const [profileState, setProfileState] = useState({
-    firstName,
-    lastName,
-    image,
-  });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileState((prevState) => ({...prevState, [e.target.name]: e.target.value }));
-    updateFields({[e.target.name]: e.target.value});
-    console.log(e.target.value)
-  };
-  
+const ProfileForm = (props: ProfileProps) => {
   const handleClick = () => document.getElementById("upload")?.click();
+
   return (
     <>
       <Header
@@ -69,12 +50,13 @@ const ProfileForm = ({
             <FormInput
               key={field.id}
               labelText={field.labelText}
-              name={field.name}
+              name={field.name as keyof onboard}
               id={field.id}
               type={field.type}
               placeholder={field.placeholder}
               forRegister={field.forRegister}
-              
+              register={props.register}
+              error={props.errors && props.errors[field.name as keyof onboard]}
             />
           ))}
         </div>

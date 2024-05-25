@@ -14,12 +14,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type login } from "@/lib/schemas/loginSchema";
 
+//login fields to be mapped
 const fields = loginFields;
-
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const LoginForm = () => {
+  //zod validation for login
   const {
     register,
     handleSubmit,
@@ -34,7 +35,6 @@ const LoginForm = () => {
 
   //changed return type to fit react-hook-form
   const onSubmit: SubmitHandler<login> = async (data) => {
-    
     try {
       const result = await signIn("credentials", {
         email: data.email,
@@ -44,6 +44,7 @@ const LoginForm = () => {
       });
       if (!result?.ok) {
         throw new Error(result?.error?.toString());
+        //TODO: appear toast
       }
     } catch (e) {
       console.log(e);

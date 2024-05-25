@@ -6,44 +6,45 @@ import BioForm from "./BioForm";
 import WelcomePage from "./WelcomePage";
 import { useRouter } from "next/navigation";
 import Button from "../common-ui/button/Button";
-import { useState } from "react";
-import { FormData } from "@/types/formData";
-import { onboardAuth } from "@/lib/users/OnboardAuth";
-
-const INITIAL_DATA: FormData = {
-  firstName: "",
-  lastName: "",
-  image: "",
-  bio: "",
-};
+import { onboardPush } from "@/lib/users/OnboardPush";
+import { onboard, onboardSchema } from "@/lib/schemas/onboardSchema";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function OnboardingApp() {
-  const [data, setData] = useState(INITIAL_DATA);
-  function updateFields(fields: Partial<FormData>) {
-    setData((prev) => {
-      return { ...prev, ...fields };
-    });
-    console.log(data);
-  }
+
+  //zod validation for onboarding
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<onboard>({
+    defaultValues: { firstName: "", lastName: "", image:"", bio:"" },
+    resolver: zodResolver(onboardSchema),
+  });
+
+  //custom hook to change and track steps in multi-step form
   const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } =
     useMultistepForm([
-      <ProfileForm key={0} {...data} updateFields={updateFields} />,
-      <BioForm key={1} {...data} updateFields={updateFields} />,
+      <ProfileForm key={0} register={register} errors={errors}/>,
+      <BioForm key={1} register={register} errors={errors}/>,
       <WelcomePage key={2} />,
     ]);
+
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+
+  //send data to db
+  const onSubmit: SubmitHandler<onboard> = (data) => {
     if (!isLastStep) return next;
 
-    onboardAuth(data, 'lol@gmail.com');
+    onboardPush(data, "lol@gmail.com");
 
     router.push("/home");
   };
 
   return (
     <div>
-      <form className="px-40 pb-5 pt-9" onSubmit={handleSubmit}>
+      <form className="px-40 pb-5 pt-9" onSubmit={handleSubmit(onSubmit)}>
         {step}
 
         <div className="flex">

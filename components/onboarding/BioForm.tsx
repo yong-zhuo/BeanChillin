@@ -1,33 +1,36 @@
 "use client";
 
 import Header from "@/components/common-ui/form/Header";
-import { useState } from "react";
 import { Textarea } from "../common-ui/shadcn-ui/textarea";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { type onboard } from "@/lib/schemas/onboardSchema";
 
-type bioData = {
-  bio: string
+interface BioProps {
+  register: UseFormRegister<onboard>;
+  errors?: FieldErrors<onboard>;
 }
 
-type bioFormProps = bioData & {
-  updateFields: (fields: Partial<bioData>) => void;
-};
+const BioForm = (props: BioProps) => {
+  const errorMessage = props.errors && props.errors["bio"]?.message;
 
-const BioForm = ({bio, updateFields}:bioFormProps) => {
   return (
     <>
       <Header
         heading="2. Tell us about yourself"
         paragraph="Add a short description of yourself"
       />
-      <label className="text-md font-semibold text-black" htmlFor="bio">
-        Your Bio
-      </label>
+      <div className="flex justify-between">
+        <label className="text-md font-semibold text-black" htmlFor="bio">
+          Your Bio
+        </label>
+        {errorMessage && (
+          <p className="text-sm text-red-400 ">{errorMessage}</p>
+        )}
+      </div>
       <Textarea
         className="resize-none"
-        name="bio"
         placeholder="Add your bio here"
-        onChange={e => updateFields({bio:e.target.value})}
-        value={bio}
+        {...(props.register && props.register("bio"))}
       />
       <p className="text-sm text-muted-foreground">
         Your bio will be added to your profile.
