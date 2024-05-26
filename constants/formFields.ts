@@ -47,6 +47,17 @@ const signupFields = [
     }
 ]
 
+const forgetFields = [
+    {
+        labelText: "Email",
+        id:"forgetPassword",
+        name:"forgetPassword",
+        type:"email",
+        placeholder:"bean@chillin.com",
+        forRegister: true
+    }
+]
+
 const profileFields = [
 
     {
@@ -54,7 +65,6 @@ const profileFields = [
         id: "firstName",
         name: "firstName",
         type: "text",
-        isRequired: true,
         placeholder: "John",
         forRegister: false
     },
@@ -63,7 +73,6 @@ const profileFields = [
         id: "lastName",
         name: "lastName",
         type: "text",
-        isRequired: true,
         placeholder: "Doe",
         forRegister: false
     },
@@ -76,10 +85,9 @@ const bioFields = [
         id: "bio",
         name: "bio",
         type: "text",
-        isRequired: true,
         placeholder: "Add a short description of yourself",
         forRegister: false
     },
 ]
 
-export { loginFields, signupFields, profileFields, bioFields }
+export { loginFields, signupFields, forgetFields, profileFields, bioFields }
