@@ -24,6 +24,7 @@ const AuthCarousel = () => {
                 alt={`Image ${id}`}
                 width={400}
                 height={400}
+                className="sm:w-full sm:h-auto md:w-full md:h-auto lg:w-full lg:h-auto xl:w-full xl:h-auto"
               />
             </div>
             <div className="flex h-1/3 max-w-sm justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] sm:pt-5 sm:text-xl md:max-w-md lg:max-w-lg lg:text-3xl ">

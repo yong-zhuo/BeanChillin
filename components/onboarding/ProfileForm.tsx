@@ -8,8 +8,8 @@ import Image from "next/image";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
 
+//profile fields to be mapped
 const fields = profileFields;
-
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 

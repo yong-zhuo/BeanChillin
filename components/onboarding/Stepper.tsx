@@ -3,8 +3,9 @@ import { Check, UserRound, ListPlus, Bean } from "lucide-react";
 
 
 const Stepper = (props: { step: number }) => {
-  const index = props.step;
+
   
+  const index = props.step;
   const steps =  [
     {label:"Customise your profile", icon: <UserRound height={24}/>},
     {label:"Tell us about yourself", icon: <ListPlus height={24}/>},

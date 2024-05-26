@@ -1,4 +1,4 @@
-import { CircleAlert } from 'lucide-react';
+import { CircleAlert } from "lucide-react";
 import { fieldState } from "@/types/formFieldsState";
 import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
@@ -33,12 +33,17 @@ const FormInput = <T extends fieldState>({
       <div className="flex justify-between">
         <label
           htmlFor={id}
-          className="text-md text-black-700 mb-2 block font-bold"
+          className="text-md text-black-700 mb-2 block font-bold sm:text-base md:text-sm"
         >
           {labelText} {forRegister && <span className="text-pri">*</span>}
         </label>
-        
-        {error && <p className="text-sm text-red-400 flex justify-between font-semibold"><CircleAlert height={19}/>{error.message}</p>}
+
+        {error && (
+          <p className="text-xs flex justify-between font-semibold text-red-400 ">
+            <CircleAlert height={15} />
+            {error.message}
+          </p>
+        )}
       </div>
 
       <div className="mb-7">

@@ -22,8 +22,10 @@ const ForgetForm = () => {
     formState: { errors },
   } = useForm<forget>({ resolver: zodResolver(forgetSchema) });
 
+
+  //submit handler for forget-password
   const onSubmit: SubmitHandler<forget> = (data): void => {
-    //TODO: add forget password logic here
+    //TODO: #22 Add forget password logic
   };
   return (
     <>

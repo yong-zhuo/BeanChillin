@@ -11,32 +11,32 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, type signup } from "@/lib/schemas/signupSchema";
 
+//signup fields to be mapped
 const fields = signupFields;
-
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const SignUpForm = () => {
-  const router = useRouter();
-
+  //zod validation for signup
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<signup>({ resolver: zodResolver(signupSchema) });
 
-  const onSubmit:SubmitHandler<signup> = async (data) => {
-    
+  //reroute user to onboarding page upon successful signup
+  const router = useRouter();
+  const onSubmit: SubmitHandler<signup> = async (data) => {
     try {
       const res = (await CreateAccount(data)) as string;
       if (res !== "ok") {
         throw new Error(res);
       }
-      router.push("/onboard"); //change to onboarding
+      router.push("/onboard"); 
     } catch (e) {
       alert(e);
     }
-    //TODO: Email exist toast
+    //TODO: #23 Email exist error handling
   };
 
   return (
