@@ -25,7 +25,7 @@ const ProfileForm = (props: ProfileProps) => {
     <>
       <Header
         heading="Customise your profile"
-        paragraph="Enter your registered email address to reset your password"
+        paragraph="Set your name and profile picture to be displayed"
       />
       <div className="flex justify-center ">
         <input

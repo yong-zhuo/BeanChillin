@@ -89,11 +89,11 @@
     }
   
     .active .step {
-      @apply bg-sky-600;
+      @apply bg-[#CDE8E5];
     }
   
     .complete .step {
-      @apply bg-green-600;
+      @apply bg-pri;
     }
   
     .complete p {
@@ -102,6 +102,6 @@
   
     .complete:not(:first-child):before,
     .active:not(:first-child):before {
-      @apply bg-green-600;
+      @apply bg-pri;
     }
   }
