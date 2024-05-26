@@ -5,27 +5,26 @@ import { prisma } from "../prisma";
 import { onboard } from "../schemas/onboardSchema";
 import { Oauth } from "./OAuth";
 
-export async function onboardPush(data:onboard) {
-    const {bio, image, firstName, lastName} = data
+export async function onboardPush(data: onboard) {
+    const { bio, image, firstName, lastName } = data
 
     //get active user email
     const session = await getServerSession(Oauth);
-    const email = session?.user ? session.user.email : null ;
-    
+    const email = session?.user ? session.user.email : null;
     //in the event of error
     if (email === null) {
         throw new Error("Email undefined, please refresh the page")
     }
 
-    
-    if (bio !== null && image !== null && firstName !== null && lastName !== null ) {
+
+    if (bio !== null && image !== null && firstName !== null && lastName !== null) {
         await prisma.user.update({
             where: {
                 email
-            }, 
+            },
             data: {
                 bio,
-                image,
+                image: "",
                 name: `${firstName} ${lastName}`,
             }
         })

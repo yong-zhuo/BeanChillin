@@ -7,6 +7,7 @@ import { fieldState } from "@/types/formFieldsState";
 import Image from "next/image";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
+import { useState } from "react";
 
 //profile fields to be mapped
 const fields = profileFields;
@@ -18,9 +19,15 @@ interface ProfileProps {
   errors?: FieldErrors<onboard>;
 }
 
-const ProfileForm = (props: ProfileProps) => {
-  const handleClick = () => document.getElementById("upload")?.click();
 
+const ProfileForm = (props: ProfileProps) => {
+  const [imageUrl, setImageUrl] = useState<string>("/profile/default.png");
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files?.[0];
+    if (file) {
+      setImageUrl(URL.createObjectURL(file));
+    }
+  }
   return (
     <>
       <Header
@@ -28,21 +35,20 @@ const ProfileForm = (props: ProfileProps) => {
         paragraph="Set your name and profile picture to be displayed"
       />
       <div className="flex justify-center ">
+        <Image
+          src={imageUrl}
+          alt="Profile Picture"
+          height={200}
+          width={250}
+          className="aspect-square rounded-full object-cover"
+        />
+      </div>
+      <div className="flex justify-center">
         <input
-          id="upload"
           type="file"
           accept="image/*"
-          className="hidden"
-        ></input>
-        <button onClick={handleClick}>
-          <Image
-            src="/hi.png"
-            alt="Profile Picture"
-            height={200}
-            width={250}
-            className="aspect-square rounded-full object-cover"
-          />
-        </button>
+          onChange={handleChange}
+        />
       </div>
       <div className="flex justify-center">
         <div className="w-3/4">
