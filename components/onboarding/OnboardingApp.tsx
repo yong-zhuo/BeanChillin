@@ -41,48 +41,51 @@ export default function OnboardingApp() {
       onboardPush(data);
       router.push("/home");
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 
   return (
-    
-    <div>
-      <Stepper step={StepIndex + 1} />
-      <form className="px-40 pb-5 pt-9" onSubmit={handleSubmit(onSubmit)}>
+    <div className="relative flex h-full flex-col">
+      <div className="h-auto w-full sm:w-auto">
+        <Stepper step={StepIndex + 1} />
+      </div>
+      <form
+        className="flex flex-grow flex-col  px-40 pb-5 pt-9"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {step}
-
-        <div className="flex">
-          {!isFirstStep && (
-            <div className="">
-              <Button
-                handleClick={back}
-                text="Back"
-                addClass="text-sec bg-pri hover:bg-slate-500 gap-1"
-                src="/misc/arrow-left.svg"
-                alt="arrow-left"
-                width={20}
-                height={20}
-                orientation="left"
-              />
-            </div>
-          )}
-          {!isLastStep && (
-            <div className="ml-auto">
-              <Button
-                addClass="bg-pri text-sec hover:bg-slate-500 gap-1"
-                handleClick={next}
-                text="Next"
-                src="/misc/arrow-right.svg"
-                alt="arrow-right"
-                width={20}
-                height={20}
-                orientation="right"
-              />
-            </div>
-          )}
-        </div>
       </form>
+      <div className="absolute bottom-0 mt-5 flex w-full">
+        {!isFirstStep && (
+          <div className="">
+            <Button
+              handleClick={back}
+              text="Back"
+              addClass="text-sec bg-pri hover:bg-slate-500 gap-1"
+              src="/misc/arrow-left.svg"
+              alt="arrow-left"
+              width={20}
+              height={20}
+              orientation="left"
+            />
+          </div>
+        )}
+        {!isLastStep && (
+          <div className="ml-auto">
+            <Button
+              addClass="bg-pri text-sec hover:bg-slate-500 gap-1"
+              handleClick={next}
+              text="Next"
+              src="/misc/arrow-right.svg"
+              alt="arrow-right"
+              width={20}
+              height={20}
+              orientation="right"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
