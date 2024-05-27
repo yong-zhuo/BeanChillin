@@ -5,9 +5,10 @@ import Header from "@/components/common-ui/form/Header";
 import { profileFields } from "@/constants/formFields";
 import { fieldState } from "@/types/formFieldsState";
 import Image from "next/image";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormGetValues } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
 import { useState } from "react";
+import Button from "../common-ui/button/Button";
 
 //profile fields to be mapped
 const fields = profileFields;
@@ -17,6 +18,7 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 interface ProfileProps {
   register: UseFormRegister<onboard>;
   errors?: FieldErrors<onboard>;
+  setValue: UseFormSetValue<onboard>;
 }
 
 
@@ -26,6 +28,7 @@ const ProfileForm = (props: ProfileProps) => {
     const file = e.currentTarget.files?.[0];
     if (file) {
       setImageUrl(URL.createObjectURL(file));
+      props.setValue("image", file);
     }
   }
   return (
@@ -47,7 +50,14 @@ const ProfileForm = (props: ProfileProps) => {
         <input
           type="file"
           accept="image/*"
+          id="File"
           onChange={handleChange}
+          className="hidden"
+        />
+        <Button
+          addClass="bg-pri text-sec hover:bg-slate-500 h-[40px] w-[101px]"
+          handleClick={() => document.getElementById('File')?.click()}
+          text="Browse..."
         />
       </div>
       <div className="flex justify-center">

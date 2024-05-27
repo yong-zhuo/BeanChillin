@@ -15,7 +15,8 @@ export default async function CreateAccount(data: signup) {
                 name: "",
                 email,
                 password: hashedPass,
-                signinType: true
+                signinType: true,
+                isOnboard: false
             }
         })
         return 'ok';
