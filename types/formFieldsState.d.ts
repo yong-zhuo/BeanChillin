@@ -1,3 +1,3 @@
 export type fieldState = {
-    [key: string]: string;
+    [key: string]: string | File;
 }

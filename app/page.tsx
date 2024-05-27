@@ -1,17 +1,17 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Root() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if (!loggedIn) {
-      router.push("/login", undefined);
+    if (!session) {
+      router.push("/login");
     } else {
-      router.push("/home", undefined);
+      router.push("/home");
     }
   }, []);
 }

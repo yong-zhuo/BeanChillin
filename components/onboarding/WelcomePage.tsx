@@ -6,13 +6,13 @@ import Image from "next/image";
 
 const WelcomePage = () => {
   return (
-    <>
+    <div>
       <Header
         heading="Welcome to BeanChillin"
         paragraph="Start your journey now!"
       />
       <div className="flex justify-center">
-        <Image src="/onboarding/welcome.svg" alt="Welcome Image" height={500} width={500} />
+        <Image src="/onboarding/welcome.svg" alt="Welcome Image" height={450} width={450} />
       </div>
       <div className="flex items-center justify-center">
         <div className="flex w-1/2">
@@ -28,7 +28,7 @@ const WelcomePage = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, type signup } from "@/lib/schemas/signupSchema";
+import { signIn } from "next-auth/react";
 
 //signup fields to be mapped
 const fields = signupFields;
@@ -32,7 +33,12 @@ const SignUpForm = () => {
       if (res !== "ok") {
         throw new Error(res);
       }
-      router.push("/onboard"); 
+      console.log(res);
+      await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        callbackUrl: "/onboard",
+      });
     } catch (e) {
       alert(e);
     }

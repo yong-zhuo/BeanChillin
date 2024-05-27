@@ -19,7 +19,7 @@ const BioForm = (props: BioProps) => {
         heading="Tell us about yourself"
         paragraph="Add a short description of yourself"
       />
-      <div className="flex justify-between">
+      <div className="">
         <label className="text-md font-semibold text-black" htmlFor="bio">
           Your Bio
         </label>
