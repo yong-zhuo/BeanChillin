@@ -24,14 +24,16 @@ interface ProfileProps {
   register: UseFormRegister<onboard>;
   errors?: FieldErrors<onboard>;
   setValue: UseFormSetValue<onboard>;
+  imageUrl: string;
+  setImageUrl: (url: string) => void;
 }
 
 const ProfileForm = (props: ProfileProps) => {
-  const [imageUrl, setImageUrl] = useState<string>("/profile/default.jpg");
+  
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
     if (file) {
-      setImageUrl(URL.createObjectURL(file));
+      props.setImageUrl(URL.createObjectURL(file));
       props.setValue("image", file);
     }
   };
@@ -44,7 +46,7 @@ const ProfileForm = (props: ProfileProps) => {
       <div className="relative flex justify-center">
         <div className="relative">
           <Image
-            src={imageUrl}
+            src={props.imageUrl}
             alt="Profile Picture"
             height={200}
             width={280}

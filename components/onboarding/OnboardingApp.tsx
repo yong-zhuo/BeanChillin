@@ -11,6 +11,7 @@ import { onboard, onboardSchema } from "@/lib/schemas/onboardSchema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Stepper from "./Stepper";
+import { useState } from "react";
 
 export default function OnboardingApp() {
   //zod validation for onboarding
@@ -24,10 +25,12 @@ export default function OnboardingApp() {
     resolver: zodResolver(onboardSchema),
   });
 
+  const [imageUrl, setImageUrl] = useState<string>("/profile/default.jpg");
+
   //custom hook to change and track steps in multi-step form
   const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } =
     useMultistepForm([
-      <ProfileForm key={0} register={register} errors={errors} setValue={setValue} />,
+      <ProfileForm key={0} register={register} errors={errors} setValue={setValue} imageUrl={imageUrl} setImageUrl={setImageUrl} />,
       <BioForm key={1} register={register} errors={errors} />,
       <WelcomePage key={2} />,
     ]);
