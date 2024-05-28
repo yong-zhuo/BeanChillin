@@ -30,7 +30,7 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
 
   //submit handler for forget-password
   const onSubmit: SubmitHandler<reset> = (data): void => {
-    //TODO: #22 Add reset passwordl ogic
+    //reset password
     try {
       resetPassword(params.token, data);
     } catch (e: unknown) {

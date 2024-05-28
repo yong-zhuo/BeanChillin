@@ -1,3 +1,5 @@
+'use server'
+
 import { hash } from "bcrypt";
 import { prisma } from "../prisma";
 import { reset } from "../schemas/resetSchema";
@@ -19,7 +21,7 @@ export async function resetPassword(token:string, data:reset) {
         throw new Error("Invalid or expired token. Please try resetting your password again.");
     }
 
-    const encryptedPassword = await hash(password, 6);
+    const encryptedPassword = await hash(password, 12);
 
     const updateUser = prisma.user.update({
         where: {
