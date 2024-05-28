@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
-import Button from "@/components/common-ui/button/Button"
-import Header from "@/components/common-ui/form/Header"
+import Button from "@/components/common-ui/button/Button";
+import Header from "@/components/common-ui/form/Header";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ForgetPassword() {
   const router = useRouter();
@@ -12,22 +13,25 @@ export default function ForgetPassword() {
   return (
     <>
       <Header
-        heading="Sucess!"
+        heading="Link sent!"
         paragraph="Check your email address for further instructions on how to reset your password."
         logo
       />
-        <div className="mx-3 px-5">
-        <Button
-              handleClick={handleClick}
-              text="Back to Login"
-              src="/misc/arrow-left.svg"
-              alt="arrow-left"
-              width={20}
-              height={20}
-              addClass="gap-2 bg-pri text-white hover:bg-slate-400"
-              orientation="left"
-            />
+      <div className="flex flex-col justify-center items-center">
+        <Image src="/misc/mail.svg" alt="link" height={300} width={300} />
+        <div className="mx-3 px-5 justify-center items-center flex w-1/2">
+          <Button
+            handleClick={handleClick}
+            text="Back to Login"
+            src="/misc/arrow-left.svg"
+            alt="arrow-left"
+            width={20}
+            height={20}
+            addClass="gap-2 bg-pri text-white hover:bg-slate-400"
+            orientation="left"
+          />
         </div>
+      </div>
     </>
   );
 }

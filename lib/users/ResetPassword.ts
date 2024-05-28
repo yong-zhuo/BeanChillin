@@ -32,6 +32,8 @@ export async function resetPassword(token:string, data:reset) {
         }
     });
 
+
+    
     const updateToken = prisma.passwordResetToken.update({
         where: {
             id: passwordResetToken.id
@@ -42,6 +44,7 @@ export async function resetPassword(token:string, data:reset) {
     });
 
     try {
+        // Update user password and token
         await prisma.$transaction([updateUser, updateToken]);
 
     } catch (e) {

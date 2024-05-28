@@ -14,8 +14,8 @@ export async function sendMail(message: mailMessage) {
         port: 465,
         secure: true,
         auth: {
-            user: 'beanchillin3@gmail.com',
-            pass: 'vaff dthx qczw dwfw',
+            user: process.env.MAIL_USERNAME,
+            pass: process.env.GMAIL_PASSWORD,
         },
     });
 

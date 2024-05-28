@@ -29,10 +29,10 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
   } = useForm<reset>({ resolver: zodResolver(resetSchema) });
 
   //submit handler for forget-password
-  const onSubmit: SubmitHandler<reset> = (data): void => {
+  const onSubmit: SubmitHandler<reset> = async (data): Promise<void> => {
     //reset password
     try {
-      resetPassword(params.token, data);
+      await resetPassword(params.token, data);
     } catch (e: unknown) {
       if (e instanceof Error) {
         toast({

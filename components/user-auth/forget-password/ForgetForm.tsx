@@ -26,23 +26,22 @@ const ForgetForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<forget>({ resolver: zodResolver(forgetSchema) });
+  } = useForm<forget>({ resolver: zodResolver(forgetSchema)});
 
   //submit handler for forget-password
-  const onSubmit: SubmitHandler<forget> = (data): void => {
-    //TODO: #22 Add forget password logic
+  const onSubmit: SubmitHandler<forget> = async (data): Promise<void> => {
+    //send request for resetting password
     try {
-      sendReq(data);
-      
-    } catch (e: unknown) {
-      if (e instanceof Error) {
+      await sendReq(data);
+    } catch (e: any) {
+        console.log(e)
         toast({
           variant: "destructive",
           title: `Error sending reset link`,
           description: `${e.message}`,
           action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
         });
-      }
+      
     }
   };
   return (
