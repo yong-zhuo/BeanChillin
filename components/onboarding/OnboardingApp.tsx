@@ -17,6 +17,7 @@ export default function OnboardingApp() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<onboard>({
     defaultValues: { firstName: "", lastName: "", image: undefined, bio: "" },
@@ -26,20 +27,38 @@ export default function OnboardingApp() {
   //custom hook to change and track steps in multi-step form
   const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } =
     useMultistepForm([
-      <ProfileForm key={0} register={register} errors={errors} />,
+      <ProfileForm key={0} register={register} errors={errors} setValue={setValue} />,
       <BioForm key={1} register={register} errors={errors} />,
       <WelcomePage key={2} />,
     ]);
 
   const router = useRouter();
 
-  //send data to db
-  const onSubmit: SubmitHandler<onboard> = (data) => {
-    if (!isLastStep) return next;
-    //in case email fails idk y
+  //send data to db. TODO: tidy up function.
+  const onSubmit: SubmitHandler<onboard> = async (data) => {
+
+    const formData = new FormData();
+    formData.append('file', data.image);
+    formData.append('upload_preset', 'profile_picture');
     try {
-      onboardPush(data);
-      router.push("/home");
+      const imgData = await fetch('https://api.cloudinary.com/v1_1/drkrdyfdj/image/upload', { //TODO: Ensure this request is only sent once. User can press button multiple time to glitch it.
+        method: 'POST',
+        body: formData
+      }).then(res => res.json());
+
+      //Tidy code
+      const obj = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        bio: data.bio,
+        imageUrl: imgData.secure_url,
+        imgPublicId: imgData.publicId,
+        isOnboard: true
+      }
+      if (!isLastStep) return next;
+      //in case email fails idk y
+      onboardPush(obj);
+      router.replace("/home");
     } catch (e) {
       console.log(e);
     }

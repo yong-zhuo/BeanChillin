@@ -47,7 +47,9 @@ model User {
   bio           String?
   email         String?   @unique
   emailVerified DateTime?
-  image         String?
+  imageUrl      String?
+  imagePublicId String?
+  isOnboard     Boolean
   accounts      Account[]
   sessions      Session[]
 }

@@ -35,7 +35,9 @@ CREATE TABLE "User" (
     "bio" TEXT,
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
-    "image" TEXT,
+    "imageUrl" TEXT,
+    "imagePublicId" TEXT,
+    "isOnboard" BOOLEAN NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
