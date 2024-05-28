@@ -69,6 +69,7 @@ const ProfileForm = (props: ProfileProps) => {
               width={50}
               height={40}
               orientation="left"
+              action="button"
             />
           </div>
         </div>

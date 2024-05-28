@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const forgetSchema = z.object({forgetPassword: z.string().min(1,{message:"Email is required"})
+export const forgetSchema = z.object({email: z.string().min(1,{message:"Email is required"})
                                                       .email({message:"Email format is invalid"})
                                        });
 

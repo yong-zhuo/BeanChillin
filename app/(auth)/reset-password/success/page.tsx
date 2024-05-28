@@ -4,11 +4,19 @@ import Image from "next/image";
 import Logo from "@/components/common-ui/logo/Logo";
 import Button from "@/components/common-ui/button/Button";
 import { useRouter } from "next/navigation";
-export default function NotFound() {
+import { useEffect } from "react";
+export default function SuccessReset() {
   const router = useRouter();
+  
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/login");
+    }, 5000);
+  });
+
   const handleClick = () => {
     router.push("/login");
-  };
+  }
 
   return (
     <main className="flex min-h-screen flex-col overflow-hidden bg-[url('/patterns/pattern-light.png')]">
@@ -26,13 +34,11 @@ export default function NotFound() {
           />
         </div>
         <div className="mb-20 ml-8 flex flex-1 flex-col justify-start text-left">
-          <h2 className="text-5xl font-extrabold text-gray-900">Oops...</h2>
+          <h2 className="text-5xl font-extrabold text-gray-900">Your password has been updated.</h2>
           <p className="mt-2 text-left text-xl  text-gray-600">
-            Sorry, the page that you are looking for does not seem to exist
+            You will now be redirected to the login page where you can login again
           </p>
-          <p className="text-left text-xl  text-gray-600">
-            or has been removed
-          </p>
+        
           <div className="mt-auto w-1/4">
             <Button
               handleClick={handleClick}
@@ -41,8 +47,7 @@ export default function NotFound() {
               alt="arrow-left"
               width={20}
               height={20}
-              addClass="gap-2 bg-pri text-white hover:bg-slate-400"
-              orientation="left"
+              addClass="gap-2 bg-primary text-white hover:bg-slate-400"
             />
           </div>
         </div>

@@ -1,8 +1,14 @@
 import NavBar from "@/components/home/navbar/NavBar";
 
-const layout = () => {
+interface HomeLayoutProps {
+  children: React.ReactNode;
+}
+
+const layout = ({ children }: HomeLayoutProps) => {
   return (
-    <main className="h-screen bg-[url('/patterns/pattern-light.png')]"></main>
+    <main className="h-screen bg-[url('/patterns/pattern-light.png')]">
+      {children}
+    </main>
   );
 };
 
