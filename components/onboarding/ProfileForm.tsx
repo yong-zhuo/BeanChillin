@@ -64,18 +64,18 @@ const ProfileForm = (props: ProfileProps) => {
               addClass="bg-sec text-sec hover:bg-white border-2 border-pri items-center justify-center"
               handleClick={() => document.getElementById("File")?.click()}
               isCircular
-              src="/profile/edit.svg"
+              src="/profile/camera.svg"
               alt="Edit Profile Picture"
               width={50}
-              height={50}
+              height={40}
               orientation="left"
             />
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center">
-        <div className="w-3/4">
+      <div className="mt-10 flex justify-center">
+        <div className="w-2/5">
           {fields.map((field) => (
             <FormInput
               key={field.id}

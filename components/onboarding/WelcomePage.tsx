@@ -12,7 +12,7 @@ const WelcomePage = () => {
         paragraph="Start your journey now!"
       />
       <div className="flex justify-center">
-        <Image src="/onboarding/welcome.svg" alt="Welcome Image" height={450} width={450} />
+        <Image src="/onboarding/welcome.svg" alt="Welcome Image" height={480} width={480} />
       </div>
       <div className="flex items-center justify-center">
         <div className="flex w-1/2">

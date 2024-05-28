@@ -40,7 +40,7 @@ export default function Button(props: ButtonProps) {
             alt={props.alt}
             width={props.width}
             height={props.height}
-            {...props.isCircular && { className: "absolute inset-0 w-full h-full object-cover" }}
+            {...props.isCircular && { className: "absolute inset-0 w-4/5 h-4/5 m-auto object-contain" }}
           />
         )}
       <div className="overflow-hidden text-ellipsis whitespace-nowrap">
