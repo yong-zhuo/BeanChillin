@@ -26,13 +26,15 @@ const NavBar = () => {
     fetchUser();
   }, []);
 
+  
+
   return (
-    <div className="fixed inset-x-0 top-0 z-[10] h-fit border-b-2 border-pri bg-white py-2">
+    <div className="fixed inset-x-0 top-0 z-[10] h-fit border-b-2 border-pri bg-sec py-2">
       <div className="px-8 mx-auto flex h-full items-center justify-between gap-2 sm:max-w-7xl md:max-w-full ">
         <Image src="logo/logo.svg" alt="Logo" height={80} width={85} />
 
         <SearchBar />
-
+       
         {user ? <UserAccountNav user={user} /> : "User not Logged In"}
       </div>
     </div>

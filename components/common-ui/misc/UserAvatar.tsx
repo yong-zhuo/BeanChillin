@@ -20,6 +20,7 @@ const UserAvatar = ({ user, ...props }: UserProps) => {
             src={user.imageUrl}
             alt="Profile Picture"
             referrerPolicy="no-referrer"
+            fill
           />
         </div>
       ) : (

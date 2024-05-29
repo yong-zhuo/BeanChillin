@@ -11,7 +11,6 @@ import { User } from "@prisma/client";
 import React from "react";
 import Link from "next/link";
 import UserAvatar from "@/components/common-ui/misc/UserAvatar";
-import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 
 interface UserProps {
