@@ -10,7 +10,7 @@ import { forgetFields } from "@/constants/formFields";
 import { fieldState } from "@/types/formFieldsState";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
-import { sendReq } from "@/lib/users/SendRequest";
+import { sendReq } from "@/lib/mailing/SendRequest";
 
 //forget-password fields to be mapped
 const fields = forgetFields;

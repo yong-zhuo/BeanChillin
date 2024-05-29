@@ -10,7 +10,9 @@ import { resetFields } from "@/constants/formFields";
 import { fieldState } from "@/types/formFieldsState";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
-import { resetPassword } from "@/lib/users/ResetPassword";
+import { resetPassword } from "@/lib/mailing/ResetPassword";
+
+
 
 //reset password fields to be mapped
 const fields = resetFields;

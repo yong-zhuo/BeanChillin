@@ -31,7 +31,7 @@ export async function sendReq(data: forget) {
         }
     })
 
-    
+
 
     const messageData:mailMessage = {
         from: `beanchillin3@gmail.com`,

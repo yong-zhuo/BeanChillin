@@ -1,19 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import Logo from "@/components/common-ui/logo/Logo";
 import Button from "@/components/common-ui/button/Button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+
 export default function SuccessReset() {
   const router = useRouter();
-  /** 
+  
+  //auto push redirect user to login page after 7 seconds
   useEffect(() => {
     setTimeout(() => {
       router.push("/login");
     }, 7000);
   });
-*/
+
   const handleClick = () => {
     router.push("/login");
   };

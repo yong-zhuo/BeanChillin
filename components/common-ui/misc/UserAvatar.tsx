@@ -5,20 +5,19 @@ import {
 } from "@/components/common-ui/shadcn-ui/avatar";
 import Image from "next/image";
 import { AvatarProps } from "@radix-ui/react-avatar";
-import { User } from "next-auth";
+import { User } from "@prisma/client";
 
 interface UserProps extends AvatarProps {
-  user: Pick<User, "name" | "image">;
+  user: Pick<User, "name" | "imageUrl">;
 }
 
 const UserAvatar = ({ user, ...props }: UserProps) => {
   return (
     <Avatar {...props}>
-      {user.image ? (
+      {user.imageUrl ? (
         <div className="relative aspect-square h-full w-full">
           <Image
-            fill
-            src={user.image}
+            src={user.imageUrl}
             alt="Profile Picture"
             referrerPolicy="no-referrer"
           />

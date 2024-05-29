@@ -1,5 +1,7 @@
 import AuthCarousel from "@/components/user-auth/common-auth-ui/AuthCarousel";
 
+
+
 type AuthLayoutProps = {
   children: React.ReactNode;
 };
