@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 export const Oauth: NextAuthOptions = {
     session: {
         strategy: 'jwt',
-        maxAge: 60, //5 seconds. Set to 4 hours on production.
+        maxAge: 60 * 60, //5 seconds. Set to 4 hours on production.
         updateAge: 60 * 60, //1 hour
     },
     providers: [
