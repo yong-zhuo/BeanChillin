@@ -1,9 +1,11 @@
 'use server'
 
 import { getServerSession } from "next-auth";
-import { prisma } from "../prisma";
+import prisma from "../prisma";
 import { onboard } from "../schemas/onboardSchema";
 import { Oauth } from "./OAuth";
+import bcrypt from 'bcrypt'
+
 
 export async function onboardPush(data: any) {
     const { bio, imageUrl, firstName, lastName, imagePublicId, isOnboard } = data

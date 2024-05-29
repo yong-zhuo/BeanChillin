@@ -9,7 +9,6 @@ import {
   FieldErrors,
   UseFormRegister,
   UseFormSetValue,
-  UseFormGetValues,
 } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
 import { useState } from "react";
@@ -29,7 +28,7 @@ interface ProfileProps {
 }
 
 const ProfileForm = (props: ProfileProps) => {
-  
+
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
     if (file) {

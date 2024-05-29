@@ -54,13 +54,12 @@ const LoginForm = () => {
         throw new Error(result?.error?.toString());
       }
     } catch (e) {
-      console.log(e);
       toast({
         variant: "destructive",
         title: "Invalid email and password",
         description:
           "Please try again or register a new account if you have not done so.",
-          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
+        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
       });
     }
   };

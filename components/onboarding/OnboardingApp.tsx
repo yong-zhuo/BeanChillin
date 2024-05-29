@@ -11,9 +11,15 @@ import { onboard, onboardSchema } from "@/lib/schemas/onboardSchema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Stepper from "./Stepper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import IsOnboard from "@/lib/users/IsOnboard";
+import cloudinaryUpload from "@/lib/cloudinary/CloudinaryUpload";
 
 export default function OnboardingApp() {
+  const router = useRouter();
+  useEffect(() => {
+    IsOnboard();
+  }, []);
   //zod validation for onboarding
   const {
     register,
@@ -35,27 +41,20 @@ export default function OnboardingApp() {
       <WelcomePage key={2} />,
     ]);
 
-  const router = useRouter();
-
   //send data to db. TODO: tidy up function.
   const onSubmit: SubmitHandler<onboard> = async (data) => {
-
-    const formData = new FormData();
-    formData.append('file', data.image);
-    formData.append('upload_preset', 'profile_picture');
     try {
-      const imgData = await fetch('https://api.cloudinary.com/v1_1/drkrdyfdj/image/upload', { //TODO: Ensure this request is only sent once. User can press button multiple time to glitch it.
-        method: 'POST',
-        body: formData
-      }).then(res => res.json());
-
+      let res;
+      if (data.image !== undefined) {
+        res = await cloudinaryUpload(data.image);
+      }
       //Tidy code
       const obj = {
         firstName: data.firstName,
         lastName: data.lastName,
         bio: data.bio,
-        imageUrl: imgData.secure_url,
-        imgPublicId: imgData.publicId,
+        imageUrl: res?.imageUrl as string | null,
+        imgPublicId: res?.imgPublicId as string | null,
         isOnboard: true
       }
       if (!isLastStep) return next;
@@ -111,3 +110,5 @@ export default function OnboardingApp() {
     </div>
   );
 }
+
+
