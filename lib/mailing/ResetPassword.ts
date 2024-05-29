@@ -1,7 +1,7 @@
 'use server'
 
 import { hash } from "bcrypt";
-import { prisma } from "../prisma";
+import prisma  from "../prisma";
 import { reset } from "../schemas/resetSchema";
 import { redirect } from "next/navigation";
 
