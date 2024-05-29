@@ -11,7 +11,7 @@ interface HomeLayoutProps {
 
 const layout = ({ children }: HomeLayoutProps) => {
   return (
-    <main className="min-h-screen bg-[url('/patterns/pattern-light.png pt-16')]">
+    <main className="min-h-screen bg-[url('/patterns/pattern-light.png')]">
       <NavBar />
       {children}
     </main>
