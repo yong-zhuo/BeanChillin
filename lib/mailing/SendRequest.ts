@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from "../prisma";
+import prisma from "../prisma";
 import { randomUUID } from "crypto";
 import { mailMessage,sendMail } from "./MailService";
 import { forget } from "../schemas/forgetSchema";
