@@ -40,16 +40,27 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  password      String
-  signinType    Boolean
-  bio           String?
-  email         String?   @unique
-  emailVerified DateTime?
-  imageUrl      String?
-  imagePublicId String?
-  isOnboard     Boolean
-  accounts      Account[]
-  sessions      Session[]
+  id                  String               @id @default(cuid())
+  name                String?
+  password            String
+  signinType          Boolean
+  bio                 String?
+  email               String?              @unique
+  emailVerified       DateTime?
+  imageUrl            String?
+  imagePublicId       String?
+  isOnboard           Boolean
+  passwordResetTokens PasswordResetToken[]
+  accounts            Account[]
+  sessions            Session[]
+}
+
+model PasswordResetToken {
+  id        Int       @id @default(autoincrement())
+  token     String    @unique
+  createdAt DateTime  @default(now())
+  resetAt   DateTime?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }

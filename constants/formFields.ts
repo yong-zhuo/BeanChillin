@@ -50,10 +50,29 @@ const signupFields = [
 const forgetFields = [
     {
         labelText: "Email",
-        id:"forgetPassword",
-        name:"forgetPassword",
+        id:"email",
+        name:"email",
         type:"email",
         placeholder:"bean@chillin.com",
+        forRegister: true
+    }
+]
+
+const resetFields = [
+    {
+        labelText: "Password",
+        id: "password",
+        name: "password",
+        type: "password",
+        placeholder: "Enter password",
+        forRegister: true
+    },
+    {
+        labelText: "Confirm Password",
+        id: "confirm",
+        name: "confirm",
+        type: "password",
+        placeholder: "Confirm password",
         forRegister: true
     }
 ]
@@ -90,4 +109,4 @@ const bioFields = [
     },
 ]
 
-export { loginFields, signupFields, forgetFields, profileFields, bioFields }
+export { loginFields, signupFields, forgetFields, profileFields, bioFields, resetFields }

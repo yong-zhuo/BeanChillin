@@ -1,11 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import Logo from "@/components/common-ui/logo/Logo";
 import Button from "@/components/common-ui/button/Button";
 import { useRouter } from "next/navigation";
-export default function NotFound() {
+import { useEffect } from "react";
+
+
+export default function SuccessReset() {
   const router = useRouter();
+  
+  //auto push redirect user to login page after 7 seconds
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/login");
+    }, 7000);
+  });
+
   const handleClick = () => {
     router.push("/login");
   };
@@ -16,23 +26,16 @@ export default function NotFound() {
         <Logo src="/logo/logo.svg" width={200} height={200} className="mt-3" />
       </div>
       <div className="mx-auto mb-20 flex flex-1 items-center justify-between">
-        <div className="flex h-4/5 w-4/5 flex-1">
-          <Image
-            src="/not-found/404.svg"
-            alt="404"
-            height={700}
-            width={700}
-            className="object-contain"
-          />
-        </div>
         <div className="mb-20 ml-8 flex flex-1 flex-col justify-start text-left">
-          <h2 className="text-5xl font-extrabold text-gray-900">Oops...</h2>
+            
+          <h2 className="text-5xl font-extrabold text-gray-900">
+            Your password has been updated.
+          </h2>
           <p className="mt-2 text-left text-xl  text-gray-600">
-            Sorry, the page that you are looking for does not seem to exist
+            You will now be redirected to the login page where you can login
+            again
           </p>
-          <p className="text-left text-xl  text-gray-600">
-            or has been removed
-          </p>
+
           <div className="mt-auto w-1/4">
             <Button
               handleClick={handleClick}
