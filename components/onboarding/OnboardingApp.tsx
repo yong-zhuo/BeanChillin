@@ -27,7 +27,7 @@ export default function OnboardingApp() {
     setValue,
     formState: { errors },
   } = useForm<onboard>({
-    defaultValues: { firstName: "", lastName: "", image: undefined, bio: "" },
+    defaultValues: { firstName: "Random", lastName: "User", image: undefined, bio: "Hi" },
     resolver: zodResolver(onboardSchema),
   });
 
