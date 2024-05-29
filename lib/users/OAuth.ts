@@ -1,13 +1,13 @@
 import GoogleProvider from 'next-auth/providers/google'
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from '../prisma';
+import prisma from '../prisma';
 import bcrypt from 'bcrypt'
 
 export const Oauth: NextAuthOptions = {
     session: {
         strategy: 'jwt',
-        maxAge: 60 * 60, //5 seconds. Set to 4 hours on production.
+        maxAge: 60, //5 seconds. Set to 4 hours on production.
         updateAge: 60 * 60, //1 hour
     },
     providers: [
@@ -71,14 +71,28 @@ export const Oauth: NextAuthOptions = {
             }
 
             if (account.provider === "google") {
+                const generator = require('generate-password');
+                const password = generator.generate({
+                    length: 32,
+                    numbers: true
+                });
+
+                await prisma.user.upsert({
+                    where: {
+                        email: profile.email
+                    },
+                    update: {},
+                    create: {
+                        name: "",
+                        email: profile.email,
+                        password: await bcrypt.hash(password, 4),
+                        signinType: false,
+                        isOnboard: true
+                    },
+                });
                 return profile.email && profile?.email.endsWith("@gmail.com");
             }
-
-
             return false;
         },
-
     }
-
-
 }

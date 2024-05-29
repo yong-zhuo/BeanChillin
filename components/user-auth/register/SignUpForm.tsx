@@ -11,6 +11,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, type signup } from "@/lib/schemas/signupSchema";
 import { signIn } from "next-auth/react";
+import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 //signup fields to be mapped
 const fields = signupFields;
@@ -18,6 +20,9 @@ let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const SignUpForm = () => {
+  //to use shadcn-ui toast
+  const { toast } = useToast();
+
   //zod validation for signup
   const {
     register,
@@ -40,7 +45,13 @@ const SignUpForm = () => {
         callbackUrl: "/onboard",
       });
     } catch (e) {
-      alert(e);
+      toast({
+        variant: "destructive",
+        title: "Email has already exist!",
+        description:
+          "Please register with another email or login with the existing email.",
+        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
+      });
     }
     //TODO: #23 Email exist error handling
   };
