@@ -15,11 +15,13 @@ import { useEffect, useState } from "react";
 import IsOnboard from "@/lib/users/IsOnboard";
 import cloudinaryUpload from "@/lib/cloudinary/CloudinaryUpload";
 import { set } from "zod";
+import { useSession } from "next-auth/react";
+import getinfo from "@/lib/cloudinary/getinfo";
 
 export default function OnboardingApp() {
 
   const [isloading, setIsLoading] = useState(false);
-
+  const { data: session } = useSession();
 
   //check if user onboarded
   const router = useRouter();
@@ -45,7 +47,7 @@ export default function OnboardingApp() {
     useMultistepForm([
       <ProfileForm key={0} register={register} errors={errors} setValue={setValue} imageUrl={imageUrl} setImageUrl={setImageUrl} />,
       <BioForm key={1} register={register} errors={errors} />,
-      <WelcomePage key={2} state={isloading}/>,
+      <WelcomePage key={2} state={isloading} />,
     ]);
 
   //send data to db. TODO: tidy up function.
@@ -53,16 +55,16 @@ export default function OnboardingApp() {
     setIsLoading(true);
     try {
       let res;
+      const info = await getinfo();
       if (data.image !== undefined) {
-        res = await cloudinaryUpload(data.image);
+        cloudinaryUpload(data.image, info);
       }
       //Tidy code
       const obj = {
         firstName: data.firstName,
         lastName: data.lastName,
         bio: data.bio,
-        imageUrl: res?.imageUrl as string | null,
-        imgPublicId: res?.imgPublicId as string | null,
+        email: info.email,
         isOnboard: true
       }
       if (!isLastStep) return next;
