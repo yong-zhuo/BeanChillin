@@ -71,26 +71,38 @@ export const Oauth: NextAuthOptions = {
             }
 
             if (account.provider === "google") {
-                const generator = require('generate-password');
-                const password = generator.generate({
-                    length: 32,
-                    numbers: true
-                });
+                if (!profile.email || !profile.email.endsWith("@gmail.com")) {
+                    return false;
+                }
+                try {
+                    //if user is in database, can send user to login page
+                    const res = await prisma.user.findFirst({
+                        where: { email: profile.email }
+                    })
+                    if (res !== null) {
+                        return true;
+                    }
+                    const generator = require('generate-password');
+                    const password = generator.generate({
+                        length: 32,
+                        numbers: true
+                    });
 
-                await prisma.user.upsert({
-                    where: {
-                        email: profile.email
-                    },
-                    update: {},
-                    create: {
-                        name: "",
-                        email: profile.email,
-                        password: await bcrypt.hash(password, 4),
-                        signinType: false,
-                        isOnboard: true
-                    },
-                });
-                return profile.email && profile?.email.endsWith("@gmail.com");
+                    //If user is not in database, need to create info first
+                    const isCreate = await prisma.user.create({
+                        data: {
+                            name: profile?.name,
+                            email: profile.email,
+                            imageUrl: profile.image,
+                            password: await bcrypt.hash(password, 4),
+                            signinType: false,
+                            isOnboard: true
+                        },
+                    });
+                    return true;
+                } catch (e) {
+                    throw new Error();
+                }
             }
             return false;
         },
