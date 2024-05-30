@@ -52,13 +52,11 @@ export default function OnboardingApp() {
 
   //send data to db. TODO: tidy up function.
   const onSubmit: SubmitHandler<onboard> = async (data) => {
+    if (!isLastStep) return next;
     setIsLoading(true);
     try {
-      let res;
       const info = await getinfo();
-      if (data.image !== undefined) {
-        cloudinaryUpload(data.image, info);
-      }
+
       //Tidy code
       const obj = {
         firstName: data.firstName,
@@ -67,9 +65,11 @@ export default function OnboardingApp() {
         email: info.email,
         isOnboard: true
       }
-      if (!isLastStep) return next;
-      //in case email fails idk y
-      onboardPush(obj);
+
+      await Promise.all([
+        cloudinaryUpload(data.image, info),
+        onboardPush(obj)
+      ]);
       router.replace("/home");
     } catch (e) {
       console.log(e);
