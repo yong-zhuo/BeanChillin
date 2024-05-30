@@ -54,7 +54,7 @@ const ForgetForm = () => {
       setIsLoading(false);
     }
     sendReq(data);
-    router.push('/forget-password/success');
+    
   };
   return (
     <>
