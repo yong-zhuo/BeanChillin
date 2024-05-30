@@ -2,7 +2,7 @@
 
 import prisma from "../prisma";
 import { randomUUID } from "crypto";
-import { mailMessage,sendMail } from "./MailService";
+import { mailMessage, sendMail } from "./MailService";
 import { forget } from "../schemas/forgetSchema";
 import { redirect } from "next/navigation";
 
@@ -11,13 +11,14 @@ const PROTOCOL = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 
 export async function sendReq(data: forget) {
     const email = data.email
+    //CLEANUP: Dont need checks as there is mailAuth
     //if email is undefined
     if (!email || typeof email !== 'string') {
         throw new Error("Invalid email");
     }
 
     const user = await prisma.user.findUnique({
-        where: {email},
+        where: { email },
     })
 
     if (!user) {
@@ -31,9 +32,7 @@ export async function sendReq(data: forget) {
         }
     })
 
-
-
-    const messageData:mailMessage = {
+    const messageData: mailMessage = {
         from: `beanchillin3@gmail.com`,
         to: email,
         subject: 'Reset Password Request',
@@ -42,10 +41,8 @@ export async function sendReq(data: forget) {
     For security reasons, this link is only valid for four hours.
         
     If you did not request this reset, please ignore this email.`,
-      }
+    }
 
     await sendMail(messageData);
     redirect('/forget-password/success');
-
-    
 }

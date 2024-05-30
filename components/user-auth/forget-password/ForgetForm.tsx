@@ -12,6 +12,7 @@ import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { sendReq } from "@/lib/mailing/SendRequest";
 import { useState } from "react";
+import mailAuth from "@/lib/mailing/mailAuth";
 
 //forget-password fields to be mapped
 const fields = forgetFields;
@@ -37,7 +38,8 @@ const ForgetForm = () => {
     setIsLoading(true);
     //send request for resetting password
     try {
-      await sendReq(data);
+      await mailAuth(data);
+      sendReq(data);
     } catch (e: any) {
       console.log(e);
       toast({
