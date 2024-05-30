@@ -11,6 +11,7 @@ import { fieldState } from "@/types/formFieldsState";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { resetPassword } from "@/lib/mailing/ResetPassword";
+import { useState } from "react";
 
 //reset password fields to be mapped
 const fields = resetFields;
@@ -18,6 +19,10 @@ let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const ResetForm = ({ params }: { params: { token: string } }) => {
+
+  //loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   //to use shadcn-ui toast
   const { toast } = useToast();
 
@@ -30,6 +35,7 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
 
   //submit handler for forget-password
   const onSubmit: SubmitHandler<reset> = async (data): Promise<void> => {
+    setIsLoading(true);
     //reset password
     try {
       await resetPassword(params.token, data);
@@ -42,6 +48,7 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
           action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
         });
       }
+      setIsLoading(false);
     }
   };
   return (
@@ -71,6 +78,9 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
             action="submit"
             text="Reset Password"
             addClass=" text-white bg-pri hover:bg-slate-400"
+            state={isLoading}
+            height={20}
+            width={20}
           />
         </div>
       </form>

@@ -1,10 +1,13 @@
-"use client";
+
 import Button from "@/components/common-ui/button/Button";
 import Header from "../common-ui/form/Header";
 import Image from "next/image";
 
+interface WelcomeProps {
+  state:boolean
+}
 
-const WelcomePage = () => {
+const WelcomePage = ({state}:WelcomeProps) => {
   return (
     <div>
       <Header
@@ -25,6 +28,7 @@ const WelcomePage = () => {
             width={20}
             height={20}
             orientation="left"
+            state={state}
           />
         </div>
       </div>

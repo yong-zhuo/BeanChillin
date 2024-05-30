@@ -13,6 +13,7 @@ import { signupSchema, type signup } from "@/lib/schemas/signupSchema";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
+import { useState } from "react";
 
 //signup fields to be mapped
 const fields = signupFields;
@@ -20,6 +21,9 @@ let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const SignUpForm = () => {
+
+  const [isLoading, setIsLoading] = useState(false);
+
   //to use shadcn-ui toast
   const { toast } = useToast();
 
@@ -33,6 +37,7 @@ const SignUpForm = () => {
   //reroute user to onboarding page upon successful signup
   const router = useRouter();
   const onSubmit: SubmitHandler<signup> = async (data) => {
+    setIsLoading(true);
     try {
       const res = (await CreateAccount(data)) as string;
       if (res !== "ok") {
@@ -52,8 +57,8 @@ const SignUpForm = () => {
           "Please register with another email or login with the existing email.",
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
       });
+      setIsLoading(false);
     }
-    //TODO: #23 Email exist error handling
   };
 
   return (
@@ -84,6 +89,9 @@ const SignUpForm = () => {
             text="Create Account"
             action="submit"
             addClass=" text-white bg-pri hover:bg-slate-400"
+            state={isLoading}
+            height={20}
+            width={20}
           />
         </div>
       </form>

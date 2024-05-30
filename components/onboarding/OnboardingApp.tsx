@@ -14,12 +14,19 @@ import Stepper from "./Stepper";
 import { useEffect, useState } from "react";
 import IsOnboard from "@/lib/users/IsOnboard";
 import cloudinaryUpload from "@/lib/cloudinary/CloudinaryUpload";
+import { set } from "zod";
 
 export default function OnboardingApp() {
+
+  const [isloading, setIsLoading] = useState(false);
+
+
+  //check if user onboarded
   const router = useRouter();
   useEffect(() => {
     IsOnboard();
   }, []);
+
   //zod validation for onboarding
   const {
     register,
@@ -38,11 +45,12 @@ export default function OnboardingApp() {
     useMultistepForm([
       <ProfileForm key={0} register={register} errors={errors} setValue={setValue} imageUrl={imageUrl} setImageUrl={setImageUrl} />,
       <BioForm key={1} register={register} errors={errors} />,
-      <WelcomePage key={2} />,
+      <WelcomePage key={2} state={isloading}/>,
     ]);
 
   //send data to db. TODO: tidy up function.
   const onSubmit: SubmitHandler<onboard> = async (data) => {
+    setIsLoading(true);
     try {
       let res;
       if (data.image !== undefined) {
@@ -63,6 +71,7 @@ export default function OnboardingApp() {
       router.replace("/home");
     } catch (e) {
       console.log(e);
+      setIsLoading(false);
     }
   };
 

@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type login } from "@/lib/schemas/loginSchema";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
+import { useState } from "react";
 
 //login fields to be mapped
 const fields = loginFields;
@@ -23,6 +24,9 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 
 const LoginForm = () => {
+
+  const [isLoading, setIsLoading] = useState(false);
+
   //zod validation for login
   const {
     register,
@@ -43,6 +47,7 @@ const LoginForm = () => {
   //if login credentials match, send users to home
   //else throw an error and display toast
   const onSubmit: SubmitHandler<login> = async (data) => {
+    setIsLoading(true);
     try {
       const result = await signIn("credentials", {
         email: data.email,
@@ -61,6 +66,7 @@ const LoginForm = () => {
           "Please try again or register a new account if you have not done so.",
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
       });
+      setIsLoading(false);
     }
   };
 
@@ -101,6 +107,9 @@ const LoginForm = () => {
             text="Sign In"
             action="submit"
             addClass="text-white bg-pri hover:bg-slate-400"
+            state={isLoading}
+            height={20}
+            width={20}
           />
         </div>
         <Divider text="or" borderColor="border-pri" textColor="pri" />

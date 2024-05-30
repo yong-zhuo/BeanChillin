@@ -11,6 +11,7 @@ import { fieldState } from "@/types/formFieldsState";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { sendReq } from "@/lib/mailing/SendRequest";
+import { useState } from "react";
 
 //forget-password fields to be mapped
 const fields = forgetFields;
@@ -18,6 +19,9 @@ let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const ForgetForm = () => {
+  //loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   //to use shadcn-ui toast
   const { toast } = useToast();
 
@@ -26,22 +30,23 @@ const ForgetForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<forget>({ resolver: zodResolver(forgetSchema)});
+  } = useForm<forget>({ resolver: zodResolver(forgetSchema) });
 
   //submit handler for forget-password
   const onSubmit: SubmitHandler<forget> = async (data): Promise<void> => {
+    setIsLoading(true);
     //send request for resetting password
     try {
       await sendReq(data);
     } catch (e: any) {
-        console.log(e)
-        toast({
-          variant: "destructive",
-          title: `Error sending reset link`,
-          description: `${e.message}`,
-          action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
-        });
-      
+      console.log(e);
+      toast({
+        variant: "destructive",
+        title: `Error sending reset link`,
+        description: `${e.message}`,
+        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+      });
+      setIsLoading(false);
     }
   };
   return (
@@ -71,6 +76,9 @@ const ForgetForm = () => {
             action="submit"
             text="Email me the link"
             addClass=" text-white bg-pri hover:bg-slate-400"
+            state={isLoading}
+            height={20}
+            width={20}
           />
         </div>
       </form>

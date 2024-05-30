@@ -12,6 +12,7 @@ interface ButtonProps {
   height?: number;
   orientation?: "left" | "right";
   isCircular?: boolean;
+  state?: boolean
 }
 
 const buttonClass = "group shadow relative  flex justify-center border border-transparent text-sm font-medium py-2 px-4 mt-9";
@@ -30,34 +31,39 @@ export default function Button(props: ButtonProps) {
       className={classes}
       onClick={props.handleClick}
     >
-      {props.alt &&
-        props.src &&
-        props.width &&
-        props.height &&
-        props.orientation === "left" && (
-          <Image
-            src={props.src}
-            alt={props.alt}
-            width={props.width}
-            height={props.height}
-            {...props.isCircular && { className: "absolute inset-0 w-4/5 h-4/5 m-auto object-contain" }}
-          />
-        )}
-      <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-        {props.text}
-      </div>
-      {props.alt &&
-        props.src &&
-        props.width &&
-        props.height &&
-        props.orientation === "right" && (
-          <Image
-            src={props.src}
-            alt={props.alt}
-            width={props.width}
-            height={props.height}
-          />
-        )}
+      {props.state ? (<Image src="/misc/spinner.svg" alt="loading" height={props.height} width={props.width}/>) : (
+        <>
+          {props.alt &&
+            props.src &&
+            props.width &&
+            props.height &&
+            props.orientation === "left" && (
+              <Image
+                src={props.src}
+                alt={props.alt}
+                width={props.width}
+                height={props.height}
+                {...props.isCircular && { className: "absolute inset-0 w-4/5 h-4/5 m-auto object-contain" }}
+              />
+            )}
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+            {props.text}
+          </div>
+          {props.alt &&
+            props.src &&
+            props.width &&
+            props.height &&
+            props.orientation === "right" && (
+              <Image
+                src={props.src}
+                alt={props.alt}
+                width={props.width}
+                height={props.height}
+              />
+            )}
+        </>
+      )}
+      
     </button>
   );
 }
