@@ -6,8 +6,11 @@ interface Info {
   email: string,
   public_id: string
 }
-export default async function cloudinaryUpload(file: File, info: Info) {
+export default async function cloudinaryUpload(file: File | undefined, info: Info) {
 
+  if (file === undefined) {
+    return;
+  }
   const form = new FormData();
   form.append('file', file);
   form.append('public_id', `${info.public_id}`);
