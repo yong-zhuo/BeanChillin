@@ -13,6 +13,8 @@ import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { sendReq } from "@/lib/mailing/SendRequest";
 import { useState } from "react";
 import mailAuth from "@/lib/mailing/mailAuth";
+import { useRouter } from "next/navigation";
+
 
 //forget-password fields to be mapped
 const fields = forgetFields;
@@ -20,6 +22,7 @@ let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 const ForgetForm = () => {
+  const router = useRouter();
   //loading state
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,10 +39,10 @@ const ForgetForm = () => {
   //submit handler for forget-password
   const onSubmit: SubmitHandler<forget> = async (data): Promise<void> => {
     setIsLoading(true);
+    
     //send request for resetting password
     try {
       await mailAuth(data);
-      sendReq(data);
     } catch (e: any) {
       console.log(e);
       toast({
@@ -50,6 +53,8 @@ const ForgetForm = () => {
       });
       setIsLoading(false);
     }
+    sendReq(data);
+    router.push('/forget-password/success');
   };
   return (
     <>

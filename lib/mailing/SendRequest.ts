@@ -4,7 +4,7 @@ import prisma from "../prisma";
 import { randomUUID } from "crypto";
 import { mailMessage, sendMail } from "./MailService";
 import { forget } from "../schemas/forgetSchema";
-import { redirect } from "next/navigation";
+
 
 const DOMAIN = process.env.DOMAIN || 'localhost:3000';
 const PROTOCOL = process.env.NODE_ENV === 'production' ? 'https' : 'http';
@@ -44,5 +44,5 @@ export async function sendReq(data: forget) {
     }
 
     await sendMail(messageData);
-    redirect('/forget-password/success');
+    
 }
