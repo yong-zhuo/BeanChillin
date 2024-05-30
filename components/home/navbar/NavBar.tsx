@@ -35,7 +35,7 @@ const NavBar = () => {
 
         <SearchBar />
        
-        {user ? <UserAccountNav user={user} /> : "User not Logged In"}
+        {user ? <UserAccountNav user={user} /> : <Image src="/misc/loading.svg" alt="loading" height={50} width={50} /> }
       </div>
     </div>
   );
