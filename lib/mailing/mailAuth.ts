@@ -5,8 +5,9 @@ import { forget } from "../schemas/forgetSchema";
 
 export default async function mailAuth(data: forget) {
     const email = data.email
+
     //if email is undefined
-    if (!email || typeof email !== 'string') {
+    if (!email || typeof email !== 'string' || email === '') {
         throw new Error("Invalid email");
     }
 
