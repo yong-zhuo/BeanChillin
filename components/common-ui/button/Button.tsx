@@ -30,6 +30,7 @@ export default function Button(props: ButtonProps) {
       type={props.action}
       className={classes}
       onClick={props.handleClick}
+      data-testid={props.text}
     >
       {props.state ? (<Image src="/misc/spinner.svg" alt="loading" height={props.height} width={props.width}/>) : (
         <>

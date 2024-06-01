@@ -48,6 +48,7 @@ const FormInput = <T extends fieldState>({
 
       <div className="mb-7">
         <input
+          data-testid={id}
           placeholder={placeholder}
           className={`${fixedInputClass} ${addClass || ""}`}
           type={type}
