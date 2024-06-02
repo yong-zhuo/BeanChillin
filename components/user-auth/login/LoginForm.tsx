@@ -106,7 +106,7 @@ const LoginForm = () => {
           <Button
             text="Sign In"
             action="submit"
-            addClass="text-white bg-pri hover:bg-slate-400"
+            addClass="text-white bg-pri shadow hover:bg-slate-400"
             state={isLoading}
             height={20}
             width={20}

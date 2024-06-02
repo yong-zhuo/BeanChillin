@@ -77,7 +77,7 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
           <Button
             action="submit"
             text="Reset Password"
-            addClass=" text-white bg-pri hover:bg-slate-400"
+            addClass=" text-white bg-pri hover:bg-slate-400 shadow"
             state={isLoading}
             height={20}
             width={20}

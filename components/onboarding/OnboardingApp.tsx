@@ -39,7 +39,7 @@ export default function OnboardingApp() {
     resolver: zodResolver(onboardSchema),
   });
 
-  const [imageUrl, setImageUrl] = useState<string>("/profile/default.jpg");
+  const [imageUrl, setImageUrl] = useState<string>("/profile/avatar.svg");
 
   //custom hook to change and track steps in multi-step form
   const { steps, StepIndex, step, next, back, isFirstStep, isLastStep } =
@@ -93,7 +93,7 @@ export default function OnboardingApp() {
             <Button
               handleClick={back}
               text="Back"
-              addClass="text-sec bg-pri hover:bg-slate-500 gap-1"
+              addClass="text-sec bg-pri hover:bg-slate-500 gap-1 shadow"
               src="/misc/arrow-left.svg"
               alt="arrow-left"
               width={20}
@@ -105,7 +105,7 @@ export default function OnboardingApp() {
         {!isLastStep && (
           <div className="ml-auto">
             <Button
-              addClass="bg-pri text-sec hover:bg-slate-500 gap-1"
+              addClass="bg-pri text-sec hover:bg-slate-500 gap-1 shadow"
               handleClick={next}
               text="Next"
               src="/misc/arrow-right.svg"

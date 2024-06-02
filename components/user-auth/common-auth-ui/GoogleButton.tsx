@@ -12,7 +12,7 @@ const GoogleButton = () => {
       alt="Google"
       height={20}
       width={20}
-      addClass="bg-white text-primary hover:bg-gray-400 gap-2"
+      addClass="bg-white text-primary hover:bg-gray-400 gap-2 shadow"
       orientation="left"
     />
   );

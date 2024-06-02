@@ -15,7 +15,7 @@ interface ButtonProps {
   state?: boolean
 }
 
-const buttonClass = "group shadow relative  flex justify-center border border-transparent text-sm font-medium py-2 px-4 mt-9";
+const buttonClass = "group relative  flex justify-center border border-transparent text-sm font-medium py-2 px-4 mt-9";
 
 const squareButton = cn("rounded-md w-full", buttonClass);
 
@@ -31,6 +31,7 @@ export default function Button(props: ButtonProps) {
       className={classes}
       onClick={props.handleClick}
       data-testid={props.text}
+      disabled={props.state}
     >
       {props.state ? (<Image src="/misc/spinner.svg" alt="loading" height={props.height} width={props.width}/>) : (
         <>

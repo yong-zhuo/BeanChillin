@@ -82,7 +82,7 @@ const ForgetForm = () => {
           <Button
             action="submit"
             text="Email me the link"
-            addClass=" text-white bg-pri hover:bg-slate-400"
+            addClass=" text-white bg-pri hover:bg-slate-400 shadow"
             state={isLoading}
             height={20}
             width={20}
