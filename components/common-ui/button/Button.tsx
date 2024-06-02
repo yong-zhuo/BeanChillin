@@ -30,6 +30,7 @@ export default function Button(props: ButtonProps) {
       type={props.action}
       className={classes}
       onClick={props.handleClick}
+      disabled={props.state}
     >
       {props.state ? (<Image src="/misc/spinner.svg" alt="loading" height={props.height} width={props.width}/>) : (
         <>

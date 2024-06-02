@@ -18,7 +18,7 @@ const layout = ({ children }: HomeLayoutProps) => {
       <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')]">
         <NavBar />
         <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
-          <section className="max-w-8xl mx-auto flex h-full w-full border-2 ">
+          <section className="max-w-8xl mx-auto flex h-full w-full ">
             <LeftSideBar />
             <div className="h-full w-full overflow-auto p-3">{children}</div>
             <RightSideBar />
