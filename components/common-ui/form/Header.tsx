@@ -27,7 +27,7 @@ export default function Header(props: HeaderProps) {
       <h2 className="text-center text-3xl font-extrabold text-gray-700">
         {props.heading}
       </h2>
-      <p className="mt-2 text-center text-sm text-gray-500">
+      <p className="mt-2 text-center text-lg text-gray-500">
         {props.paragraph}{" "}
         {props.linkUrl && props.linkName && (
           <Link

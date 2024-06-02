@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Loading from "@/components/common-ui/misc/Loading";
 
 export default function Root() {
   const router = useRouter();
@@ -14,4 +15,6 @@ export default function Root() {
       router.push("/home");
     }
   }, []);
+
+  return <Loading />;
 }

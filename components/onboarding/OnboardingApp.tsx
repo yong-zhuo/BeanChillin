@@ -14,7 +14,6 @@ import Stepper from "./Stepper";
 import { useEffect, useState } from "react";
 import IsOnboard from "@/lib/users/IsOnboard";
 import cloudinaryUpload from "@/lib/cloudinary/CloudinaryUpload";
-import { set } from "zod";
 import { useSession } from "next-auth/react";
 import getinfo from "@/lib/cloudinary/getinfo";
 
@@ -24,10 +23,11 @@ export default function OnboardingApp() {
   const { data: session } = useSession();
 
   //check if user onboarded
+ 
   const router = useRouter();
   useEffect(() => {
     IsOnboard();
-  }, []);
+  }, []); 
 
   //zod validation for onboarding
   const {
