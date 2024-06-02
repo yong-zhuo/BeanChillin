@@ -24,7 +24,7 @@ const UserAccountNav = ({ user }: UserProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none focus:ring-0">
         <UserAvatar
-          className="h-12 w-12 border-2 border-pri cursor-pointer focus:outline-none focus:ring-0"
+          className="h-12 w-12 border-2  border-pri cursor-pointer focus:outline-none focus:ring-0 hover:ring-2 ring-pri"
           user={{ name: user.name || null, imageUrl: user.imageUrl || null }}
         />
       </DropdownMenuTrigger>

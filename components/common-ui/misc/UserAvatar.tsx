@@ -25,7 +25,12 @@ const UserAvatar = ({ user, ...props }: UserProps) => {
         </div>
       ) : (
         <AvatarFallback>
-          <span className="sr-only">{user?.name}</span>
+          <Image
+            src="/profile/avatar.svg"
+            alt="Profile Picture"
+            referrerPolicy="no-referrer"
+            fill
+          />
         </AvatarFallback>
       )}
     </Avatar>

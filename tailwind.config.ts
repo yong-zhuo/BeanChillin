@@ -19,6 +19,7 @@ const config = {
       },
     },
     extend: {
+      maxWidth: {'8xl': '120rem'},
       colors: {
         'pri': '#4D869C',
         'sec': '#EEF7FF',

@@ -44,7 +44,7 @@ export default function ResetSuccess() {
               alt="arrow-left"
               width={20}
               height={20}
-              addClass="gap-2 bg-pri text-white hover:bg-slate-400"
+              addClass="gap-2 bg-pri text-white hover:bg-slate-400 shadow"
               orientation="left"
             />
           </div>
