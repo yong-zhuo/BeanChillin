@@ -3,7 +3,7 @@ import TabsCard from "./TabsCard";
 
 const LeftSideBar = () => {
   return (
-    <div className="flex justify-start space-y-16 flex-col w-1/5 mt-10 pt-12">
+    <div className="hidden md:block justify-start space-y-16 flex-col w-1/4 mt-10 pt-12">
       <ProfileCard />
       <TabsCard/>
     </div>

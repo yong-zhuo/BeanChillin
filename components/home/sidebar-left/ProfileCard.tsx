@@ -11,6 +11,7 @@ import {
 import { UserContext } from "../UserContext";
 import { useContext } from "react";
 import Image from "next/image";
+import { Separator } from "@/components/common-ui/shadcn-ui/separator";
 
 const ProfileCard = () => {
   const { user } = useContext(UserContext);
@@ -22,7 +23,7 @@ const ProfileCard = () => {
           {user ? (
             <div className="flex items-center">
                 <UserAvatar
-                className="h-20 w-20"
+                className="h-20 w-20 border-2 border-pri"
                   user={{
                     name: user.name || null,
                     imageUrl: user.imageUrl || null,
@@ -42,6 +43,7 @@ const ProfileCard = () => {
             </div>
           )}
         </CardTitle>
+        <Separator className="bg-pri"/>
       </CardHeader>
     </Card>
   );
