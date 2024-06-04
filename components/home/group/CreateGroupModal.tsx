@@ -87,7 +87,7 @@ const CreateGroupModal = () => {
           <Button
             text="New Group"
             action="button"
-            addClass="shadow bg-pri text-sec mt-2 mb-2 hover:bg-slate-500"
+            addClass="shadow bg-pri text-sec mt-2 mb-2 hover:bg-slate-500 "
             handleClick={() => setOpen(true)}
           />
         </DialogTrigger>
@@ -137,14 +137,15 @@ const CreateGroupModal = () => {
                     <SelectItem value="Interests">Interests</SelectItem>
                     <SelectItem value="CCA">CCA</SelectItem>
                     <SelectItem value="Event">Event</SelectItem>
+                    <SelectItem value="Social">Event</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
               {/*Using hidden input to detect Select values, might need to change*/} 
               <input type="hidden" name="groupType"/>
               <Button
-                text="Create Group"
-                addClass="bg-pri text-sec"
+                text="Create"
+                addClass="bg-pri text-sec transform hover:-translate-y-1 transition duration-400 hover:animate-pulse shadow"
                 action="submit"
                 state={isLoading}
                 height={20}

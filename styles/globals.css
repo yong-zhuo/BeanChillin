@@ -104,4 +104,5 @@
     .active:not(:first-child):before {
       @apply bg-pri;
     }
+    
   }

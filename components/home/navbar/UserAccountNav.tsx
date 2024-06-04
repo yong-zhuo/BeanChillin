@@ -18,13 +18,11 @@ interface UserProps {
 }
 
 const UserAccountNav = ({ user }: UserProps) => {
-  
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none focus:ring-0">
         <UserAvatar
-          className="h-12 w-12 border-2  border-pri cursor-pointer focus:outline-none focus:ring-0 hover:ring-2 ring-pri"
+          className="h-8 w-8 translate-y-0 cursor-pointer border-2  border-pri shadow-md ring-pri transition hover:-translate-y-1 hover:ring-1 focus:outline-none focus:ring-0 md:h-12 md:w-12  md:hover:-translate-y-1 md:hover:ring-2 "
           user={{ name: user.name || null, imageUrl: user.imageUrl || null }}
         />
       </DropdownMenuTrigger>
@@ -42,7 +40,7 @@ const UserAccountNav = ({ user }: UserProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href="/" className="block p-2 cursor-pointer">
+          <Link href="/" className="block cursor-pointer p-2">
             Account settings
           </Link>
         </DropdownMenuItem>
@@ -53,9 +51,11 @@ const UserAccountNav = ({ user }: UserProps) => {
           className="cursor-pointer"
           onSelect={(e) => {
             e.preventDefault();
-            signOut( { callbackUrl: `${window.location.origin}/login` });
+            signOut({ callbackUrl: `${window.location.origin}/login` });
           }}
-        >Sign Out</DropdownMenuItem>
+        >
+          Sign Out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import React, { ReactNode, createContext, useEffect, useState } from 'react';
-import {User} from "@prisma/client";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
+import { User } from "@prisma/client";
+
 
 interface UserContextType {
-    user: User | null;
-    setUser: (user: User | null) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const UserContext = createContext<UserContextType>({
-    user: null,
-    setUser: () => {},
-  });
+  user: null,
+  setUser: () => {},
+});
 
-const UserProvider:React.FC<{children: ReactNode}> = ({ children }) => {
+const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  
   useEffect(() => {
     const fetchUser = async () => {
       const res = await fetch("/api/user");
@@ -30,10 +30,10 @@ const UserProvider:React.FC<{children: ReactNode}> = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser}}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
 };
 
-export { UserProvider, UserContext};
+export { UserProvider, UserContext };

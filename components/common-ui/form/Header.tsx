@@ -35,6 +35,7 @@ export default function Header(props: HeaderProps) {
             className="font-medium text-pri hover:underline"
           >
             {props.linkName}
+            
           </Link>
         )}
       </p>

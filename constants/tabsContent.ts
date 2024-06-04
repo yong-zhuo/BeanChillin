@@ -5,6 +5,7 @@ export const tabsButton = [
         alt: "Feed",
         src:"/misc/feed.svg",
         orientation: "left",
+        url: "/feed"
    
     },
     {
@@ -13,6 +14,7 @@ export const tabsButton = [
         alt: "Friends",
         src:"/misc/friends.svg",
         orientation: "left",
+        url: "/friends"
    
     },
     {
@@ -21,6 +23,7 @@ export const tabsButton = [
         alt: "Groups",
         src:"/misc/group.svg",
         orientation: "left",
+        url: "/groups"
    
     }
 

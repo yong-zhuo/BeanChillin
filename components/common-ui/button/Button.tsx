@@ -13,6 +13,7 @@ interface ButtonProps {
   orientation?: "left" | "right";
   isCircular?: boolean;
   state?: boolean
+  children?:React.ReactNode
 }
 
 const buttonClass = "group relative  flex justify-center border border-transparent text-sm font-medium py-2 px-4 mt-9";
@@ -48,6 +49,7 @@ export default function Button(props: ButtonProps) {
               />
             )}
           <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+            {props.children}
             {props.text}
           </div>
           {props.alt &&

@@ -3,7 +3,7 @@ import { fieldState } from "@/types/formFieldsState";
 import { FieldError, Path, UseFormRegister } from "react-hook-form";
 
 export interface FormProps<T extends fieldState> {
-  labelText: string;
+  labelText?: string;
   placeholder?: string;
   forRegister?: boolean;
   error?: FieldError;
@@ -27,16 +27,17 @@ const FormInput = <T extends fieldState>({
   name,
   type,
   id,
+  ...props
 }: FormProps<T>) => {
   return (
     <>
       <div className="flex justify-between">
-        <label
+        {labelText && <label
           htmlFor={id}
           className="text-md text-black-700 mb-2 block font-bold sm:text-base md:text-sm"
         >
           {labelText} {forRegister && <span className="text-pri">*</span>}
-        </label>
+        </label>}
 
         {error && (
           <p className="text-xs flex justify-between font-semibold text-red-400 ">
@@ -48,10 +49,11 @@ const FormInput = <T extends fieldState>({
 
       <div className="mb-7">
         {/*Extra label for Jest to detect input field */}  
-        <label htmlFor={id} className="hidden">{labelText}</label>
+        <label htmlFor={id} className="hidden" >{labelText}</label>
         <input
           placeholder={placeholder}
           className={`${fixedInputClass} ${addClass || ""}`}
+          {...props}
           type={type}
           {...(register && register(name))}
         />

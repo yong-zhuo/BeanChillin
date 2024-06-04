@@ -11,7 +11,6 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
-import { useState } from "react";
 import Button from "../common-ui/button/Button";
 
 //profile fields to be mapped

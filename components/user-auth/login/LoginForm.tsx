@@ -97,16 +97,17 @@ const LoginForm = () => {
         <div className="-mt-5 flex justify-end text-sm sm:text-xs">
           <Link
             href="/forget-password"
-            className="font-medium text-pri hover:underline lg:text-sm sm:text-base md:text-sm"
+            className="font-medium text-pri lg:text-sm sm:text-base md:text-sm hover:underline "
           >
             Forgot your Password?
+            
           </Link>
         </div>
         <div className="mx-3 my-3 px-5">
           <Button
             text="Sign In"
             action="submit"
-            addClass="text-white bg-pri shadow hover:bg-slate-400"
+            addClass="text-white bg-pri shadow hover:bg-slate-400 transition ease-in-out duration-300 delay-50 hover:-translate-y-1 hover:scale-110"
             state={isLoading}
             height={20}
             width={20}
