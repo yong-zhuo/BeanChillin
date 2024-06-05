@@ -5,10 +5,10 @@ import { GroupType } from "@/types/groupType";
 
 const GroupBadge = ({ type }: { type: GroupType }) => {
   const groupColours = {
-    Academic: "bg-blue-400",
-    Interest: "bg-green-400",
+    Academics: "bg-blue-400",
+    Interests: "bg-green-400",
     Social: "bg-yellow-400",
-    Event: "bg-red-400",
+    Events: "bg-red-400",
     CCA: "bg-purple-400",
   };
 

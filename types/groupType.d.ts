@@ -1,1 +1,1 @@
-export type GroupType = "Academic" | "Interest" | "Social" | "Event" | "CCA" | undefined;
+export type GroupType = "Academics" | "Interests" | "Social" | "Events" | "CCA" | undefined;
