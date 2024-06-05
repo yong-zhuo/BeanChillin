@@ -3,7 +3,7 @@ import GroupAvatar from "./GroupAvatar";
 import { AspectRatio } from "@/components/common-ui/shadcn-ui/aspect-ratio";
 import Image from "next/image";
 import Button from "@/components/common-ui/button/Button";
-import { Separator } from "@/components/common-ui/shadcn-ui/separator";
+
 import {
   Tabs,
   TabsContent,
@@ -45,7 +45,7 @@ const GroupHeader = ({
         </div>
         <CardContent className="-ml-1 flex items-center justify-between pt-8 md:ml-4">
           <h1 className="text-2xl font-semibold">
-            {name} <GroupBadge type={'Interest'}/>
+            {name} <GroupBadge type={'Interests'}/>
           </h1>
           {joined ? (
             <Button
