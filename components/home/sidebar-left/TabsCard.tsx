@@ -23,7 +23,7 @@ const TabsCard = () => {
           <Button
             key={tab.alt}
             action="button"
-            addClass="bg-transparent hover:bg-sec gap-4 justify-start font-semibold text-xl mt-3 mb-3 px-2 transition hover:-translate-x-1"
+            addClass="bg-transparent hover:bg-sec gap-4 justify-start font-semibold text-xl mt-3 mb-3 px-2 transition hover:-translate-x-1 hover:shadow-lg"
             text={tab.text}
             height={30}
             width={30}

@@ -12,6 +12,9 @@ import {
 } from "@/components/common-ui/shadcn-ui/tabline";
 import CreatePost from "../post/CreatePost";
 import { Session } from "next-auth";
+import AboutGroupTab from "./AboutGroupTab";
+import GroupBadge from "./GroupBadge";
+import { LogOut, Trash } from "lucide-react";
 //TODO:Create tabs list for group page
 const GroupHeader = ({
   name,
@@ -37,28 +40,34 @@ const GroupHeader = ({
           <GroupAvatar
             group
             img="/placeholder/pl1.jpg"
-            className="absolute bottom-0 aspect-square h-20 w-20 -translate-y-3/4 translate-x-1/3 transform rounded-lg border-2 border-pri"
+            className="absolute bottom-0 aspect-square h-14 w-14 lg:h-20 lg:w-20 -translate-y-20 translate-x-1/3 lg:-translate-y-3/4 lg:translate-x-1/3 transform rounded-lg border-2 border-pri"
           />
         </div>
-        <CardContent className="-ml-1 md:ml-4 flex items-center justify-between pt-8">
-          <h1 className="mt-2 text-2xl font-semibold">{name}</h1>
+        <CardContent className="-ml-1 flex items-center justify-between pt-8 md:ml-4">
+          <h1 className="text-2xl font-semibold">
+            {name} <GroupBadge type={'Interest'}/>
+          </h1>
           {joined ? (
             <Button
-              addClass="bg-red-400 text-white w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
+              addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
               text="Leave Group"
               action="submit"
-            />
+            >
+              <LogOut className="h-5 w-5"/>
+            </Button>
           ) : (
             <Button
-              addClass="bg-pri text-white w-fit mr-0 mx-2 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
+              addClass="bg-pri text-white w-1/3 text-sm md:w-fit mr-0 mx-2 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
               text="Join Group"
               action="submit"
-            />
+            >
+              <Trash className="h-5 w-5"/>
+            </Button>
           )}
         </CardContent>
       </Card>
-      <Tabs className="-mt-[2px] ">
-        <TabsList className="grid w-full grid-cols-6 rounded-t-none border bg-white text-center text-black shadow-sm -space-x-1.5">
+      <Tabs className="-mt-[2px]" defaultValue="Posts">
+        <TabsList className="grid w-full grid-cols-6 -space-x-1.5 rounded-b-lg rounded-t-none border bg-white text-center text-black shadow-sm">
           <TabsTrigger value="About" className="text-center hover:bg-gray-100">
             About
           </TabsTrigger>
@@ -73,7 +82,9 @@ const GroupHeader = ({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="About">About</TabsContent>
+        <TabsContent value="About">
+          <AboutGroupTab description="It gd" creator="BeanChillin" />
+        </TabsContent>
         <TabsContent value="Posts">
           <CreatePost session={session} />
         </TabsContent>

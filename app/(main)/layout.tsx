@@ -15,7 +15,7 @@ interface HomeLayoutProps {
 const layout = ({ children }: HomeLayoutProps) => {
   return (
     <UserProvider>
-      <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-hidden">
+      <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-auto">
         <NavBar />
         <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
           <section className="max-w-8xl mx-auto flex h-full w-full ">

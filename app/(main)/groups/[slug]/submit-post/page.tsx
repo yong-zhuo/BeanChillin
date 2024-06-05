@@ -30,7 +30,7 @@ const page =  async ({params}: PageProps) => {
               </div>
         
               <div className='w-full flex justify-end'>
-                <Button action='submit' addClass='w-full'>
+                <Button action='submit' addClass='w-full' >
                   Post
                 </Button>
               </div>

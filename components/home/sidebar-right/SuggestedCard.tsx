@@ -10,20 +10,19 @@ import {
 } from "@/components/common-ui/shadcn-ui/card";
 import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
+import UserPreview from "../friends/UserPreview";
 
-const SuggestedCard = ({name}: {name: string}) => {
-  
+const SuggestedCard = ({ name }: { name: string }) => {
   return (
     <Card>
-      <CardHeader >
-        <CardTitle >
-            {`Suggested ${name}`}
-            <Separator className="bg-pri my-2"/>
+      <CardHeader>
+        <CardTitle>
+          {`Suggested ${name}`}
+          <Separator className="my-2 bg-pri" />
         </CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea>
-
         </ScrollArea>
       </CardContent>
     </Card>
