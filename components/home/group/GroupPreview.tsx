@@ -31,7 +31,7 @@ const GroupPreview = (props: GroupProps) => {
             <div className="flex items-center">
               <GroupAvatar
                 group={true}
-                img="/placeholder/pl1.jpg"
+                img="/placeholder/pl3.png"
                 className="rounded-md border-2 border-pri h-16 w-16 xl:h-20 xl:w-20"
               />
               <div className="flex w-2/3 flex-col xl:w-4/5 items-center lg:items-start">

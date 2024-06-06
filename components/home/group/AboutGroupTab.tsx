@@ -17,7 +17,7 @@ const AboutGroupTab = (props: AboutProps) => {
         <p className="text-lg text-gray-400">{props.description}</p>
         <h1 className="text-2xl font-semibold mt-6">Created By</h1>
         <Separator className="bg-pri bg-opacity-30" />
-        <UserPreview name='Kafka' friends={500} friended={true} bio='Hello!'/>
+        <UserPreview name='Placeholder' friends={500} friended={true} bio='Lorem Ipsum'/>
         <h1 className="text-2xl font-semibold mt-6">Created At</h1>
         <Separator className="bg-pri bg-opacity-30" />
         <p className="text-lg text-gray-400">12 June 2023</p>
