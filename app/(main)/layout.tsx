@@ -20,7 +20,7 @@ const layout = ({ children }: HomeLayoutProps) => {
         <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
           <section className="max-w-8xl mx-auto flex h-full w-full ">
               <LeftSideBar />
-            <div className="h-full w-full overflow-hidden p-3">{children}</div>
+            <div className="h-full w-full p-3">{children}</div>
             <RightSideBar />
           </section>
         </div>
