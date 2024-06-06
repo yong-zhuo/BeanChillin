@@ -91,7 +91,7 @@ export default function OnboardingApp() {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="h-auto w-full hidden md:block -mb-4 3mxl:mb-10">
+      <div className="h-auto w-full hidden md:block  3mxl:mb-10">
         <Stepper step={StepIndex + 1} />
       </div>
       <form

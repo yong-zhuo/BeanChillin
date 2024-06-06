@@ -67,19 +67,14 @@ const GroupHeader = ({
         </CardContent>
       </Card>
       <Tabs className="-mt-[2px]" defaultValue="Posts">
-        <TabsList className="grid w-full grid-cols-6 -space-x-1.5 rounded-b-lg rounded-t-none border bg-white text-center text-black shadow-sm">
+        <TabsList className="grid w-full grid-cols-5 -space-x-1.5 rounded-b-lg rounded-t-none border bg-white text-center text-black shadow-sm">
           <TabsTrigger value="About" className="text-center hover:bg-gray-100">
             About
           </TabsTrigger>
           <TabsTrigger value="Posts" className="text-center hover:bg-gray-100">
             Posts
           </TabsTrigger>
-          <TabsTrigger
-            value="Members"
-            className="text-center hover:bg-gray-100"
-          >
-            Members
-          </TabsTrigger>
+          
         </TabsList>
 
         <TabsContent value="About">
@@ -91,7 +86,7 @@ const GroupHeader = ({
         <TabsContent value="Posts">
           <CreatePost session={session} />
         </TabsContent>
-        <TabsContent value="Members">Members</TabsContent>
+        
       </Tabs>
     </div>
   );

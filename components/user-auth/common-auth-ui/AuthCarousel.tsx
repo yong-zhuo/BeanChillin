@@ -7,7 +7,7 @@ import { Card } from "@/components/common-ui/shadcn-ui/card";
 
 const AuthCarousel = () => {
   return (
-    <div className="flex h-screen items-start justify-center bg-transparent border-none mt-10">
+    <div className="flex h-full items-start justify-center bg-transparent border-none mt-14">
       <Carousel
         autoPlay
         infiniteLoop
@@ -15,7 +15,7 @@ const AuthCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showArrows={false}
-        className="h-11/12 w-11/12 flex items-center justify-center "
+        className="h-4/5 w-4/5  flex items-center justify-center "
       >
         {images.map((image, id) => (
           <div key={id} className="flex flex-col justify-center items-center mb-4 pb-4 pt-5 lg:mb-9 lg:pb-9 xl:mb-7 xl:pb-7">
@@ -24,9 +24,9 @@ const AuthCarousel = () => {
               alt={`Image ${id}`}
               width={400}
               height={400}
-              className="h-[400px] w-[400px] lg:h-[550px] lg:w-[550px] 2xl:h-[600px] 2xl:w-[600px]"
+              className="h-[400px] w-[400px] lg:h-[550px] lg:w-[550px] 2xl:h-[550px] 2xl:w-[550px]"
             />
-            <p className=" p-9 m-7 lg:m-0 lg:p-0 xl:mb-8 xl:pb-8 flex max-w-lg justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] md:text-2xl">
+            <p className=" p-9 m-7 lg:m-0 lg:p-0 xl:mb-7 xl:pb-7 flex max-w-md justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] md:text-2xl">
               {image.text}
             </p>
           </div>
