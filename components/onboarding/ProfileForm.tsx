@@ -52,9 +52,9 @@ const ProfileForm = (props: ProfileProps) => {
             alt="Profile Picture"
             height={200}
             width={200}
-            className="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px] md:h-[160px] md:w-[160px]  2xl:h-[280px] 2xl:w-[280px]"
+            className="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px] md:h-[160px] md:w-[160px]  2mxl:h-[220px] 2mxl:w-[220px] 3mxl:h-[300px] 3mxl:w-[300px]"
           />
-          <div className="absolute bottom-1 right-1 2xl:bottom-7 2xl:right-5 flex flex-col-reverse">
+          <div className="absolute bottom-1 right-1 2mxl:bottom-5 2mxl:right-3 3mxl:bottom-6 3mxl:right-5 flex flex-col-reverse">
             <input
               type="file"
               accept="image/*"
