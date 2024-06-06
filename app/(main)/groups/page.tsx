@@ -14,7 +14,7 @@ const GroupPage = async () => {
     <div className="container mx-auto mt-3 w-5/6 px-12">
       <h2 className="text-3xl font-extrabold">Groups</h2>
       <div className="order-first my-6 h-fit rounded-lg md:order-last">
-        <div className="bg-pri px-6 py-1 rounded-lg shadow">
+        <div className="bg-pri px-6 py-1 rounded-lg shadow-md">
           <p className="flex items-center gap-1.5 py-3 font-semibold text-sec">
             <Image
               src="/home/create.svg"

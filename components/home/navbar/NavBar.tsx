@@ -7,6 +7,7 @@ import Image from "next/image";
 import { UserContext } from "../UserContext";
 import Messaging from "./Messaging";
 import Link from "next/link";
+import HamburgerMenu from "./HamburgerMenu";
 
 const NavBar = () => {
   
@@ -43,6 +44,7 @@ const NavBar = () => {
             />
           )}
         </div>
+        <HamburgerMenu/>
       </div>
     </div>
   );
