@@ -2,6 +2,13 @@ import Image from "next/image";
 import CreateGroupModal from "@/components/home/group/CreateGroupModal";
 import ViewGroupTabs from "@/components/home/group/ViewGroupTabs";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
+
+export const metadata = {
+  title: "Groups | BeanChillin",
+  description: "Welcome to BeanChillin!",
+};
+
+
 const GroupPage = async () => {
   return (
     <div className="container mx-auto mt-3 w-5/6 px-12">

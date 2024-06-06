@@ -16,7 +16,7 @@ import { loginSchema, type login } from "@/lib/schemas/loginSchema";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { useState } from "react";
-import { Separator } from "@/components/common-ui/shadcn-ui/separator";
+
 
 //login fields to be mapped
 const fields = loginFields;

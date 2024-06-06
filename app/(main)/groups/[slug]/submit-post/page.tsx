@@ -1,6 +1,11 @@
 import Button from '@/components/common-ui/button/Button'
 import React from 'react'
 
+export const metadata = {
+  title: "Create Post | BeanChillin",
+  description: "Welcome to BeanChillin!",
+};
+
 interface PageProps {
     params: {
         slug:string

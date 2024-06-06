@@ -8,6 +8,11 @@ import { Group } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 
+export const metadata = {
+  title: "Groups | BeanChillin",
+  description: "Welcome to BeanChillin!",
+};
+
 interface PageProps {
     params: {
       slug: string

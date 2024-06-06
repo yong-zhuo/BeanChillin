@@ -12,6 +12,7 @@ import {
 } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
 import Button from "../common-ui/button/Button";
+import { User } from "lucide-react";
 
 //profile fields to be mapped
 const fields = profileFields;
@@ -37,10 +38,13 @@ const ProfileForm = (props: ProfileProps) => {
   };
   return (
     <>
-      <Header
-        heading="Customise your profile"
-        paragraph="Set your name and profile picture to be displayed"
-      />
+      <div className="flex flex-col justify-center items-center">
+        <div className="md:hidden h-12 w-12 aspect-square rounded-full mb-4 bg-pri flex items-center justify-center"><User className="text-sec"/></div>
+        <Header
+          heading="Customise your profile"
+          paragraph="Set your name and profile picture to be displayed"
+        />
+      </div>
       <div className="relative flex justify-center">
         <div className="relative">
           <Image
@@ -48,9 +52,9 @@ const ProfileForm = (props: ProfileProps) => {
             alt="Profile Picture"
             height={200}
             width={280}
-            className="aspect-square rounded-full object-cover border-pri border-4"
+            className="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px]"
           />
-          <div className="absolute bottom-5 right-5 flex flex-col-reverse">
+          <div className="absolute bottom-1 right-1 md:bottom-5 md:right-5 flex flex-col-reverse">
             <input
               type="file"
               accept="image/*"
@@ -73,8 +77,8 @@ const ProfileForm = (props: ProfileProps) => {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-center">
-        <div className="w-2/5">
+      <div className="mt-10 flex flex-col items-center justify-center">
+        <div className="md:w-2/5">
           {fields.map((field) => (
             <FormInput
               key={field.id}
@@ -86,6 +90,7 @@ const ProfileForm = (props: ProfileProps) => {
               forRegister={field.forRegister}
               register={props.register}
               error={props.errors && props.errors[field.name as keyof onboard]}
+              addClass="min-w-60"
             />
           ))}
         </div>

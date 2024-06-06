@@ -21,7 +21,7 @@ const ProfileCard = () => {
       <CardHeader>
         <CardTitle>
           {user ? (
-            <div className="flex items-center">
+            <div className="flex flex-col justify-between items-center">
               <UserAvatar
                 className="h-20 w-20 border-2 border-pri"
                 user={{

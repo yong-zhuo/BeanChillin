@@ -24,10 +24,10 @@ export default function Header(props: HeaderProps) {
           className="flex justify-center p-10"
         />}
       </div>
-      <h2 className="text-center text-3xl font-extrabold text-gray-700">
+      <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-700">
         {props.heading}
       </h2>
-      <p className="mt-2 text-center text-lg text-gray-500">
+      <p className="mt-2 text-center text-sm md:text-lg text-gray-500">
         {props.paragraph}{" "}
         {props.linkUrl && props.linkName && (
           <Link

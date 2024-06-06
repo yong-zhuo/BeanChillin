@@ -20,7 +20,7 @@ const Stepper = (props: { step: number }) => {
           <div className="step">
             {i + 1 < index ? <Check className="h-24" /> : step.icon}
           </div>
-          <p className="font-bold text-gray-500">{step.label}</p>
+          <p className="font-bold text-gray-500 text-xs lg:text-sm">{step.label}</p>
         </div>
       ))}
     </div>
