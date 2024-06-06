@@ -28,7 +28,7 @@ export default function ForgetSuccess() {
             alt="arrow-left"
             width={20}
             height={20}
-            addClass="gap-2 bg-pri text-white hover:bg-slate-400 shadow"
+            addClass="gap-2 bg-pri text-white hover:bg-slate-400 shadow transition ease-in-out duration-300 delay-50 hover:-translate-x-1"
             orientation="left"
           />
         </div>

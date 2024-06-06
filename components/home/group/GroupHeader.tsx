@@ -31,7 +31,7 @@ const GroupHeader = ({
         <div className="mx-auto mt-6 w-11/12">
           <AspectRatio ratio={3 / 1}>
             <Image
-              src="/placeholder/pl2.png"
+              src="/placeholder/pl2.jpg"
               alt="Banner"
               fill
               className="rounded-md border-2 border-pri object-cover"
@@ -39,13 +39,13 @@ const GroupHeader = ({
           </AspectRatio>
           <GroupAvatar
             group
-            img="/placeholder/pl1.jpg"
-            className="absolute bottom-0 aspect-square h-14 w-14 lg:h-20 lg:w-20 -translate-y-20 translate-x-1/3 lg:-translate-y-3/4 lg:translate-x-1/3 transform rounded-lg border-2 border-pri"
+            img="/placeholder/pl3.png"
+            className="absolute bottom-0 aspect-square h-14 w-14 -translate-y-20 translate-x-1/3 transform rounded-lg border-2 border-pri lg:h-20 lg:w-20 lg:-translate-y-3/4 lg:translate-x-1/3"
           />
         </div>
         <CardContent className="-ml-1 flex items-center justify-between pt-8 md:ml-4">
           <h1 className="text-2xl font-semibold">
-            {name} <GroupBadge type={'Interests'}/>
+            {name} <GroupBadge type={"Interests"} />
           </h1>
           {joined ? (
             <Button
@@ -53,7 +53,7 @@ const GroupHeader = ({
               text="Leave Group"
               action="submit"
             >
-              <LogOut className="h-5 w-5"/>
+              <LogOut className="h-5 w-5" />
             </Button>
           ) : (
             <Button
@@ -61,7 +61,7 @@ const GroupHeader = ({
               text="Join Group"
               action="submit"
             >
-              <Trash className="h-5 w-5"/>
+              <Trash className="h-5 w-5" />
             </Button>
           )}
         </CardContent>
@@ -83,7 +83,10 @@ const GroupHeader = ({
         </TabsList>
 
         <TabsContent value="About">
-          <AboutGroupTab description="It gd" creator="BeanChillin" />
+          <AboutGroupTab
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac libero eu eros blandit luctus. Donec vehicula condimentum condimentum. Curabitur quis pulvinar urna."
+            creator="BeanChillin"
+          />
         </TabsContent>
         <TabsContent value="Posts">
           <CreatePost session={session} />

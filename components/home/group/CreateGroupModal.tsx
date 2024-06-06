@@ -87,7 +87,7 @@ const CreateGroupModal = () => {
           <Button
             text="New Group"
             action="button"
-            addClass="shadow bg-pri text-sec mt-2 mb-2 hover:bg-slate-500 "
+            addClass="shadow bg-pri text-sec mt-2 mb-2 hover:bg-slate-500 hover:shadow-lg hover:scale-105 transition"
             handleClick={() => setOpen(true)}
           />
         </DialogTrigger>
