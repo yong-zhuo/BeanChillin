@@ -1,3 +1,4 @@
+'use client'
 import { Card, CardHeader } from "@/components/common-ui/shadcn-ui/card";
 import React from "react";
 import GroupAvatar from "./GroupAvatar";
@@ -6,6 +7,7 @@ import Button from "@/components/common-ui/button/Button";
 import { Badge } from "@/components/common-ui/shadcn-ui/badge";
 import GroupBadge from "./GroupBadge";
 import { GroupType } from "@/types/groupType";
+import { redirect, useRouter } from "next/navigation";
 
 //TODO: remove placeholders and add data
 
@@ -19,7 +21,7 @@ type GroupProps = {
 //TODO: Add logic for button to leave group
 const GroupPreview = (props: GroupProps) => {
   //badge colours
-  
+  const router = useRouter();
 
   return (
     <>
@@ -46,19 +48,20 @@ const GroupPreview = (props: GroupProps) => {
               <Button
                 text="View"
                 action="button"
-                addClass="bg-pri text-white hover:bg-slate-400 items-center "
+                addClass="bg-pri text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
+                handleClick={() => {router.push(`/groups/${props.name}`)}}
               />
               {props.yourGroup ? (
                 <Button
                   text="Delete"
                   action="button"
-                  addClass="bg-red-400 text-white hover:bg-slate-400 items-center "
+                  addClass="bg-red-400 text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
                 />
               ) : (
                 <Button
                   text="Leave "
                   action="button"
-                  addClass="bg-red-400 text-white hover:bg-slate-400 items-center"
+                  addClass="bg-red-400 text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
                 />
               )}
             </div>

@@ -50,7 +50,7 @@ const UserPreview = (props: UserPreviewProps) => {
               <Button
                 text="Unfriend"
                 action="button"
-                addClass="bg-red-400 text-white hover:bg-slate-400 items-center w-fit shadow"
+                addClass="bg-red-400 text-white hover:bg-slate-400 items-center w-fit hover:shadow-lg hover:scale-105 transition"
               >
                 <UserMinus className="h-5 w-5" />
               </Button>
@@ -58,7 +58,7 @@ const UserPreview = (props: UserPreviewProps) => {
               <Button
                 text="Friend"
                 action="button"
-                addClass="bg-pri text-white hover:bg-slate-400 items-center w-fit shadow"
+                addClass="bg-pri text-white hover:bg-slate-400 items-center w-fit hover:shadow-lg hover:scale-105 transition"
               >
                 <UserPlus className="h-5 w-5" />
               </Button>
