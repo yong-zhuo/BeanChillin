@@ -15,18 +15,18 @@ const AuthCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showArrows={false}
-        className="h-4/5 w-4/5 flex items-center justify-center mt-10 pt-10"
+        className="h-11/12 w-11/12 flex items-center justify-center "
       >
         {images.map((image, id) => (
-          <div key={id} className="flex flex-col justify-center items-center mb-12 pb-12">
+          <div key={id} className="flex flex-col justify-center items-center mb-4 pb-4 pt-5 lg:mb-9 lg:pb-9 xl:mb-7 xl:pb-7">
             <Image
               src={image.src}
               alt={`Image ${id}`}
-              width={500}
-              height={500}
-              className="h-[600px] w-[600px]"
+              width={400}
+              height={400}
+              className="h-[400px] w-[400px] lg:h-[550px] lg:w-[550px] 2xl:h-[600px] 2xl:w-[600px]"
             />
-            <p className="pb-10 mb-10 flex max-w-md justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] md:text-2xl">
+            <p className=" p-9 m-7 lg:m-0 lg:p-0 xl:mb-8 xl:pb-8 flex max-w-lg justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] md:text-2xl">
               {image.text}
             </p>
           </div>

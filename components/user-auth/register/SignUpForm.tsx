@@ -70,7 +70,7 @@ const SignUpForm = () => {
         linkUrl="/login"
         logo
       />
-      <form onSubmit={handleSubmit(onSubmit)} className="mb-4 px-40 pb-8 pt-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="m-5 lg:mb-5 lg:px-40 lg:pb-2 lg:pt-6 ">
         {fields.map((field) => (
           <FormInput
             key={field.id}

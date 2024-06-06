@@ -8,7 +8,7 @@ export const metadata = {
 
 const page = async () => {
   return (
-    <div className="container mx-auto mt-3 w-5/6 px-12">
+    <div className="container mx-auto mt-3 md:w-5/6 md:px-12">
       <h2 className="text-3xl font-extrabold">Home</h2>
       <HomeCard />
     </div>

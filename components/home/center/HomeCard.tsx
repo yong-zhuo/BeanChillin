@@ -8,7 +8,7 @@ import { Bean } from "lucide-react";
 
 const HomeCard = () => {
   return (
-    <Card className="mt-7 h-full ">
+    <Card className="mt-7 h-full">
       <CardContent className="mt-3 flex flex-col justify-center">
         <CardHeader className="flex justify-center items-center">
           <Bean size={50} color="#4D869C" />
