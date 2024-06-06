@@ -48,7 +48,7 @@ export default function Button(props: ButtonProps) {
                 {...props.isCircular && { className: "absolute inset-0 w-4/5 h-4/5 m-auto object-contain" }}
               />
             )}
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap flex flex-row gap-1 items-center">
             {props.children}
             {props.text}
           </div>

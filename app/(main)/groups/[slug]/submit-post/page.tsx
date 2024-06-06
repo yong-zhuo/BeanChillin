@@ -1,6 +1,11 @@
 import Button from '@/components/common-ui/button/Button'
 import React from 'react'
 
+export const metadata = {
+  title: "Create Post | BeanChillin",
+  description: "Welcome to BeanChillin!",
+};
+
 interface PageProps {
     params: {
         slug:string
@@ -30,7 +35,7 @@ const page =  async ({params}: PageProps) => {
               </div>
         
               <div className='w-full flex justify-end'>
-                <Button action='submit' addClass='w-full'>
+                <Button action='submit' addClass='w-full' >
                   Post
                 </Button>
               </div>

@@ -17,14 +17,13 @@ import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { useState } from "react";
 
+
 //login fields to be mapped
 const fields = loginFields;
 let fieldsState: fieldState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
-
 const LoginForm = () => {
-
   const [isLoading, setIsLoading] = useState(false);
 
   //zod validation for login
@@ -64,7 +63,7 @@ const LoginForm = () => {
         title: "Invalid email and password",
         description:
           "Please try again or register a new account if you have not done so.",
-        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>
+        action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
       setIsLoading(false);
     }
@@ -80,7 +79,10 @@ const LoginForm = () => {
         logo
       />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mb-5 px-40 pb-2 pt-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="m-5 md:mb-5 md:px-40 md:pb-2 md:pt-6"
+      >
         {fields.map((field) => (
           <FormInput
             key={field.id}
@@ -97,26 +99,26 @@ const LoginForm = () => {
         <div className="-mt-5 flex justify-end text-sm sm:text-xs">
           <Link
             href="/forget-password"
-            className="font-medium text-pri lg:text-sm sm:text-base md:text-sm hover:underline "
+            className="font-medium text-pri hover:underline sm:text-base md:text-sm lg:text-sm "
           >
             Forgot your Password?
-            
           </Link>
         </div>
         <div className="mx-3 my-3 px-5">
           <Button
             text="Sign In"
             action="submit"
-            addClass="text-white bg-pri shadow hover:bg-slate-400 transition ease-in-out duration-300 delay-50 hover:-translate-y-1 hover:scale-110"
+            addClass="text-white bg-pri shadow-md hover:bg-slate-400 transition ease-in-out duration-300 delay-50 hover:-translate-y-1 hover:scale-110"
             state={isLoading}
             height={20}
             width={20}
           />
         </div>
+
         <Divider text="or" borderColor="border-pri" textColor="pri" />
       </form>
-      <div className="-pt-6 -mt-10 mb-4 px-40 pb-8">
-        <div className="-py-2 mx-3 px-5">
+      <div className="md:-pt-6 m-5 md:-mt-10 md:mb-4 md:px-40 md:pb-8">
+        <div className="-py-2 mx-3 px-5 ">
           <GoogleButton />
         </div>
       </div>

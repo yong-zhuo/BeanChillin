@@ -133,11 +133,11 @@ const CreateGroupModal = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-white z-20">
                   <SelectGroup className="border-2">
-                    <SelectItem value="Academics" className="">Academics</SelectItem>
+                    <SelectItem value="Academics">Academics</SelectItem>
                     <SelectItem value="Interests">Interests</SelectItem>
                     <SelectItem value="CCA">CCA</SelectItem>
-                    <SelectItem value="Event">Event</SelectItem>
-                    <SelectItem value="Social">Event</SelectItem>
+                    <SelectItem value="Events">Events</SelectItem>
+                    <SelectItem value="Social">Social</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
