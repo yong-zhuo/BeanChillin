@@ -88,7 +88,7 @@ const SignUpForm = () => {
           <Button
             text="Create Account"
             action="submit"
-            addClass=" text-white bg-pri hover:bg-slate-400 shadow"
+            addClass=" text-white bg-pri hover:bg-slate-400 shadow transition ease-in-out duration-300 delay-50 hover:-translate-y-1 hover:scale-110"
             state={isLoading}
             height={20}
             width={20}

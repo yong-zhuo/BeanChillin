@@ -81,7 +81,7 @@ const LoginForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="m-5 md:mb-5 md:px-40 md:pb-2 md:pt-6"
+        className="m-5 lg:mb-5 lg:px-40 lg:pb-2 lg:pt-6 "
       >
         {fields.map((field) => (
           <FormInput
@@ -104,7 +104,7 @@ const LoginForm = () => {
             Forgot your Password?
           </Link>
         </div>
-        <div className="mx-3 my-3 px-5">
+        <div className="mx-3 my-3 px-5 min-w-1/2">
           <Button
             text="Sign In"
             action="submit"
@@ -117,7 +117,7 @@ const LoginForm = () => {
 
         <Divider text="or" borderColor="border-pri" textColor="pri" />
       </form>
-      <div className="md:-pt-6 m-5 md:-mt-10 md:mb-4 md:px-40 md:pb-8">
+      <div className="lg:-pt-6 m-5 lg:-mt-10 lg:mb-4 lg:px-40 lg:pb-8">
         <div className="-py-2 mx-3 px-5 ">
           <GoogleButton />
         </div>
