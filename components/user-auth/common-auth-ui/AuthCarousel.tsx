@@ -7,7 +7,7 @@ import { Card } from "@/components/common-ui/shadcn-ui/card";
 
 const AuthCarousel = () => {
   return (
-    <div className="flex h-full items-start justify-center bg-transparent border-none mt-14">
+    <div className="flex h-screen items-start justify-center bg-transparent border-none mt-14">
       <Carousel
         autoPlay
         infiniteLoop
