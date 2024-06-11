@@ -86,6 +86,8 @@ model Group {
   posts       Post[]
   description String?
   picture     String?
+  banner      String?
+  type        String?
 
   creatorId String?
   Creator   User?        @relation("CreatedBy", fields: [creatorId], references: [id])
