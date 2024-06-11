@@ -113,7 +113,7 @@ const CreateGroupModal = () => {
                   forRegister={field.forRegister}
                 />
               ))}
-              <Select onValueChange={value => setValue('groupType', value)} value={watch('groupType')}>
+              <Select onValueChange={value => setValue('type', value)} value={watch('type')}>
                 <div className="flex justify-between">
                   <label
                     htmlFor="groupType"
@@ -121,10 +121,10 @@ const CreateGroupModal = () => {
                   >
                     Group Category <span className="text-pri">*</span>
                   </label>
-                  {errors["groupType"] && (
+                  {errors["type"] && (
                     <p className="flex justify-between text-xs font-semibold text-red-400 ">
                       <CircleAlert height={15} />
-                      {errors["groupType"].message}
+                      {errors["type"].message}
                     </p>
                   )}
                 </div>
@@ -142,7 +142,7 @@ const CreateGroupModal = () => {
                 </SelectContent>
               </Select>
               {/*Using hidden input to detect Select values, might need to change*/} 
-              <input type="hidden" name="groupType"/>
+              <input type="hidden" name="type"/>
               <Button
                 text="Create"
                 addClass="bg-pri text-sec transform hover:-translate-y-1 transition duration-400 hover:animate-pulse shadow"
