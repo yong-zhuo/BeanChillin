@@ -84,7 +84,7 @@ const Page = async ({ params }: PageProps) => {
         <div className="mx-auto mt-6 w-11/12">
           <AspectRatio ratio={3 / 1}>
             <Image
-              src={group.banner || "/placeholder/pl1.png"}
+              src={group.banner || "/placeholder/pl2.jpg"}
               alt="Banner"
               fill
               className="rounded-md border-2 border-pri object-cover"

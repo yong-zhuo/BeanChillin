@@ -5,13 +5,13 @@ import { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
 
 
-export async function POST(req:Request, user: User) {
+export async function POST(req:Request) {
     try {
         const session = await getServerSession(Oauth);
         
 
         if (!session?.user) {
-            return new Response("Unauthorized", { status: 401 });
+            return Response.json("Unauthorized", { status: 401 });
         }
 
         const data = await req.json();
@@ -25,7 +25,7 @@ export async function POST(req:Request, user: User) {
         })
 
         if (groupExists){
-            return new Response("Group already exists", { status: 409});
+            return Response.json("Group already exists", { status: 409});
         }
 
         //create group
@@ -33,22 +33,25 @@ export async function POST(req:Request, user: User) {
             data: {
                 name: data.name,
                 description: data.description,
-                picture: data.picture,
-                banner: data.banner,
                 type: data.type,
-                creatorId: user.id,
+                creatorId: data.creatorId,
             }
         })
 
+        if (typeof group.creatorId === 'undefined') {
+            return Response.json('Creator ID is undefined', { status: 400 });
+        }
+
         await prisma.membership.create({
             data: {
-                userId: user.id,
+                userId: group.creatorId as string,
                 groupId: group.id,
             },})
 
-            return new Response(group.name);
+            return Response.json(group.name);
     
     } catch (e) {
-        return new Response('Could not create group', {status: 500})
+        console.log(e)
+        return Response.json('Could not create group', {status: 500})
     }
 }
