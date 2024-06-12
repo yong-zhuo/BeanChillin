@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt'
 
 
 export const Oauth: NextAuthOptions = {
-    
+
     session: {
         strategy: 'jwt',
         maxAge: 60 * 60, //5 seconds. Set to 4 hours on production.
@@ -63,7 +63,7 @@ export const Oauth: NextAuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        async signIn({ account, profile}) {
+        async signIn({ account, profile }) {
             if (account && account.provider === "credentials") {
                 return true;
             }
