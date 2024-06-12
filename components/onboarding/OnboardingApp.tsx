@@ -91,11 +91,11 @@ export default function OnboardingApp() {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="h-auto w-full hidden md:block mb-0 3mxl:mb-10">
+      <div className="h-auto w-full hidden md:block  3mxl:mb-10">
         <Stepper step={StepIndex + 1} />
       </div>
       <form
-        className="flex flex-grow flex-col  px-40 pb-5 pt-9"
+        className="flex flex-col  px-40 pb-5 pt-9"
         onSubmit={handleSubmit(onSubmit, onError)}
       >
         {step}

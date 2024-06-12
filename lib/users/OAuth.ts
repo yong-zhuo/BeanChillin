@@ -1,10 +1,12 @@
-import GoogleProvider from 'next-auth/providers/google'
+import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '../prisma';
 import bcrypt from 'bcrypt'
 
+
 export const Oauth: NextAuthOptions = {
+    
     session: {
         strategy: 'jwt',
         maxAge: 60 * 60, //5 seconds. Set to 4 hours on production.
@@ -61,7 +63,7 @@ export const Oauth: NextAuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        async signIn({ account, profile }) {
+        async signIn({ account, profile}) {
             if (account && account.provider === "credentials") {
                 return true;
             }
@@ -87,13 +89,15 @@ export const Oauth: NextAuthOptions = {
                         length: 32,
                         numbers: true
                     });
-
+                    const googleProfile = profile as GoogleProfile;
                     //If user is not in database, need to create info first
                     const isCreate = await prisma.user.create({
                         data: {
                             name: profile?.name,
                             email: profile.email,
                             password: await bcrypt.hash(password, 4),
+                            imageUrl: googleProfile?.picture,
+                            bio: "Hello!",
                             signinType: false,
                             isOnboard: false
                         },

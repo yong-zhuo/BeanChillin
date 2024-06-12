@@ -19,7 +19,7 @@ const WelcomePage = ({state}:WelcomeProps) => {
         paragraph="Start your journey now!"
       />
       <div className="flex justify-center">
-        <Image src="/onboarding/welcome.svg" alt="Welcome Image" height={480} width={480} className="min-w-[300px]"/>
+      <Image src="/onboarding/welcome.svg" alt="Welcome Image" height={280} width={280} className="min-w-[300px] min-h-[200px] w-[350px] h-[200px] lg:w-[350px] lg:h-[200px] 2mxl:w-[400px] 2mxl:h-[200px] 3mxl:h-[280px] 3mxl:w-[400px] 3xl:w-[400px] 3xl:h-[400px]"/>
       </div>
       <div className="flex items-center justify-center">
         <div className="flex w-1/2 min-w-[200px]">

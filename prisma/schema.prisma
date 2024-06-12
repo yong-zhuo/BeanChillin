@@ -14,6 +14,11 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -41,13 +46,20 @@ model Session {
 }
 
 model User {
-  id                  String               @id @default(cuid())
-  name                String?
-  password            String
-  signinType          Boolean
-  bio                 String?
-  email               String?              @unique
-  emailVerified       DateTime?
+  id            String    @id @default(cuid())
+  name          String?
+  password      String
+  signinType    Boolean
+  bio           String?
+  email         String?   @unique
+  emailVerified DateTime?
+
+  createdGroups Group[]      @relation("CreatedBy")
+  joinedGroups  Membership[]
+  votes         Vote[]
+  Posts         Post[]
+  Comments      Comment[]
+
   imageUrl            String?
   imagePublicId       String?
   isOnboard           Boolean
@@ -64,4 +76,69 @@ model PasswordResetToken {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
+}
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  posts       Post[]
+  description String?
+  picture     String?
+
+  creatorId String?
+  Creator   User?        @relation("CreatedBy", fields: [creatorId], references: [id])
+  members   Membership[]
+}
+
+model Membership {
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  @@id([userId, groupId])
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  title     String
+  content   Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
+  group     Group     @relation(fields: [groupId], references: [id])
+  groupId   String
+  votes     Vote[]
+  comments  Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+
+  replyToId String?
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("ReplyTo")
+
+  commentId String?
+}
+
+model Vote {
+  user   User     @relation(fields: [userId], references: [id])
+  userId String
+  post   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+  type   VoteType
+
+  @@id([userId, postId])
 }

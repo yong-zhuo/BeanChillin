@@ -51,10 +51,10 @@ const ProfileForm = (props: ProfileProps) => {
             src={props.imageUrl}
             alt="Profile Picture"
             height={200}
-            width={280}
-            className="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px]"
+            width={200}
+            className="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px] md:h-[160px] md:w-[160px]  2mxl:h-[220px] 2mxl:w-[220px] 3mxl:h-[300px] 3mxl:w-[300px]"
           />
-          <div className="absolute bottom-1 right-1 md:bottom-5 md:right-5 flex flex-col-reverse">
+          <div className="absolute bottom-1 right-1 2mxl:bottom-5 2mxl:right-3 3mxl:bottom-6 3mxl:right-5 flex flex-col-reverse">
             <input
               type="file"
               accept="image/*"
@@ -77,8 +77,8 @@ const ProfileForm = (props: ProfileProps) => {
         </div>
       </div>
 
-      <div className="mt-10 flex flex-col items-center justify-center">
-        <div className="md:w-2/5">
+      <div className="mt-5 flex flex-col items-center justify-center">
+        <div className="w-[150px] sm:w-[200px] md:w-[250px] lg:w-[400px] flex flex-col justify-center">
           {fields.map((field) => (
             <FormInput
               key={field.id}
@@ -90,7 +90,6 @@ const ProfileForm = (props: ProfileProps) => {
               forRegister={field.forRegister}
               register={props.register}
               error={props.errors && props.errors[field.name as keyof onboard]}
-              addClass="min-w-60"
             />
           ))}
         </div>
