@@ -33,7 +33,7 @@ import { useForm } from "react-hook-form";
 import { UserContext } from "../UserContext";
 import { useRouter } from "next/navigation";
 import GroupImages from "./GroupImages";
-import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
+import { groupCloudUpload } from "@/lib/cloudinary/CloudinaryUpload";
 
 const fields = createGroupFields;
 let fieldsState: fieldState = {};
@@ -71,7 +71,7 @@ const CreateGroupModal = () => {
     //TODO: #39 Add create group logic and send data to backend
 
     const payload = {
-      name: data.name,
+      name: data.name.replaceAll(" ", "-"),
       description: data.description,
       picture: data.picture,
       banner: data.banner,
@@ -132,6 +132,7 @@ const CreateGroupModal = () => {
         });
         //might change this logic, get name and reroute them to their new group page
         const name = await response.json();
+        await Promise.all([groupCloudUpload(data.picture, name, "groupPicture"), groupCloudUpload(data.banner, name, "banner")]);
         router.push(`/groups/${name}`);
       }
       

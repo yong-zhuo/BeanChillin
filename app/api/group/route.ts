@@ -1,9 +1,7 @@
 import prisma from "@/lib/prisma";
-import { MembershipValidator, createGroupSchema } from "@/lib/schemas/createGroupSchema";
 import { Oauth } from "@/lib/users/OAuth";
-import { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+
 
 
 export async function POST(req:Request) {
@@ -12,7 +10,7 @@ export async function POST(req:Request) {
         
 
         if (!session?.user) {
-            return Response.json("Unauthorized", { status: 401 });
+            return new Response("Unauthorized", { status: 401 });
         }
 
         const data = await req.json();
@@ -40,7 +38,7 @@ export async function POST(req:Request) {
         })
 
         if (typeof group.creatorId === 'undefined') {
-            return new Response(JSON.stringify({error: 'Creator ID is undefined'}), { status: 400 });
+            return new Response('Creator ID is undefined', { status: 400 });
         }
 
         await prisma.membership.create({
@@ -53,6 +51,6 @@ export async function POST(req:Request) {
     
     } catch (e) {
         console.log(e)
-        return new Response(JSON.stringify({error: 'Could not create group'}), {status: 500})
+        return new Response('Could not create group', {status: 500})
     }
 }
