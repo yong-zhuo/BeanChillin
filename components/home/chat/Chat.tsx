@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 import ChatForm from "./ChatForm";
 import DisplayMessage from "./DisplayMessage";
 import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
-import useChatSession from "@/hooks/useChatSession";
 import { useEffect } from "react";
 
 
@@ -19,7 +18,7 @@ export async function getMessages(emails: string[]) {
                 message: true,
                 id: true,
                 createdAt: true,
-                User: {
+                user: {
                     select: {
                         name: true
                     }

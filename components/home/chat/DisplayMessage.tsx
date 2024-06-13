@@ -8,7 +8,7 @@ import Pusher from 'pusher-js';
 export interface Props {
     data: {
         message: string;
-        User: {
+        user: {
             name: string | null;
         } | null;
         id: string;
