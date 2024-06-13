@@ -28,7 +28,7 @@ const AboutGroupTab = (props: AboutProps) => {
         <p className="text-lg text-gray-400">{props.members} Members</p>
         <h1 className="mt-6 text-2xl font-semibold">Created By</h1>
         <Separator className="bg-pri bg-opacity-30" />
-        {props.creator !== user ? (
+        {props.creator?.id !== user?.id ? (
           <UserPreview
             name="Placeholder"
             friends={500}
@@ -36,7 +36,7 @@ const AboutGroupTab = (props: AboutProps) => {
             bio={props.creator?.bio as string}
           />
         ) : (
-          "You created this group"
+          <p className="text-lg text-gray-400">You created this group</p>
         )}
         <h1 className="mt-6 text-2xl font-semibold">Created At</h1>
         <Separator className="bg-pri bg-opacity-30" />
