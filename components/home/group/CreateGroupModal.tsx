@@ -95,7 +95,6 @@ const CreateGroupModal = () => {
       if (!response.ok) {
         
         
-
         if (response.status === 409) {
           toast({
             variant: "destructive",

@@ -152,7 +152,7 @@ model Vote {
 model Message {
   id          String   @id @default(uuid())
   message     String
-  User        User?    @relation(fields: [email], references: [email])
+  user        User?    @relation(fields: [email], references: [email])
   email       String
   sender_id   String?
   receiver_id String?
