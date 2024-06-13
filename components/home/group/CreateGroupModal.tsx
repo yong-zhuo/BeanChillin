@@ -82,7 +82,7 @@ const CreateGroupModal = () => {
     setIsLoading(true);
 
     try {
-      console.log("Payload to send:", JSON.stringify(payload));
+     // console.log("Payload to send:", JSON.stringify(payload));
       const response = await fetch("/api/group", {
         method: "POST",
         headers: {
@@ -91,8 +91,10 @@ const CreateGroupModal = () => {
         body: JSON.stringify(payload),
       });
 
+
       if (!response.ok) {
-        const errdata = await response.json();
+        
+        
 
         if (response.status === 409) {
           toast({
@@ -123,15 +125,17 @@ const CreateGroupModal = () => {
             action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
           });
         }
+      } else {
+        toast({
+          variant: "success",
+          title: "Group Successfully created",
+          description: "Start posting in your Group!",
+        });
+        //might change this logic, get name and reroute them to their new group page
+        const name = await response.json();
+        router.push(`/groups/${name}`);
       }
-      toast({
-        variant: "success",
-        title: "Group Successfully created",
-        description: "Start posting in your Group!",
-      });
-      //might change this logic, get name and reroute them to their new group page
-      const name = await response.json();
-      router.push(`/groups/${name}`);
+      
     } catch (e) {
       console.error(e);
       toast({
