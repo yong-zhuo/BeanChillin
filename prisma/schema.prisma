@@ -87,7 +87,7 @@ model Group {
   name        String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  posts       Post[]
+  posts       Post[]  
   description String?
   picture     String?
   banner      String?

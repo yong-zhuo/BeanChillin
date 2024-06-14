@@ -54,7 +54,7 @@ const Page = async ({ params }: PageProps) => {
     },
   });
 
-  //find memebrship status of user
+  //find membership status of user
   const membership = await prisma.membership.findFirst({
     where: {
       group: {
@@ -100,7 +100,7 @@ const Page = async ({ params }: PageProps) => {
           <h1 className="text-2xl font-semibold">
             {group.name} <GroupBadge type={group.type as GroupType} />
           </h1>
-          <MembershipButton status={isMember} creator={group.Creator} />
+          <MembershipButton status={isMember} group={group} />
         </CardContent>
       </Card>
 

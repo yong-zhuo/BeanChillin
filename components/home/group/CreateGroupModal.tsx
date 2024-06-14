@@ -184,13 +184,6 @@ const CreateGroupModal = () => {
                 forRegister={field.forRegister}
               />
             ))}
-            <GroupImages
-              setBanner={setBanner}
-              setPicture={setPicture}
-              picture={picture}
-              banner={banner}
-              setValue={setValue}
-            />
             <Select
               onValueChange={(value) => setValue("type", value)}
               value={watch("type")}
@@ -224,6 +217,16 @@ const CreateGroupModal = () => {
             </Select>
             {/*Using hidden input to detect Select values, might need to change*/}
             <input type="hidden" name="type" />
+            <div className="mt-7">
+              <GroupImages
+                setBanner={setBanner}
+                setPicture={setPicture}
+                picture={picture}
+                banner={banner}
+                setValue={setValue}
+              />
+            </div>
+            
             <Button
               text="Create"
               addClass="bg-pri text-sec transform hover:-translate-y-1 transition duration-400 hover:animate-pulse shadow"

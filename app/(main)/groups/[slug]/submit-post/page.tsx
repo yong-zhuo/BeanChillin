@@ -1,4 +1,6 @@
 import Button from '@/components/common-ui/button/Button'
+import prisma from '@/lib/prisma';
+import { notFound } from 'next/navigation';
 import React from 'react'
 
 export const metadata = {
@@ -14,12 +16,12 @@ interface PageProps {
 
 const page =  async ({params}: PageProps) => {
     //Logic to check if group exists
-    /*const group = await prisma.group.findFirst({
+    const group = await prisma.group.findFirst({
         where: {
             name: params.slug,
         },
-    })*/
-    //if (!group) return notFound()
+    })
+    if (!group) return notFound()
         return (
             <div className='flex flex-col items-start gap-6'>
               

@@ -35,6 +35,8 @@ export async function POST(req: Request) {
             },
         });
 
+        return new Response("Left group", { status: 200 });
+
     } catch (e) {
         return new Response("Could not leave group", { status: 500 });
     }
