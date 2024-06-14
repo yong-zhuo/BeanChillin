@@ -10,6 +10,7 @@ export async function postData(formData: FormData) {
     const message = formData.get("message");
     const sender_id = formData.get("sender_id");
     const receiver_id = formData.get("receiver_id");
+    const key = formData.get("key");
 
     if (typeof message === 'string' && message.trim().length !== 0) {
         const data = await prisma.message.create({
@@ -36,7 +37,7 @@ export async function postData(formData: FormData) {
             useTLS: true,
         });
 
-        pusher.trigger('my-channel', "my-event", {
+        pusher.trigger(key, "my-event", {
             message: `${JSON.stringify(data)}\n\n`,
         });
     }
