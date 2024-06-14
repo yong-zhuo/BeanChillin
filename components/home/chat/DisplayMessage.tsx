@@ -6,6 +6,7 @@ import Pusher from 'pusher-js';
 import React from "react";
 
 
+
 export interface ChatSession {
     data: never[] | {
         messages: {

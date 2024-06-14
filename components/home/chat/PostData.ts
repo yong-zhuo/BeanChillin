@@ -21,7 +21,7 @@ export async function postData(formData: FormData) {
                 receiver_id: receiver_id as string
             },
             include: {
-                User: {
+                user: {
                     select: {
                         name: true
                     }

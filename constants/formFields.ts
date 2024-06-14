@@ -112,16 +112,16 @@ const bioFields = [
 const createGroupFields = [
     {
         labelText: "Group Name",
-        id: "groupName",
-        name: "groupName",
+        id: "name",
+        name: "name",
         type: "text",
         placeholder: "Enter group name",
         forRegister: true
     },
     {
         labelText: "Group Description",
-        id: "groupDescription",
-        name: "groupDescription",
+        id: "description",
+        name: "description",
         type: "text",
         placeholder: "Enter group description",
         forRegister: true

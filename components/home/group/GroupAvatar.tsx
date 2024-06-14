@@ -8,7 +8,7 @@ import { AvatarProps } from "@radix-ui/react-avatar";
 
 //to be replaced with actual group data
 interface GroupProps extends AvatarProps {
-    group: boolean
+    group?: boolean
     img: string
 }
 
