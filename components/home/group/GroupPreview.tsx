@@ -1,27 +1,32 @@
 'use client'
 import { Card, CardHeader } from "@/components/common-ui/shadcn-ui/card";
-import React from "react";
 import GroupAvatar from "./GroupAvatar";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
 import Button from "@/components/common-ui/button/Button";
-import { Badge } from "@/components/common-ui/shadcn-ui/badge";
 import GroupBadge from "./GroupBadge";
 import { GroupType } from "@/types/groupType";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Group } from "@prisma/client";
+import { getMemberCount } from "@/lib/group/groupActions";
+import { useEffect, useRef, useState } from "react";
 
-//TODO: remove placeholders and add data
 
-type GroupProps = {
-  name?: string;
-  members?: number;
-  type?: GroupType;
-  yourGroup?: boolean;
-};
-//TODO: Add logic for Groupavatar to have a fallback image
-//TODO: Add logic for button to leave group
-const GroupPreview = (props: GroupProps) => {
-  //badge colours
+
+const GroupPreview = ({group}: {group: Group}) => {
+  
+  const [memberCount, setMemberCount] = useState<number | null>(null);
+ 
+  
   const router = useRouter();
+  useEffect(() => {
+    
+    const fetchMemberCount = async () => {
+      const count = await getMemberCount(group.id);
+      setMemberCount(count);
+      
+    }
+    fetchMemberCount();
+  }, [group]);
 
   return (
     <>
@@ -31,16 +36,16 @@ const GroupPreview = (props: GroupProps) => {
             <div className="flex items-center">
               <GroupAvatar
                 group={true}
-                img="/placeholder/pl3.png"
+                img={group.picture || "/placeholder/pl3.png"}
                 className="rounded-md border-2 border-pri h-16 w-16 xl:h-20 xl:w-20"
               />
               <div className="flex w-2/3 flex-col xl:w-4/5 items-center lg:items-start">
                 <div className="ml-4 font-bold xl:text-2xl flex flex-col lg:flex-row justify-between items-center">
-                  {props.name}
-                  <GroupBadge type={props.type}/>
+                  {group.name}
+                  <GroupBadge type={group.type as GroupType}/>
                 </div>
                 <div className="ml-4 text-sm font-light">
-                  Members: {props.members}
+                  Members: {memberCount}
                 </div>
               </div>
             </div>
@@ -49,21 +54,8 @@ const GroupPreview = (props: GroupProps) => {
                 text="View"
                 action="button"
                 addClass="bg-pri text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
-                handleClick={() => {router.push(`/groups/${props.name}`)}}
-              />
-              {props.yourGroup ? (
-                <Button
-                  text="Delete"
-                  action="button"
-                  addClass="bg-red-400 text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
-                />
-              ) : (
-                <Button
-                  text="Leave "
-                  action="button"
-                  addClass="bg-red-400 text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
-                />
-              )}
+                handleClick={() => {router.push(`/groups/${group.name}`)}}
+              /> 
             </div>
           </div>
         </CardHeader>

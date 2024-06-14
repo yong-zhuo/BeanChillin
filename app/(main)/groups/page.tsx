@@ -2,6 +2,8 @@ import Image from "next/image";
 import CreateGroupModal from "@/components/home/group/CreateGroupModal";
 import ViewGroupTabs from "@/components/home/group/ViewGroupTabs";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
+import { getServerSession } from "next-auth";
+import { Oauth } from "@/lib/users/OAuth";
 
 export const metadata = {
   title: "Groups | BeanChillin",
@@ -10,6 +12,10 @@ export const metadata = {
 
 
 const GroupPage = async () => {
+
+  
+
+
   return (
     <div className="container mx-auto mt-3 w-5/6 px-12">
       <h2 className="text-3xl font-extrabold">Groups</h2>
