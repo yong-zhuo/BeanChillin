@@ -8,7 +8,7 @@ interface ChatFormProps {
     data: {
         sender_id: string | null | undefined;
         receiver_id: string | null | undefined;
-        key: string | undefined;
+        key: string | null| undefined;
     }
 }
 

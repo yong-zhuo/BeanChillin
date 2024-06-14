@@ -14,13 +14,13 @@ export interface ChatSession {
             id: string;
             sender_id: string | null;
             receiver_id: string | null;
-            User: {
+            user: {
                 name: string | null;
             } | null;
             createdAt: Date;
         }[];
         friendship: {
-            key: string;
+            key: string | null;
             status: string;
             sender_id: string | null;
         } | null;
