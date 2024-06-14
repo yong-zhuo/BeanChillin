@@ -3,17 +3,20 @@ import prisma from "@/lib/prisma";
 import ChatForm from "./ChatForm";
 import DisplayMessage from "./DisplayMessage";
 import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
-import useChatSession from "@/hooks/useChatSession";
-import { useEffect } from "react";
-
 
 export async function getMessages(emails: string[]) {
 
     try {
-        const data = await prisma.message.findMany({
+        const messages = await prisma.message.findMany({
             where: {
-                email: emails[0],
-                receiver_id: emails[1],
+                OR: [{
+                    sender_id: emails[0],
+                    receiver_id: emails[1]
+                },
+                {
+                    sender_id: emails[1],
+                    receiver_id: emails[0]
+                }]
             },
             select: {
                 message: true,
@@ -32,6 +35,23 @@ export async function getMessages(emails: string[]) {
             },
             take: 50,
         });
+
+        const friendship = await prisma.friendship.findFirst({
+            where: {
+                sender_id: emails[0],
+                receiver_id: emails[1]
+            },
+            select: {
+                key: true,
+                status: true,
+                sender_id: true,
+                receiver_id: true,
+            }
+        });
+        const data = {
+            messages: messages,
+            friendship: friendship
+        }
         return data;
     }
     catch (e) {
@@ -42,19 +62,24 @@ export async function getMessages(emails: string[]) {
 
 export const dynamic = 'force-dynamic';
 
-
-//TODO: CHANGE STATIC INFO
 export default async function Chat() {
-
-    const data = await getMessages(['beanchillin3@gmail.com', 'admin1@gmail.com']);
-
+    const data = await getMessages(['beanchillin3@gmail.com', 'DragonClaw@gmail.com']);
+    const dataMessage = Array.isArray(data) ? [] : data?.messages ? data.messages : [];
+    const dataFriendship = Array.isArray(data) ? null : data?.friendship ? data.friendship : null;
+    const obj = {
+        sender_id: dataFriendship?.sender_id,
+        receiver_id: dataFriendship?.receiver_id,
+        key: dataFriendship?.key
+    }
     return (
 
-        <ScrollArea className="bg-sec flex flex-col justify-center h-[1160px]">
+        <ScrollArea className="bg-sec flex flex-col justify-center h-[1160px]" id="chat">
             <DisplayMessage
                 data={data}
             />
-            <ChatForm />
+            <ChatForm
+                data={obj}
+            />
         </ScrollArea>
     )
 }

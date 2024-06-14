@@ -90,6 +90,7 @@ export const Oauth: NextAuthOptions = {
                         numbers: true
                     });
                     const googleProfile = profile as GoogleProfile;
+                    console.log("IM HERE!!!!!!!!");
                     //If user is not in database, need to create info first
                     const isCreate = await prisma.user.create({
                         data: {
