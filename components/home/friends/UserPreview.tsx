@@ -2,23 +2,21 @@
 
 import UserAvatar from "@/components/common-ui/misc/UserAvatar";
 import { Card, CardHeader } from "@/components/common-ui/shadcn-ui/card";
-import GroupBadge from "../group/GroupBadge";
 import Button from "@/components/common-ui/button/Button";
-import { useContext } from "react";
-import { UserContext } from "../UserContext";
 import { UserMinus, UserPlus } from "lucide-react";
 import { Badge } from "@/components/common-ui/shadcn-ui/badge";
+import { User } from "@prisma/client";
 
 type UserPreviewProps = {
-  name?: string;
-  bio?: string;
+  creator?: User | null;
   friends?: number;
   friended?: boolean;
+  currUser?: User | null;
 };
 
 const UserPreview = (props: UserPreviewProps) => {
   //to change useravatar user to creator
-  const {user} = useContext(UserContext);
+  
   return (
     <Card className="mb-3 mt-3">
       <CardHeader>
@@ -26,22 +24,22 @@ const UserPreview = (props: UserPreviewProps) => {
           <div className="flex items-center flex-col md:flex-row">
             <UserAvatar
               user={{
-                name: user?.name || null,
-                imageUrl: user?.imageUrl || null,
+                name: props.creator?.name || null,
+                imageUrl: props.creator?.imageUrl || null,
               }}
               className="h-16 w-16 rounded-full border-2 border-pri md:h-20 md:w-20"
             />
             <div className="flex w-2/3 flex-col items-center md:w-4/5 md:items-start">
               <div className="lg:flex lg:flex-row lg:items-center">
                   <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl">
-                    {props.name}
+                    {props.creator?.name}
                   </div>
                   <div className="md:ml-4 text-md font-medium">
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>
               <div className="md:ml-4 text-md font-light">
-                {props.bio}
+                {props.creator?.bio}
               </div>
             </div>
           </div>

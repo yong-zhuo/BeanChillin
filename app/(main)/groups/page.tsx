@@ -10,17 +10,15 @@ export const metadata = {
   description: "Welcome to BeanChillin!",
 };
 
-
 const GroupPage = async () => {
-
-  
-
-
   return (
     <div className="container mx-auto mt-3 w-5/6 px-12">
-      <h2 className="text-3xl font-extrabold">Groups</h2>
+      <h2 className="w-fit text-3xl font-extrabold flex flex-row gap-2 items-center">
+        Groups
+        <Image src="/misc/group.svg" alt="group" width={30} height={30} />
+      </h2>
       <div className="order-first my-6 h-fit rounded-lg md:order-last">
-        <div className="bg-pri px-6 py-1 rounded-lg shadow-md">
+        <div className="rounded-lg bg-pri px-6 py-1 shadow-md">
           <p className="flex items-center gap-1.5 py-3 font-semibold text-sec">
             <Image
               src="/home/create.svg"
@@ -44,7 +42,7 @@ const GroupPage = async () => {
           </div>
         </dl>
       </div>
-      <Separator className="bg-pri mb-2" />
+      <Separator className="mb-2 bg-pri" />
       <div className="mt-1">
         <ViewGroupTabs />
       </div>

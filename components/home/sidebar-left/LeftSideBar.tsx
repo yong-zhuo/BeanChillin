@@ -1,7 +1,7 @@
 import ProfileCard from "./ProfileCard";
 import TabsCard from "./TabsCard";
 
-const LeftSideBar = () => {
+const LeftSideBar = async () => {
   return (
     <div className="sticky hidden md:block justify-start space-y-16 flex-col w-2/5 lg:w-1/4 mt-10 pt-12">
       <ProfileCard />

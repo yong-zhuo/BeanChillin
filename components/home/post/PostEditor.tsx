@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
-
-const PostEditor = (props: Props) => {
-  return (
-    <div>PostEditor</div>
-  )
+interface PostEditorProps {
+  groupId: string
 }
 
-export default PostEditor
+const PostEditor = ({groupId} : PostEditorProps) => {
+  return <div>PostEditor</div>;
+};
+
+export default PostEditor;

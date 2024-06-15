@@ -34,6 +34,7 @@ import { UserContext } from "../UserContext";
 import { useRouter } from "next/navigation";
 import GroupImages from "./GroupImages";
 import { groupCloudUpload } from "@/lib/cloudinary/CloudinaryUpload";
+import Loading from "@/components/common-ui/misc/Loading";
 
 const fields = createGroupFields;
 let fieldsState: fieldState = {};
@@ -82,7 +83,7 @@ const CreateGroupModal = () => {
     setIsLoading(true);
 
     try {
-     // console.log("Payload to send:", JSON.stringify(payload));
+      // console.log("Payload to send:", JSON.stringify(payload));
       const response = await fetch("/api/group", {
         method: "POST",
         headers: {
@@ -91,10 +92,7 @@ const CreateGroupModal = () => {
         body: JSON.stringify(payload),
       });
 
-
       if (!response.ok) {
-        
-        
         if (response.status === 409) {
           toast({
             variant: "destructive",
@@ -125,17 +123,19 @@ const CreateGroupModal = () => {
           });
         }
       } else {
+        //might change this logic, get name and reroute them to their new group page
+        const name = await response.json();
+        await Promise.all([
+          groupCloudUpload(data.picture, name, "groupPicture"),
+          groupCloudUpload(data.banner, name, "banner"),
+        ]);
         toast({
           variant: "success",
           title: "Group Successfully created",
-          description: "Start posting in your Group!",
+          description: "Please wait while we redirect you to your new Group.",
         });
-        //might change this logic, get name and reroute them to their new group page
-        const name = await response.json();
-        await Promise.all([groupCloudUpload(data.picture, name, "groupPicture"), groupCloudUpload(data.banner, name, "banner")]);
         router.push(`/groups/${name}`);
       }
-      
     } catch (e) {
       console.error(e);
       toast({
@@ -162,7 +162,13 @@ const CreateGroupModal = () => {
             handleClick={() => setOpen(true)}
           />
         </DialogTrigger>
-        <DialogContent className="max-h-[90vh] w-[300px] overflow-y-auto sm:w-[800px] sm:max-w-[425px] ">
+        <DialogContent
+          className="max-h-[90vh] w-[300px] overflow-y-auto sm:w-[800px] sm:max-w-[425px] "
+          onInteractOutside={(e) => {
+            if (isLoading)
+            e.preventDefault();
+          }}
+        >
           <DialogHeader>
             <DialogTitle>Create your Group</DialogTitle>
             <DialogDescription>
@@ -226,7 +232,7 @@ const CreateGroupModal = () => {
                 setValue={setValue}
               />
             </div>
-            
+
             <Button
               text="Create"
               addClass="bg-pri text-sec transform hover:-translate-y-1 transition duration-400 hover:animate-pulse shadow"

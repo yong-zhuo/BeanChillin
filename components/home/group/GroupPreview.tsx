@@ -1,30 +1,25 @@
-'use client'
+"use client";
 import { Card, CardHeader } from "@/components/common-ui/shadcn-ui/card";
 import GroupAvatar from "./GroupAvatar";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
-import Button from "@/components/common-ui/button/Button";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
 import GroupBadge from "./GroupBadge";
 import { GroupType } from "@/types/groupType";
-import { useRouter } from "next/navigation";
 import { Group } from "@prisma/client";
 import { getMemberCount } from "@/lib/group/groupActions";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { ArrowBigRight, Loader2 } from "lucide-react";
 
-
-
-const GroupPreview = ({group}: {group: Group}) => {
-  
+const GroupPreview = ({ group }: { group: Group }) => {
   const [memberCount, setMemberCount] = useState<number | null>(null);
- 
-  
-  const router = useRouter();
+
+
   useEffect(() => {
-    
     const fetchMemberCount = async () => {
       const count = await getMemberCount(group.id);
       setMemberCount(count);
-      
-    }
+    };
     fetchMemberCount();
   }, [group]);
 
@@ -32,30 +27,33 @@ const GroupPreview = ({group}: {group: Group}) => {
     <>
       <Card className="mb-3 mt-3">
         <CardHeader>
-          <div className="justify-center xl:flex xl:flex-row xl:justify-between">
+          <div className="justify-center lg:flex lg:flex-row lg:justify-between">
             <div className="flex items-center">
               <GroupAvatar
                 group={true}
                 img={group.picture || "/placeholder/pl3.png"}
-                className="rounded-md border-2 border-pri h-16 w-16 xl:h-20 xl:w-20"
+                className="h-16 w-16 rounded-md border-2 border-pri xl:h-20 xl:w-20"
               />
-              <div className="flex w-2/3 flex-col xl:w-4/5 items-center lg:items-start">
-                <div className="ml-4 font-bold xl:text-2xl flex flex-col lg:flex-row justify-between items-center">
+              <div className="flex w-2/3 flex-col items-center lg:items-start xl:w-4/5">
+                <div className="ml-4 flex flex-col items-center justify-between font-bold lg:flex-row xl:text-2xl">
                   {group.name}
-                  <GroupBadge type={group.type as GroupType}/>
+                  <GroupBadge type={group.type as GroupType} />
                 </div>
-                <div className="ml-4 text-sm font-light">
-                  Members: {memberCount}
+                <div className="ml-4 text-sm font-light flex flex-row items-center gap-1">
+                  Members: {memberCount === null? <Loader2 className="h-4 w-4 animate-spin"/> : memberCount}
                 </div>
               </div>
             </div>
-            <div className="flex h-1/4 w-full flex-row space-x-12 xl:h-fit xl:w-fit xl:space-x-5  ">
+            <div className="flex h-1/4 w-full flex-row space-x-12 lg:h-fit lg:w-fit lg:space-x-5 justify-center items-center lg:items-stretch lg:justify-end">
               <Button
-                text="View"
-                action="button"
-                addClass="bg-pri text-white hover:bg-slate-400 items-center hover:shadow-lg hover:scale-105 transition"
-                handleClick={() => {router.push(`/groups/${group.name}`)}}
-              /> 
+                asChild
+                className="group relative mt-9 flex items-center justify-center border border-transparent bg-pri  px-4 py-2 text-sm font-medium text-white transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg"
+              >
+                <Link href={`/groups/${group.name}`}>
+                  View
+                  <ArrowBigRight />
+                </Link>
+              </Button>
             </div>
           </div>
         </CardHeader>

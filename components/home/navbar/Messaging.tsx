@@ -1,20 +1,17 @@
-"use client"
-import Button from "@/components/common-ui/button/Button";
+"use client";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
 import { MessageCircle } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Messaging = () => {
   const router = useRouter();
   return (
-    <div>
-      <Button
-        isCircular
-        action="button"
-        orientation="left"
-        handleClick={() => router.push('/chat')}
-        addClass="h-8 w-8 md:h-12 md:w-12 border-2 border-pri cursor-pointer focus:outline-none focus:ring-0 hover:ring-1 md:hover:ring-2 ring-pri m-0 p-0 transition translate-y-0 hover:-translate-y-1  md:hover:-translate-y-1 flex items-center justify-center shadow-md bg-white"
-      >
-        <MessageCircle className="text-pri h-6 w-6 md:h-9 md:w-9" />
+    <div className=" flex aspect-square h-9 w-9 cursor-pointer items-center  justify-center overflow-hidden rounded-full border-2 border-pri bg-white p-0  px-4 py-2 text-sm font-medium shadow-md ring-pri transition hover:-translate-y-1 hover:ring-1 focus:outline-none focus:ring-0  md:h-12 md:w-12 md:hover:-translate-y-1 md:hover:ring-2">
+      <Button asChild className="" variant={"default"}>
+        <Link href={"/chat"}>
+          <MessageCircle className="h-6 w-6 text-pri md:h-8 md:w-8" />
+        </Link>
       </Button>
     </div>
   );
