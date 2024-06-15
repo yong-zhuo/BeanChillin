@@ -5,19 +5,21 @@ import { getServerSession } from "next-auth";
 
 
 export default async function GET() {
-
-    const session = await getServerSession(Oauth);
-
-    if (!session?.user) {
-        return new Response('Unauthorized', { status: 401 });
-    }
-
-    const res = await prisma.friendship.count({
-        where: {
-            sender_id: session?.user?.email as string,
-            status: 'Friend'
+    try {
+        const session = await getServerSession(Oauth);
+        if (!session?.user) {
+            return new Response("Unauthorized", { status: 401 });
         }
-    });
-
-    return Response.json(res);
+        const res = await prisma.friendship.count({
+            where: {
+                sender_id: session?.user?.email as string,
+                status: 'Friend'
+            }
+        });
+        return Response.json(res);
+    } catch (e) {
+        
+        return new Response('Could not get Friend count', {status: 500})
+    }
+    
 }
