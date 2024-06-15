@@ -1,11 +1,8 @@
 import Button from "@/components/common-ui/button/Button";
-import { Card } from "@/components/common-ui/shadcn-ui/card";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
 import PostEditor from "@/components/home/post/PostEditor";
 import prisma from "@/lib/prisma";
-import { Oauth } from "@/lib/users/OAuth";
-import { SquarePen } from "lucide-react";
-import { getServerSession } from "next-auth";
+import { ArrowRightToLine, SquarePen } from "lucide-react";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -51,17 +48,20 @@ const page = async ({ params }: PageProps) => {
           <div className="flex justify-between gap-x-4 py-3 ">
             <p className="text-zinc-500">
               Ready to share something new? Fill in your title and description
-              below. You can also add images or links to make your post more
-              engaging.
+              below. 
+              <br/>
+              <br/>
+              You can also add images or links using the inline text block editor to make your post more
+              engaging!
             </p>
           </div>
         </dl>
       </div>
       <Separator className="mb-2 bg-pri" />
       <PostEditor groupId={group.id} />
-      <div className="flex w-full justify-end">
-        <Button action="submit" addClass="w-full">
-          Post
+      <div className="flex w-full justify-end -mt-5 mb-5">
+        <Button action="submit" addClass="w-fit bg-pri text-white hover:bg-slate-500 transition hover:scale-105" formId="group-post">
+          Post <ArrowRightToLine />
         </Button>
       </div>
     </div>

@@ -49,3 +49,22 @@ export async function groupCloudUpload(file: File | undefined, groupName:string,
 
   await postimage({ imageUrl: data.secure_url, groupName: groupName }, groupUploadType)
 }
+
+export async function postCloudUpload(file: File) {
+  
+    if (file === undefined) {
+      return;
+    }
+    const form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', 'post_image')
+    const data = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+      {
+        method: 'POST',
+        body: form,
+      }
+    ).then(res => res.json()).catch(e => console.log(e));
+  
+    return data.secure_url
+}

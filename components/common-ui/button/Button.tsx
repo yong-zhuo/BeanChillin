@@ -15,6 +15,7 @@ interface ButtonProps {
   state?: boolean;
   children?: React.ReactNode;
   loadText?: string;
+  formId?: string;
 }
 
 const buttonClass =
@@ -40,6 +41,7 @@ export default function Button(props: ButtonProps) {
       className={classes}
       onClick={props.handleClick}
       disabled={props.state}
+      form={props.formId}
     >
       {props.state ? (
         <div className="flex flex-row gap-2 items-center overflow-hidden whitespace-nowrap">
