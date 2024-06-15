@@ -4,7 +4,7 @@ import { Oauth } from "@/lib/users/OAuth";
 import { getServerSession } from "next-auth";
 
 
-export default async function GET() {
+export async function GET() {
     try {
         const session = await getServerSession(Oauth);
         if (!session?.user) {
