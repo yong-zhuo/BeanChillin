@@ -4,6 +4,7 @@ import ChatForm from "./ChatForm";
 import DisplayMessage from "./DisplayMessage";
 import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
 import { useEffect } from "react";
+import { symbol } from "zod";
 
 
 
@@ -66,7 +67,7 @@ export async function getMessages(emails: string[]) {
 export const dynamic = 'force-dynamic';
 
 export default async function Chat() {
-    const data = await getMessages(['beanchillin3@gmail.com', 'DragonClaw@gmail.com']);
+    const data = await getMessages(['beanchillin3@gmail.com', 'Dragon@gmail.com']);
     const dataMessage = Array.isArray(data) ? [] : data?.messages ? data.messages : [];
     const dataFriendship = Array.isArray(data) ? null : data?.friendship ? data.friendship : null;
     const obj = {

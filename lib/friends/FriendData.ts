@@ -5,3 +5,4 @@ export default interface Data {
     id: string; //friend request id
 }
 
+
