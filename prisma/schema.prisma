@@ -67,8 +67,10 @@ model User {
   accounts            Account[]
   sessions            Session[]
   Message             Message[]
-  FriendRequest       Friendship[]
+  FriendRequest       Friendship[]         @relation("SenderRelation")
   FriendList          FriendList[]
+  friendshipsReceived Friendship[]         @relation("ReceiverRelation")
+  CommentVote         CommentVote[]
 }
 
 model PasswordResetToken {
@@ -135,7 +137,8 @@ model Comment {
   replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   replies   Comment[] @relation("ReplyTo")
 
-  commentId String?
+  commentId   String?
+  CommentVote CommentVote[]
 }
 
 model Vote {
@@ -148,10 +151,20 @@ model Vote {
   @@id([userId, postId])
 }
 
+model CommentVote {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  type      VoteType
+
+  @@id([userId, commentId])
+}
+
 model Message {
   id          String   @id @default(uuid())
   message     String
-  user        User?    @relation(fields: [email], references: [email])
+  user        User?    @relation(fields: [receiver_id], references: [id])
   email       String
   sender_id   String?
   receiver_id String?
@@ -163,7 +176,8 @@ model Friendship {
   sender_id   String
   receiver_id String
   status      String
-  user        User?   @relation(fields: [sender_id], references: [id])
+  sender      User?   @relation("SenderRelation", fields: [sender_id], references: [id])
+  receiver    User?   @relation("ReceiverRelation", fields: [receiver_id], references: [id])
   key         String?
 
   @@unique([sender_id, receiver_id])
