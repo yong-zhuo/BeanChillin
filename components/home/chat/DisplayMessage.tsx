@@ -4,29 +4,26 @@ import { useEffect, useRef, useState } from "react";
 import moment from 'moment';
 import Pusher from 'pusher-js';
 import React from "react";
-import ChatHeader from "./ChatHeader";
 
 
 
 export interface ChatSession {
     data: never[] | {
         messages: {
-            id: string;
             message: string;
+            id: string;
+            sender_id: string | null;
+            receiver_id: string | null;
+            user: {
+                name: string | null;
+            } | null;
             createdAt: Date;
-            sender_id?: string | undefined;
-            receiver_id?: string | undefined;
         }[];
         friendship: {
-            status: string;
             key: string | null;
-            sender_id: string;
-            receiver_id: string;
-            receiver: {
-                name: string | null;
-                imageUrl: string | null;
-            } | null;
-        } | null
+            status: string;
+            sender_id: string | null;
+        } | null;
     }
 }
 export default function DisplayMessage({ data }: ChatSession) {
@@ -35,9 +32,6 @@ export default function DisplayMessage({ data }: ChatSession) {
     const [totalComments, setTotalComments] = useState(messages);
     const messageEndRef = useRef<HTMLInputElement>(null);
     const key = friendship?.key as string || "room1";
-    const recipient_name = friendship?.receiver?.name === undefined ? "" : friendship?.receiver?.name;
-    const recipient_img = friendship?.receiver?.name === undefined ? "" : friendship?.receiver?.imageUrl;
-
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
@@ -60,14 +54,11 @@ export default function DisplayMessage({ data }: ChatSession) {
         return () => {
             pusher.unsubscribe(key);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div className="p-6 flex-grow max-h-screen overflow-y-auto">
-            <ChatHeader
-                params={{ name: recipient_name, imageUrl: recipient_img }}
-            />
             <div className="flex flex-col gap-4">
                 {totalComments.map((msg, index): JSX.Element => (
                     <React.Fragment key={index}>

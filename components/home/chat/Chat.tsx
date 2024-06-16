@@ -5,30 +5,32 @@ import DisplayMessage from "./DisplayMessage";
 import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
 import { useEffect } from "react";
 import { symbol } from "zod";
-import { messaageArrayValidator } from "@/lib/schemas/messageSchema";
 
-interface ChatParams {
-    sender_id: string;
-    receiver_id: string;
-}
 
-export async function getMessages(ids: string[]) {
+
+export async function getMessages(emails: string[]) {
+
     try {
-        const dbMessages = await prisma.message.findMany({
+        const messages = await prisma.message.findMany({
             where: {
                 OR: [{
-                    sender_id: ids[0],
-                    receiver_id: ids[1]
+                    sender_id: emails[0],
+                    receiver_id: emails[1]
                 },
                 {
-                    sender_id: ids[1],
-                    receiver_id: ids[0]
+                    sender_id: emails[1],
+                    receiver_id: emails[0]
                 }]
             },
             select: {
                 message: true,
                 id: true,
                 createdAt: true,
+                user: {
+                    select: {
+                        name: true
+                    }
+                },
                 sender_id: true,
                 receiver_id: true
             },
@@ -38,24 +40,16 @@ export async function getMessages(ids: string[]) {
             take: 50,
         });
 
-        const messages = messaageArrayValidator.parse(dbMessages);
-
         const friendship = await prisma.friendship.findFirst({
             where: {
-                sender_id: ids[0],
-                receiver_id: ids[1]
+                sender_id: emails[0],
+                receiver_id: emails[1]
             },
             select: {
                 key: true,
                 status: true,
                 sender_id: true,
                 receiver_id: true,
-                receiver: {
-                    select: {
-                        name: true,
-                        imageUrl: true
-                    }
-                }
             }
         });
         const data = {
@@ -72,9 +66,8 @@ export async function getMessages(ids: string[]) {
 
 export const dynamic = 'force-dynamic';
 
-export default async function Chat({ params }: { params: ChatParams }) {
-    const { sender_id, receiver_id } = params;
-    const data = await getMessages([sender_id, receiver_id]);
+export default async function Chat() {
+    const data = await getMessages(['beanchillin3@gmail.com', 'Dragon@gmail.com']);
     const dataMessage = Array.isArray(data) ? [] : data?.messages ? data.messages : [];
     const dataFriendship = Array.isArray(data) ? null : data?.friendship ? data.friendship : null;
     const obj = {
@@ -83,6 +76,7 @@ export default async function Chat({ params }: { params: ChatParams }) {
         key: dataFriendship?.key
     }
     return (
+
         <ScrollArea className="bg-sec flex flex-col justify-center h-[1160px]" id="chat">
             <DisplayMessage
                 data={data}

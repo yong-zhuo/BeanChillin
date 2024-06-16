@@ -13,14 +13,14 @@ export async function GET() {
         }
         const res = await prisma.friendship.count({
             where: {
-                sender_id: session?.user?.id as string,
+                sender_id: session?.user?.email as string,
                 status: 'Friend'
             }
         });
         return Response.json(res);
     } catch (e) {
-
-        return new Response('Could not get total Friend count', { status: 500 })
+        
+        return new Response('Could not get total Friend count', {status: 500})
     }
-
+    
 }

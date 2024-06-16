@@ -4,19 +4,9 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '../prisma';
 import bcrypt from 'bcrypt'
 
-export interface CustomSessionUser {
-    id?: string; // Add other properties as needed
-    name?: string;
-    email?: string;
-    imageUrl?: string; // Add the 'imageUrl' property
-}
-
-export interface CustomToken {
-    id?: string;
-    picture?: string;
-}
 
 export const Oauth: NextAuthOptions = {
+
     session: {
         strategy: 'jwt',
         maxAge: 60 * 60, //5 seconds. Set to 4 hours on production.
@@ -71,6 +61,7 @@ export const Oauth: NextAuthOptions = {
     pages: {
         signIn: '/login',
     },
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async signIn({ account, profile }) {
             if (account && account.provider === "credentials") {
@@ -96,10 +87,10 @@ export const Oauth: NextAuthOptions = {
                     const generator = require('generate-password');
                     const password = generator.generate({
                         length: 32,
-                        numbers: true,
-                        symbol: true
+                        numbers: true
                     });
                     const googleProfile = profile as GoogleProfile;
+                    console.log("IM HERE!!!!!!!!");
                     //If user is not in database, need to create info first
                     const isCreate = await prisma.user.create({
                         data: {
@@ -119,28 +110,5 @@ export const Oauth: NextAuthOptions = {
             }
             return false;
         },
-        jwt: async ({ token, user }) => {
-            const user_id = (await prisma.user.findFirst({
-                where: {
-                    email: user?.email
-                },
-                select: {
-                    id: true,
-                    imageUrl: true,
-                }
-            }));
-            if (user_id) {
-                token.id = user_id.id;
-                token.picture = user_id.imageUrl;
-            }
-            return token;
-        },
-        session: async ({ session, token }) => {
-            if (token && session.user) {
-                session.user.id = token.id;
-                session.user.image = token.picture;
-            }
-            return session;
-        }
     }
 }

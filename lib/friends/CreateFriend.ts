@@ -12,6 +12,7 @@ export default async function CreateFriend(data: FriendData) {
 
     try {
         const info = await ReadFriend(data);
+        console.log(info);
         //If there is a record and there is either a friend request or are friends
         if (info !== null && info.status !== 'NotFriend') {
             return null;
@@ -29,12 +30,19 @@ export default async function CreateFriend(data: FriendData) {
 
             if (self_id === null) { //if there is no record, make one
 
+                const generator = require('generate-password');
+                const password = generator.generate({
+                    length: 32,
+                    numbers: true,
+                    symbol: true
+                });
+
                 const res = await prisma.friendship.create({
                     data: {
                         sender_id,
                         receiver_id,
                         status: 'Pending',
-                        key: sender_id + "-" + receiver_id,
+                        key: password + sender_id + receiver_id,
                     }
                 });//Create 2 records for both users, Key HAS to be a common key
                 const res2 = await prisma.friendship.create({
@@ -42,7 +50,7 @@ export default async function CreateFriend(data: FriendData) {
                         sender_id: receiver_id,
                         receiver_id: sender_id,
                         status: 'NotFriend',
-                        key: sender_id + "-" + receiver_id,
+                        key: password + sender_id + receiver_id,
                     }
                 });
 
