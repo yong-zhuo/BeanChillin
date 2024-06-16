@@ -18,6 +18,8 @@ import GroupAvatar from "@/components/home/group/GroupAvatar";
 import GroupBadge from "@/components/home/group/GroupBadge";
 import MembershipButton from "@/components/home/group/MembershipButton";
 import { GroupType } from "@/types/groupType";
+import PostFeed from "@/components/home/post/PostFeed";
+
 
 export const metadata = {
   title: "Groups | BeanChillin",
@@ -76,6 +78,7 @@ const Page = async ({ params }: PageProps) => {
     },
   });
 
+
   if (!group) return notFound();
 
   return (
@@ -124,6 +127,7 @@ const Page = async ({ params }: PageProps) => {
         </TabsContent>
         <TabsContent value="Posts">
           <CreatePost session={session} />
+          <PostFeed initPosts={group.posts} groupName={group.name} />
         </TabsContent>
       </Tabs>
     </div>

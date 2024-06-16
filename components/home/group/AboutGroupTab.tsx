@@ -30,7 +30,7 @@ const AboutGroupTab = (props: AboutProps) => {
         <Separator className="bg-pri bg-opacity-30" />
         {props.creator?.id !== user?.id ? (
           <UserPreview
-            creator={props.creator}
+            otherUser={props.creator}
             friends={500}
             friended={true}
             currUser={user}

@@ -14,7 +14,7 @@ const CreatePost = ({ session }: { session: Session | null }) => {
   const pathname = usePathname();
 
   return (
-    <li className="overflow-hidden rounded-md bg-white shadow list-none mt-2">
+    <li className="overflow-hidden rounded-md bg-white shadow list-none mt-2 mb-4">
       <div className="flex h-full justify-between gap-6 px-6 py-4">
         <div className="relative">
           <UserAvatar

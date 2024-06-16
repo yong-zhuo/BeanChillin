@@ -8,7 +8,7 @@ import { Badge } from "@/components/common-ui/shadcn-ui/badge";
 import { User } from "@prisma/client";
 
 type UserPreviewProps = {
-  creator?: User | null;
+  otherUser?: User | null;
   friends?: number;
   friended?: boolean;
   currUser?: User | null;
@@ -24,22 +24,22 @@ const UserPreview = (props: UserPreviewProps) => {
           <div className="flex items-center flex-col md:flex-row">
             <UserAvatar
               user={{
-                name: props.creator?.name || null,
-                imageUrl: props.creator?.imageUrl || null,
+                name: props.otherUser?.name || null,
+                imageUrl: props.otherUser?.imageUrl || null,
               }}
               className="h-16 w-16 rounded-full border-2 border-pri md:h-20 md:w-20"
             />
             <div className="flex w-2/3 flex-col items-center md:w-4/5 md:items-start">
               <div className="lg:flex lg:flex-row lg:items-center">
                   <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl">
-                    {props.creator?.name}
+                    {props.otherUser?.name}
                   </div>
                   <div className="md:ml-4 text-md font-medium">
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>
               <div className="md:ml-4 text-md font-light">
-                {props.creator?.bio}
+                {props.otherUser?.bio}
               </div>
             </div>
           </div>
