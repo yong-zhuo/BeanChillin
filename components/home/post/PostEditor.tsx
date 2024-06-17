@@ -83,7 +83,7 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
       toast({
         title: "Post created!",
         description: "Your post has been successfully created!",
-        variant: "success",
+        variant: "event",
       });
     }
   };

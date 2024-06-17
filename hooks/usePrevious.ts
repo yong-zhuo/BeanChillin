@@ -1,11 +1,10 @@
-import { useRef } from "react"
+'use client'
+import { useEffect, useRef } from "react"
 
 export default function usePrevious(value: any) {
-    const currentRef = useRef(value)
-    const previousRef = useRef()
-    if (currentRef.current !== value) {
-        previousRef.current = currentRef.current
-        currentRef.current = value
-    }
-    return previousRef.current
+    const ref = useRef();
+      useEffect(() => {
+        ref.current = value;
+      });
+      return ref.current;
 }

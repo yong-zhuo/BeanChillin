@@ -127,7 +127,7 @@ const Page = async ({ params }: PageProps) => {
         </TabsContent>
         <TabsContent value="Posts">
           <CreatePost session={session} />
-          <PostFeed initPosts={group.posts} groupName={group.name} />
+          <PostFeed initPosts={group.posts} groupName={group.name} groupCreatorId={group.creatorId as string} />
         </TabsContent>
       </Tabs>
     </div>
