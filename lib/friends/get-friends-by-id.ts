@@ -1,11 +1,24 @@
+"use server"
+import { getServerSession } from "next-auth";
 import prisma from "../prisma";
+import { Oauth } from "../users/OAuth";
 
-export const getFriendsById = async (id: string) => {
+export const getFriendsById = async () => {
 
+    const session = await getServerSession(Oauth);
+    const email = session?.user?.email as string;
     try {
+        const findId = await prisma.user.findUnique({
+            where: {
+                email: email
+            },
+        });
+
+        const userId = findId?.id as string;
+
         const dbFriends = await prisma.friendship.findMany({
             where: {
-                sender_id: id,
+                sender_id: userId,
                 status: 'Friend'
             },
             select: {
