@@ -4,6 +4,7 @@ import GeneralFeed from "@/components/home/feed/GeneralFeed";
 
 
 
+
 const page = async () => {
   return (
     <div className="container mx-auto mt-3 w-5/6 px-12">

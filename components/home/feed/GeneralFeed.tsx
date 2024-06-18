@@ -19,7 +19,7 @@ const GeneralFeed = async () => {
         take: INFINITE_SCROLL_RESULTS,
     })
   return (
-   <PostFeed initPosts={posts}/>
+   <PostFeed initPosts={posts} feedType='general'/>
   )
 }
 

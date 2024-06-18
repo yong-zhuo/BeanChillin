@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import { postVoteSchema } from "@/lib/schemas/voteSchema"
+import { commentVoteSchema} from "@/lib/schemas/voteSchema"
 import { Oauth } from "@/lib/users/OAuth"
 import { getServerSession } from "next-auth"
 import { z } from "zod"
@@ -7,7 +7,7 @@ import { z } from "zod"
 export async function PATCH(req: Request) {
     try {
         const data = await req.json()
-        const { postId, voteType } = postVoteSchema.parse(data)
+        const { commentId, voteType } = commentVoteSchema.parse(data)
 
         const session = await getServerSession(Oauth)
 
@@ -16,36 +16,22 @@ export async function PATCH(req: Request) {
         }
 
         //check if user has already voted
-        const voteExist = await prisma.vote.findFirst({
+        const voteExist = await prisma.commentVote.findFirst({
             where: {
                 userId: data.userId,
-                postId: postId,
+                commentId: commentId,
             },
         })
 
-        const post = await prisma.post.findUnique({
-            where: {
-                id: postId,
-            },
-            include: {
-                author:true,
-                votes: true,
-            }
-        })
-
-        //if post does not exist
-        if (!post) {
-            return new Response("Post not found", { status: 404 })
-        }
 
         //if user has already voted
         if (voteExist) {
             //if user has voted the same type
             if (voteExist.type === voteType) {
-                await prisma.vote.delete({
+                await prisma.commentVote.delete({
                     where: {
-                        userId_postId: {
-                            postId: postId,
+                        userId_commentId: {
+                            commentId: commentId,
                             userId: data.userId,
                         }
                     },
@@ -54,10 +40,10 @@ export async function PATCH(req: Request) {
             }
 
             //if user has voted different type
-            await prisma.vote.update({
+            await prisma.commentVote.update({
                 where: {
-                    userId_postId: {
-                        postId: postId,
+                    userId_commentId: {
+                        commentId: commentId,
                         userId: data.userId,
                     }
                 },
@@ -72,11 +58,11 @@ export async function PATCH(req: Request) {
         }
 
 
-        //create new vote
-        await prisma.vote.create({
+        //create new vote if no existing vote
+        await prisma.commentVote.create({
             data: {
                 type: voteType,
-                postId: postId,
+                commentId: commentId,
                 userId: data.userId,
             },
         })

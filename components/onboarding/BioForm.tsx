@@ -23,7 +23,7 @@ const BioForm = (props: BioProps) => {
         heading="Tell us about yourself"
         paragraph="Add a short description of yourself"
       />
-      <div className="w-3/5 min-w-[400px]">
+      <div className="w-4/5 min-w-[400px] ">
         <label
           className="text-md flex flex-row justify-between font-semibold text-black"
           htmlFor="bio"
@@ -34,7 +34,7 @@ const BioForm = (props: BioProps) => {
           )}
         </label>
         <Textarea
-          className="resize-none shadow"
+          className="resize-none shadow h-[150px] lg:h-[200px] w-full"
           placeholder="Add your bio here"
           {...(props.register && props.register("bio"))}
         />

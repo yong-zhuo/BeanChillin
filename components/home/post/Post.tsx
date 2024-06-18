@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import EditorContent from "./EditorContent";
 import { Badge } from "@/components/common-ui/shadcn-ui/badge";
-import ClientPostVote from "../post-vote/ClientPostVote";
+import PostVote from "../post-vote/PostVote";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -86,7 +86,7 @@ const Post = ({
           </div>
         </div>
         <div className="flex items-start justify-center">
-          <ClientPostVote
+          <PostVote
             initVotesCount={votesCount}
             postId={post.id}
             initVote={currVote?.type}

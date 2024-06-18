@@ -6,7 +6,7 @@ export const postVoteSchema = z.object({
 })
 
 export const commentVoteSchema = z.object({
-  postId: z.string(),
+  commentId: z.string(),
   voteType: z.enum(['UPVOTE', 'DOWNVOTE']),
 })
 

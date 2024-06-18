@@ -2,24 +2,26 @@
 import { Button } from "@/components/common-ui/shadcn-ui/button";
 import usePrevious from "@/hooks/usePrevious";
 import { cn } from "@/lib/utils";
-import { VoteType } from "@prisma/client";
+import { CommentVote, VoteType } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { useRouter } from "next/navigation";
 
-type ClientPostVoteProps = {
-  postId: string;
+type PartialVote = Pick<CommentVote, "type">;
+
+interface CommentVotesProps  {
+  commentId: string;
   initVotesCount: number;
-  initVote?: VoteType | null;
+  initVote?: PartialVote;
 };
 
-const ClientPostVote = ({
-  postId,
+const CommentVotes = ({
+  commentId,
   initVotesCount,
   initVote,
-}: ClientPostVoteProps) => {
+}: CommentVotesProps) => {
   const [votesCount, setVotesCount] = useState<number>(initVotesCount);
   const [currVote, setCurrVote] = useState(initVote);
   const [isVoting, setIsVoting] = useState(false);
@@ -32,7 +34,7 @@ const ClientPostVote = ({
     setCurrVote(initVote);
   }, [initVote]);
 
-  const handleVote = async (type: VoteType) => {
+  const handleVote = async (type: any) => {
 
     //prevent multiple votes
     if (isVoting) return;
@@ -41,12 +43,12 @@ const ClientPostVote = ({
 
     const payload = {
       voteType: type,
-      postId: postId,
+      commentId: commentId,
       userId:user?.id
     };
 
     //optimistic update for votes
-    if (currVote === type) {
+    if (currVote?.type === type) {
         setCurrVote(undefined);
 
         if(type === 'UPVOTE') {
@@ -55,7 +57,7 @@ const ClientPostVote = ({
             setVotesCount((prevCount) => prevCount + 1);
         }
     } else {
-        setCurrVote(type);
+        setCurrVote({type});
 
         if(type === 'UPVOTE') {
             setVotesCount((prevCount) => prevCount + (currVote ? 2 : 1));
@@ -65,7 +67,7 @@ const ClientPostVote = ({
     }
 
     try {
-      const response = await fetch("/api/group/posts/vote", {
+      const response = await fetch("/api/group/posts/comment/vote", {
         method: "PATCH",
         body: JSON.stringify(payload),
       });
@@ -101,21 +103,21 @@ const ClientPostVote = ({
   };
 
   return (
-    <div className="pb-0 sm:pl-6 sm:w-20 flex-col sm:gap-0 sm:pb-0 justify-center  ">
+    <div className="flex flex-row pl-0 sm:w-12  sm:gap-1 sm:pb-0  items-center">
       <Button onClick={() => handleVote('UPVOTE')} size="icon" variant="ghost" aria-label="UPVOTE">
         <ArrowBigUp
           className={cn("h-5 w-5 text-zinc-700", {
-            "fill-pri text-pri": currVote === "UPVOTE",
+            "fill-pri text-pri": currVote?.type === "UPVOTE",
           })}
         />
       </Button>
-      <p className="m-0 sm:mr-4 py-2 text-center text-sm font-medium text-zinc-900">
+      <p className="m-0 sm:mr-0 py-2 text-center text-sm font-medium text-zinc-900">
         {votesCount}
       </p>
       <Button onClick={() => handleVote('DOWNVOTE')} size="icon" variant="ghost" aria-label="DOWNVOTE">
         <ArrowBigDown
           className={cn("h-5 w-5 text-zinc-700", {
-            "fill-red-400 text-red-400": currVote === "DOWNVOTE",
+            "fill-red-400 text-red-400": currVote?.type === "DOWNVOTE",
           })}
         />
       </Button>
@@ -123,4 +125,4 @@ const ClientPostVote = ({
   );
 };
 
-export default ClientPostVote;
+export default CommentVotes;

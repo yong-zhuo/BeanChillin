@@ -1,2 +1,2 @@
 // for infinite scroll, should be higher in prod
-export const INFINITE_SCROLL_RESULTS = 3
+export const INFINITE_SCROLL_RESULTS = 5

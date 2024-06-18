@@ -66,7 +66,7 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
           variant: "destructive",
         });
       } else {
-        toast ({
+        toast({
           title: "Error creating post!",
           description: "An unexpected error occurred. Try again later.",
           variant: "destructive",
@@ -104,9 +104,9 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
     const Editor = (await import("@editorjs/editorjs")).default;
     const Header = (await import("@editorjs/header")).default;
     const Embed = (await import("@editorjs/embed")).default;
-    const Table = (await import("@editorjs/table")).default;
-    const List = (await import("@editorjs/list")).default;
-    const Code = (await import("@editorjs/code")).default;
+    //const Table = (await import("@editorjs/table")).default;
+    //const List = (await import("@editorjs/list")).default;
+    //const Code = (await import("@editorjs/code")).default;
     const Link = (await import("@editorjs/link")).default;
     const InlineCode = (await import("@editorjs/inline-code")).default;
     const Image = (await import("@editorjs/image")).default;
@@ -145,9 +145,6 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
               },
             },
           },
-          list: List,
-          table: Table,
-          code: Code,
           inlineCode: InlineCode,
           embed: Embed,
         },
@@ -214,10 +211,17 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
             }}
             {...rest}
             placeholder="Add your title here!"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-4xl font-bold focus:outline-none"
+            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-4xl text-gray-900 font-bold focus:outline-none"
           />
           <div className="flex flex-col items-start justify-start">
-            <div id="editor" className=" min-h-[300px]" />
+            <div id="editor" className=" min-h-[300px] text-gray-900" />
+            <p className="text-sm text-gray-500">
+              Use{" "}
+              <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+                /
+              </kbd>{" "}
+              to open the command menu.
+            </p>
           </div>
         </div>
       </form>
