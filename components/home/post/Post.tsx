@@ -95,7 +95,7 @@ const Post = ({
       </div>
       
 
-      <div className="z-20 bg-gray-50 px-4 py-4 text-sm sm:px-6">
+      <div className="z-20 bg-sec px-4 py-4 text-sm sm:px-6">
         <Link
           href={`/groups/${groupName}/post/${post.id}`}
           className="flex w-fit items-center gap-2"
