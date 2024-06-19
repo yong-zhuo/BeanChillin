@@ -43,17 +43,7 @@ export default async function UpdateFriend(data: FriendData) {
             }
         })
         return;
-    } else if (info.status === 'Pending' && status === 'NotFriend') { //user decline friend req
-        await prisma.friendship.update({
-            where: {
-                id: info.id,
-            },
-            data: {
-                status: "NotFriend"
-            }
-        });
-        return;
-    } else if (status === 'NotFriend' && info.status === 'Friend') { //User remove friend
+    } else { //User remove or decline friend req
         await prisma.friendship.update({
             where: {
                 id: info.id,
@@ -80,8 +70,6 @@ export default async function UpdateFriend(data: FriendData) {
                 status: "NotFriend"
             }
         });
-        return;
-    } else { //Error
         return;
     }
 }
