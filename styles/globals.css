@@ -107,13 +107,13 @@
   }
 
   .scrollbar::-webkit-scrollbar {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
   }
 
   .scrollbar::-webkit-scrollbar-track {
     border-radius: 100vh;
-    background: #EEF7FF;
+    background: white;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
@@ -123,6 +123,6 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #EEF7FF;
+    background: white;
   }
 }

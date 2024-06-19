@@ -18,7 +18,7 @@ const layout = async ({ children }: HomeLayoutProps) => {
     const friends = await getFriendsById();
     return (
         <UserProvider>
-            <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-auto">
+            <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-hidden">
                 <NavBar />
                 <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
                     <section className="max-w-8xl mx-auto flex h-full w-full ">

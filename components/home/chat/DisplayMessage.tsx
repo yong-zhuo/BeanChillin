@@ -37,9 +37,10 @@ export default function DisplayMessage({ data }: DisplayMessageProps) {
     }
 
     //run only on first load
+    /*
     useEffect(() => {
         scrollToBottom();
-    }, []);
+    }, []);*/
 
     //For realtime chat
     useEffect(() => {
@@ -54,7 +55,7 @@ export default function DisplayMessage({ data }: DisplayMessageProps) {
         });
 
         return () => {
-            scrollToBottom();
+            //scrollToBottom();
             pusher.unsubscribe(key);
             pusher.unbind('my-event');
         };
@@ -119,22 +120,22 @@ export default function DisplayMessage({ data }: DisplayMessageProps) {
     }, [handleScroll]);
 
     return (
-        <div className="p-6 flex-grow max-h-screen overflow-y-auto lg:h-[900px] md:h-[700px] sm:h-[500px] scrollbar" ref={scrollContainerRef}>
+        <div className="p-6 flex-grow max-h-screen overflow-y-auto h-[67vh] 2mxl:h-[67vh] 2xl:h-[62vh] md:h-[67vh] sm:h-[67vh] scrollbar" ref={scrollContainerRef}>
             <div className="flex flex-col gap-4">
                 {totalComments.map((msg, index): JSX.Element => (
                     <React.Fragment key={index}>
                         {
                             friendship?.sender_id === msg.sender_id ?
                                 < div key={index} className="flex flex-col items-end" >
-                                    <div className="flex items-center">
-                                        <div className="flex items-end rounded-lg bg-pri text-white p-4 shadow-md">{msg.message}</div>
+                                    <div className="flex ">
+                                        <div className="flex text-wrap items-end rounded-lg rounded-tr-none  bg-pri text-white p-2 shadow-md">{msg.message}</div>
                                     </div>
                                     <p className="font-light text-sm text-gray-600">{moment(msg.createdAt as Date).local().calendar()}</p>
                                 </div>
                                 :
                                 < div key={index} className="flex flex-col" >
                                     <div className="flex items-center">
-                                        <div className="flex items-end rounded-lg bg-gray-500 text-white p-4 shadow-md">{msg.message}</div>
+                                        <div className="flex items-end rounded-lg rounded-tl-none bg-gray-500 text-white p-2 shadow-md">{msg.message}</div>
                                     </div>
                                     <p className="font-light text-sm text-gray-600">{moment(msg.createdAt as Date).local().calendar()}</p>
                                 </div>

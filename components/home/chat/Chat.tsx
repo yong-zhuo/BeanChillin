@@ -135,7 +135,7 @@ export default async function Chat({ params }: { params: ChatParams }) {
     };
 
     return (
-        <div className="bg-sec flex flex-col justify-center h-full">
+        <div className="bg-white flex flex-col justify-center h-full rounded-b-md shadow-md ">
             <ChatHeader
                 params={{ name: recipient_name, imageUrl: recipient_img }}
             />
