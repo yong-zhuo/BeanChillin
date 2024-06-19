@@ -153,7 +153,7 @@ const SearchBar = () => {
                   {userResults?.map((user) => (
                     <CommandItem
                       onSelect={(e) => {
-                        router.push(`/profile/${e}`);
+                        router.push(`/profile/${user.id}`);
                         router.refresh();
                       }}
                       key={user.id}
