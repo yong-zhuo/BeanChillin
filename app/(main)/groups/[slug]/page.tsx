@@ -78,6 +78,13 @@ const Page = async ({ params }: PageProps) => {
     },
   });
 
+  const friendCount = await prisma.friendship.count({
+    where: {
+      sender_id: group?.creatorId as string,
+      status: "Friend",
+    },
+  });
+
 
   if (!group) return notFound();
 
@@ -123,10 +130,11 @@ const Page = async ({ params }: PageProps) => {
             creator={group.Creator}
             createdAt={group.createdAt}
             members={memberCount}
+            friendCount={friendCount}
           />
         </TabsContent>
         <TabsContent value="Posts">
-          <CreatePost session={session} />
+          <CreatePost  />
           <PostFeed initPosts={group.posts} groupName={group.name} />
         </TabsContent>
       </Tabs>

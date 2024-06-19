@@ -13,6 +13,7 @@ type AboutProps = {
   creator: User | null;
   createdAt: Date;
   members: number;
+  friendCount: number;
 };
 
 const AboutGroupTab = (props: AboutProps) => {
@@ -31,8 +32,7 @@ const AboutGroupTab = (props: AboutProps) => {
         {props.creator?.id !== user?.id ? (
           <UserPreview
             otherUser={props.creator}
-            friends={500}
-            friended={true}
+            friends={props.friendCount}
             currUser={user}
           />
         ) : (

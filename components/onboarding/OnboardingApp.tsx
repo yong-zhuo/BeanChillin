@@ -67,7 +67,7 @@ export default function OnboardingApp() {
         email: info.email,
         isOnboard: true
       }
-
+     
       await Promise.all([
         cloudinaryUpload(data.image, info),
         onboardPush(obj)

@@ -75,9 +75,9 @@ const PostVote = ({
 
       } 
 
-      if(response.ok) {
+      
         router.refresh();
-      }
+    
 
     } catch (error) {
         //revert optimistic update

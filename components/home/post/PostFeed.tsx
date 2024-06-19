@@ -29,7 +29,7 @@ const PostFeed = ({ initPosts, groupName, feedType }: PostFeedProps) => {
     try {
       if (hasMoreData) {
         const query =
-          `/api/posts?limit=${INFINITE_SCROLL_RESULTS}&offset=${offset}&feedType=${feedType}` +
+          `/api/posts?limit=${INFINITE_SCROLL_RESULTS}&offset=${offset}` +
           (!!groupName ? `&groupName=${groupName}` : "");
         const res = await fetch(query);
         const newPosts = (await res.json()) as DetailedPost[];

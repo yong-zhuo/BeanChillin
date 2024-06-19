@@ -67,15 +67,7 @@ const page = async ({ params }: PageProps) => {
       </div>
       <Separator className="mb-2 bg-pri" />
       <PostEditor groupId={group.id} />
-      <div className="-mt-5 mb-5 flex w-full justify-end">
-        <Button
-          action="submit"
-          addClass="w-fit bg-pri text-white hover:bg-slate-500 transition hover:scale-105"
-          formId="group-post"
-        >
-          Post <ArrowRightToLine />
-        </Button>
-      </div>
+      
     </div>
   );
 };

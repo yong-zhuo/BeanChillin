@@ -16,22 +16,22 @@ export async function GET(req: Request) {
 
 
     try {
-        const {limit, offset, groupName, feedType} = z.object
+        const {limit, offset, groupName} = z.object
             ({
                 limit: z.string(),
                 offset: z.string(),
                 groupName: z.string().nullish().optional(),
-                feedType: z.string().nullish().optional(),
+                //feedType: z.string().nullish().optional(),
             }).parse({
                 limit: url.searchParams.get("limit"),
                 offset: url.searchParams.get("offset"),
                 groupName:url.searchParams.get("groupName"),
-                feedType:url.searchParams.get("feedType"),
+                //feedType:url.searchParams.get("feedType"),
             });
 
         let where = {};
 
-        if (session && feedType === 'group') {
+        if (session) {
             const followedGroups = await prisma.membership.findMany({
                 where: {
                     user: {
@@ -52,7 +52,7 @@ export async function GET(req: Request) {
                     name: groupName,
                 },
             };
-        } else if (session && feedType === 'group') {
+        } else if (session) {
             where = {
                 groupId: {
                     in: followedGroupIds,
