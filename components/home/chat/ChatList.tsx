@@ -8,22 +8,11 @@ import * as Tabs from '@radix-ui/react-tabs';
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { ChatListProps } from "./Chat";
 
-interface ChatListProps {
-    friends: {
-        receiver: {
-            id: string | null;
-            name: string | null;
-            email: string | null;
-            imageUrl: string | null;
-        } | null;
-        key: string | null;
-    }[]
-}
 const ChatList = ({ friends }: ChatListProps) => {
     const router = useRouter();
     const pathname = usePathname();
-    const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
 
     return (
         <ul role='list' className='max-h-[25rem] overflow-y-auto -mx-2 space-y-1'>

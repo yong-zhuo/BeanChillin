@@ -1,18 +1,63 @@
-
+"use server"
 import prisma from "@/lib/prisma";
 import ChatForm from "./ChatForm";
 import DisplayMessage from "./DisplayMessage";
-import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
-import { useEffect } from "react";
-import { symbol } from "zod";
 import { messaageArrayValidator } from "@/lib/schemas/messageSchema";
+import ChatHeader from "./ChatHeader";
 
 interface ChatParams {
     sender_id: string;
     receiver_id: string;
 }
 
-export async function getMessages(ids: string[]) {
+export interface ChatFormProps {
+    data: {
+        sender_id: string;
+        receiver_id: string;
+        status: string;
+        key: string | null;
+        receiver: {
+            name: string | null;
+            imageUrl: string | null;
+        } | null;
+    } | null
+}
+
+export interface ChatListProps {
+    friends: {
+        receiver: {
+            id: string | null;
+            name: string | null;
+            email: string | null;
+            imageUrl: string | null;
+        } | null;
+        key: string | null;
+    }[]
+}
+
+export interface DisplayMessageProps {
+    data: never[] | {
+        messages: {
+            id: string;
+            message: string;
+            createdAt: Date;
+            sender_id?: string | undefined;
+            receiver_id?: string | undefined;
+        }[];
+        friendship: {
+            status: string;
+            key: string | null;
+            sender_id: string;
+            receiver_id: string;
+            receiver: {
+                name: string | null;
+                imageUrl: string | null;
+            } | null;
+        } | null
+    }
+}
+
+export async function getMessages(ids: string[], offset: number) {
     try {
         const dbMessages = await prisma.message.findMany({
             where: {
@@ -33,13 +78,25 @@ export async function getMessages(ids: string[]) {
                 receiver_id: true
             },
             orderBy: {
-                createdAt: "asc",
+                createdAt: "desc",
             },
             take: 50,
+            skip: offset,
         });
 
         const messages = messaageArrayValidator.parse(dbMessages);
 
+        return messages.reverse();
+    }
+    catch (e) {
+        console.log(e);
+        return [];
+    }
+}
+
+export async function getFriendship(ids: string[]) {
+
+    try {
         const friendship = await prisma.friendship.findFirst({
             where: {
                 sender_id: ids[0],
@@ -58,38 +115,36 @@ export async function getMessages(ids: string[]) {
                 }
             }
         });
-        const data = {
-            messages: messages,
-            friendship: friendship
-        }
-        return data;
-    }
-    catch (e) {
+
+        return friendship;
+    } catch (e) {
         console.log(e);
-        return [];
+        return null;
     }
 }
 
-export const dynamic = 'force-dynamic';
-
 export default async function Chat({ params }: { params: ChatParams }) {
     const { sender_id, receiver_id } = params;
-    const data = await getMessages([sender_id, receiver_id]);
-    const dataMessage = Array.isArray(data) ? [] : data?.messages ? data.messages : [];
-    const dataFriendship = Array.isArray(data) ? null : data?.friendship ? data.friendship : null;
-    const obj = {
-        sender_id: dataFriendship?.sender_id,
-        receiver_id: dataFriendship?.receiver_id,
-        key: dataFriendship?.key
-    }
+    const messages = await getMessages([sender_id, receiver_id], 0); //set offset to 0 as it is inital message
+    const friendship = await getFriendship([sender_id, receiver_id]);
+    const recipient_name = friendship?.receiver?.name === undefined ? "" : friendship?.receiver?.name;
+    const recipient_img = friendship?.receiver?.name === undefined ? "" : friendship?.receiver?.imageUrl;
+    const data = {
+        messages: messages,
+        friendship: friendship
+    };
+
     return (
-        <ScrollArea className="bg-sec flex flex-col justify-center h-[1160px]" id="chat">
+        <div className="bg-sec flex flex-col justify-center h-full">
+            <ChatHeader
+                params={{ name: recipient_name, imageUrl: recipient_img }}
+            />
             <DisplayMessage
                 data={data}
             />
             <ChatForm
-                data={obj}
+                data={friendship}
             />
-        </ScrollArea>
+        </div>
     )
 }

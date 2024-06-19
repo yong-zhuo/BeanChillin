@@ -2,51 +2,76 @@
 
 import Button from "@/components/common-ui/button/Button"
 import { postData } from "./PostData";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/common-ui/shadcn-ui/textarea";
+import TextareaAutosize from "react-textarea-autosize";
+import { useRef, useState } from "react";
+import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
+import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import { ChatFormProps } from "./Chat";
 
-interface ChatFormProps {
-    data: {
-        sender_id: string | null | undefined;
-        receiver_id: string | null | undefined;
-        key: string | null | undefined;
-    }
-}
 
-export default function ChatForm(data: ChatFormProps) {
-    const sender_id = data.data.sender_id as string;
-    const receiver_id = data.data.receiver_id as string;
-    const key = data.data.key as string;
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault(); // Prevent the default form submission
-        const form = event.currentTarget;
-        const formData = new FormData(form);
+export default function ChatForm({ data }: ChatFormProps) {
+    const sender_id = data?.sender_id as string;
+    const receiver_id = data?.receiver_id as string;
+    const key = data?.key as string;
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [input, setInput] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+    const { toast } = useToast();
+
+    async function handleSubmit() {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("message", input);
         formData.append("sender_id", sender_id);
         formData.append("receiver_id", receiver_id);
         formData.append("key", key);
-        await postData(formData);
-        form.reset();
+        try {
+            await postData(formData);
+            setInput('');
+            textareaRef.current?.focus();
+        }
+        catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Failed to send message",
+                description: "Something went wrong, please try again later.",
+                action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+            });
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit} className="absolute inset-x-0 bottom-0 bg-white h-[100px]">
-            <div className="flex">
-                <Textarea
-                    name="message"
-                    placeholder={key === undefined ? "You are not friends with the user" : "Type your message..."}
-                    className=" outline-pri resize-none w-full h-full"
-                    disabled={key === undefined ? true : false}
+        <div className='border-t p-3 pt-4 mb-2 sm:mb-0 overflow-hidden'>
+            <div className='relative flex-1 rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600 bottom-0 left-0 overflow-hidden'>
+                <TextareaAutosize ref={textareaRef} onKeyDown={async (e) => {
+                    if (e.key === 'Enter' && e.shiftKey === false) {
+                        e.preventDefault();
+                        await handleSubmit();
+                    }
+                }}
+                    rows={1}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type a message..."
+                    className='block w-full resize-none border-none bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 focus-within:ring-0 outline-none sm:py-1.5 overflow-hidden sm:text-s sm:leading-6 max-h-[80px]'
                 />
-                <div className={cn("px-4 py-2 flex", key === undefined ? "hidden" : "")}>
-                    <Button
-                        addClass={cn("bg-sec text-pri hover:bg-white border-2 border-pri flex items-center justify-center rounded-full", key === undefined ? "hidden" : "")}
-                        width={40}
-                        height={40}
-                        action="submit"
-                        text="Send"
-                    />
+                <div
+                    onClick={() => textareaRef.current?.focus()}
+                    className='py-2'
+                    aria-hidden='true'>
+                    <div className='py-px'>
+                        <div className='h-9' />
+                    </div>
+                </div>
+                <div className='absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2 '>
+                    <div className='flex-shrink-0'>
+                        <Button state={loading} handleClick={handleSubmit} action='submit' width={10} height={10}>Send</Button>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
     )
 }

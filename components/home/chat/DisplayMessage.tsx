@@ -1,51 +1,47 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import moment from 'moment';
 import Pusher from 'pusher-js';
 import React from "react";
-import ChatHeader from "./ChatHeader";
+import { INFINITE_SCROLL_MESSAGE } from "@/config";
+import { getMessages } from "./Chat";
+import { toast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import { DisplayMessageProps } from "./Chat";
 
 
+export const dynamic = 'force-dynamic';
 
-export interface ChatSession {
-    data: never[] | {
-        messages: {
-            id: string;
-            message: string;
-            createdAt: Date;
-            sender_id?: string | undefined;
-            receiver_id?: string | undefined;
-        }[];
-        friendship: {
-            status: string;
-            key: string | null;
-            sender_id: string;
-            receiver_id: string;
-            receiver: {
-                name: string | null;
-                imageUrl: string | null;
-            } | null;
-        } | null
-    }
-}
-export default function DisplayMessage({ data }: ChatSession) {
+export default function DisplayMessage({ data }: DisplayMessageProps) {
     const friendship = Array.isArray(data) ? null : data?.friendship ? data.friendship : null;
     const messages = Array.isArray(data) ? [] : friendship?.status === 'Friend' ? data?.messages : [];
     const [totalComments, setTotalComments] = useState(messages);
     const messageEndRef = useRef<HTMLInputElement>(null);
     const key = friendship?.key as string || "room1";
-    const recipient_name = friendship?.receiver?.name === undefined ? "" : friendship?.receiver?.name;
-    const recipient_img = friendship?.receiver?.name === undefined ? "" : friendship?.receiver?.imageUrl;
+    const [offset, setOffset] = useState(INFINITE_SCROLL_MESSAGE + 1);
+    const [hasMoreMessage, setHasMoreMessage] = useState(true);
+    const isFetching = useRef(false); // Ref to track if a fetch is in progress
+    const scrollContainerRef = useRef<HTMLDivElement>(null); // Ref for the scrollable container
 
     const scrollToBottom = () => {
-        messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
+        //should send user to the bottom only on first load. 
+        if (scrollContainerRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+            const scrollPositionFromBottom = scrollHeight - scrollTop;
+            console.log(scrollPositionFromBottom)
+            if (scrollPositionFromBottom <= 4648) {
+                messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            }
+        }
     }
 
+    //run only on first load
     useEffect(() => {
         scrollToBottom();
-    }, [totalComments]);
+    }, []);
 
+    //For realtime chat
     useEffect(() => {
         var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
             cluster: 'ap1'
@@ -58,16 +54,72 @@ export default function DisplayMessage({ data }: ChatSession) {
         });
 
         return () => {
+            scrollToBottom();
             pusher.unsubscribe(key);
+            pusher.unbind('my-event');
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [scrollToBottom]);
+
+    const loadMoreMessages = async () => {
+        try {
+            if (isFetching.current || !hasMoreMessage) return;
+            isFetching.current = true;
+            const currentScrollPosition = scrollContainerRef.current?.scrollHeight || 0;
+            if (hasMoreMessage) {
+                const res = await getMessages([friendship?.sender_id as string, friendship?.receiver_id as string], offset);
+                if (res.length === 0) {
+                    setHasMoreMessage(false);
+                }
+                setTotalComments((comment) => [...res, ...comment]);
+                setOffset((prevOffset) => prevOffset + INFINITE_SCROLL_MESSAGE);
+                //TODO: Prevent user from teleporting to the top of the chat after new messages have been loaded. Still abit buggy
+                if (scrollContainerRef.current) {
+                    scrollContainerRef.current.scrollTop = currentScrollPosition;
+                }
+            }
+        } catch (error) {
+            toast({
+                title: "Failed to fetch messages",
+                description: "Please try again later",
+                variant: "destructive",
+            });
+        } finally {
+            isFetching.current = false;
+        }
+    };
+
+    const handleScroll = useCallback(() => {
+        if (scrollContainerRef.current?.scrollTop === 0 && hasMoreMessage && !isFetching.current) {
+            loadMoreMessages();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hasMoreMessage, offset]);
+
+    //Inf scroll
+    useEffect(() => {
+        const handleScrollEvent = () => {
+            // Trigger function if scrollTop is 0
+            if (scrollContainerRef.current?.scrollTop === 0) {
+                handleScroll();
+            }
+        };
+
+        const scrollElement = scrollContainerRef.current;
+        if (scrollElement) {
+            scrollElement.addEventListener('scroll', handleScrollEvent);
+        }
+
+        // Cleanup function
+        return () => {
+            if (scrollElement) {
+                scrollElement.removeEventListener('scroll', handleScrollEvent);
+            }
+        };
+    }, [handleScroll]);
 
     return (
-        <div className="p-6 flex-grow max-h-screen overflow-y-auto">
-            <ChatHeader
-                params={{ name: recipient_name, imageUrl: recipient_img }}
-            />
+        <div className="p-6 flex-grow max-h-screen overflow-y-auto lg:h-[900px] md:h-[700px] sm:h-[500px] scrollbar" ref={scrollContainerRef}>
             <div className="flex flex-col gap-4">
                 {totalComments.map((msg, index): JSX.Element => (
                     <React.Fragment key={index}>

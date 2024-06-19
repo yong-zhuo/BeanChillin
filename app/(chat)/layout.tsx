@@ -15,9 +15,7 @@ interface HomeLayoutProps {
 }
 
 const layout = async ({ children }: HomeLayoutProps) => {
-    const session = await getServerSession(Oauth);
-    const customSession = session?.user as CustomSessionUser;
-    const friends = await getFriendsById(customSession.id as string);
+    const friends = await getFriendsById();
     return (
         <UserProvider>
             <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-auto">
@@ -25,7 +23,6 @@ const layout = async ({ children }: HomeLayoutProps) => {
                 <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
                     <section className="max-w-8xl mx-auto flex h-full w-full ">
                         <div className='w-full flex h-screen max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 p-6'>
-
                             {friends.length > 0 ? (<div className='text-s font-semibold leading-6 text-gray-400'>Your chats</div>
                             ) : null}
                             <nav className="flex flex-1 flex-col">
