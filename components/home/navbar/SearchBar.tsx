@@ -33,7 +33,7 @@ const SearchBar = () => {
   const debounceRequest = useCallback(() => {
     request();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [input]);
 
   const pathname = usePathname();
   const commandRef = useRef<HTMLDivElement>(null);
@@ -133,6 +133,7 @@ const SearchBar = () => {
                       }}
                       key={group.id}
                       value={group.name as string}
+                      className="cursor-pointer"
                     >
                       <GroupAvatar
                         className="mr-2 h-12 w-12 aspect-square border-2 border-pri rounded-lg"
@@ -152,20 +153,21 @@ const SearchBar = () => {
                   {userResults?.map((user) => (
                     <CommandItem
                       onSelect={(e) => {
-                        router.push(`/friend/${e}`);
+                        router.push(`/profile/${e}`);
                         router.refresh();
                       }}
                       key={user.id}
                       value={user.name as string}
+                      className="cursor-pointer "
                     >
                       <UserAvatar
-                        className="mr-2 h-4 w-4"
+                        className="mr-2 h-12 w-12 border-2 border-pri"
                         user={{
                           name: user.name || null,
                           imageUrl: user.imageUrl || null,
                         }}
                       />
-                      <Link href={`/friend/${user.name}`}>{user.name}</Link>
+                      <Link href={`/profile/${user.id}`}>{user.name}</Link>
                     </CommandItem>
                   ))}
                 

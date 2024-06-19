@@ -12,7 +12,8 @@ export async function GET(req: Request) {
     const [groups,users] = await Promise.all([prisma.group.findMany({
         where: {
             name: {
-                startsWith: p
+                startsWith: p,
+                mode: 'insensitive'
             }
         },
         include: {
@@ -22,7 +23,8 @@ export async function GET(req: Request) {
     }), prisma.user.findMany({
         where: {
             name: {
-                startsWith: p
+                startsWith: p,
+                mode: 'insensitive'
             }
         },
         include: {

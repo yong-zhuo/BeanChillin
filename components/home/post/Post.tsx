@@ -47,7 +47,7 @@ const Post = ({
               />
               <div className="ml-4">
                 <div className="flex items-center text-lg font-bold text-gray-900">
-                  {post.author.name}
+                  <Link href={`/profile/${post.author.id}`} className="hover:underline">{post.author.name}</Link>
                   {post.author.id === groupCreatorId ? (
                     <Badge className="ml-1 h-4 w-fit bg-pri text-xs">
                       Owner

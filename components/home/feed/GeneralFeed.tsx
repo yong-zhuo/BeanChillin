@@ -3,23 +3,24 @@ import prisma from '@/lib/prisma'
 import React from 'react'
 import PostFeed from '../post/PostFeed'
 
-
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const GeneralFeed = async () => {
     const posts = await prisma.post.findMany({
-        orderBy: {
-            createdAt: 'desc'
-        },
         include: {
             votes:true,
             author:true,
             comments:true,
             group:true
         },
+        orderBy: {
+            createdAt: 'desc'
+        },
         take: INFINITE_SCROLL_RESULTS,
     })
   return (
-   <PostFeed initPosts={posts} />
+   <PostFeed initPosts={posts} feedType='general'/>
   )
 }
 
