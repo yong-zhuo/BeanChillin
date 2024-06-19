@@ -3,8 +3,7 @@ import prisma from '@/lib/prisma'
 import React from 'react'
 import PostFeed from '../post/PostFeed'
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+
 
 const GeneralFeed = async () => {
     const posts = await prisma.post.findMany({

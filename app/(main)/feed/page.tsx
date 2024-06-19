@@ -3,7 +3,8 @@ import Image from "next/image";
 import GeneralFeed from "@/components/home/feed/GeneralFeed";
 
 
-
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const page = async () => {
   return (

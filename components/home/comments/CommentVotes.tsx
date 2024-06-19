@@ -104,7 +104,7 @@ const CommentVotes = ({
 
   return (
     <div className="flex flex-row pl-0 sm:w-12  sm:gap-1 sm:pb-0  items-center">
-      <Button onClick={() => handleVote('UPVOTE')} size="icon" variant="ghost" aria-label="UPVOTE">
+      <Button onClick={() => handleVote('UPVOTE')} size="icon" variant="ghost" aria-label="UPVOTE" className="hover:bg-sec">
         <ArrowBigUp
           className={cn("h-5 w-5 text-zinc-700", {
             "fill-pri text-pri": currVote?.type === "UPVOTE",
@@ -114,7 +114,7 @@ const CommentVotes = ({
       <p className="m-0 sm:mr-0 py-2 text-center text-sm font-medium text-zinc-900">
         {votesCount}
       </p>
-      <Button onClick={() => handleVote('DOWNVOTE')} size="icon" variant="ghost" aria-label="DOWNVOTE">
+      <Button onClick={() => handleVote('DOWNVOTE')} size="icon" variant="ghost" aria-label="DOWNVOTE"  className="hover:bg-sec">
         <ArrowBigDown
           className={cn("h-5 w-5 text-zinc-700", {
             "fill-red-400 text-red-400": currVote?.type === "DOWNVOTE",

@@ -49,7 +49,7 @@ const UserPreview = (props: UserPreviewProps) => {
             asChild
             className="w-fit bg-pri text-white  transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg"
           >
-            <Link href={`/profile/${props.otherUser?.name}`} className="flex flex-row gap-0.5 items-center justify-center">View Profile<UserSearch className="h-5 w-5"/></Link>
+            <Link href={`/profile/${props.otherUser?.id}`} className="flex flex-row gap-0.5 items-center justify-center">View Profile<UserSearch className="h-5 w-5"/></Link>
           </Button>
           </div>
         </div>

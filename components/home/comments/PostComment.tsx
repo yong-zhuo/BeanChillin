@@ -6,7 +6,7 @@ import React, { useContext, useRef, useState } from "react";
 import CommentVotes from "./CommentVotes";
 import { Button } from "@/components/common-ui/shadcn-ui/button";
 import { CommentVote } from "@prisma/client";
-import {Loader2, MessageSquarePlus, MessageSquareReply } from "lucide-react";
+import { Loader2, MessageSquarePlus, MessageSquareReply } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/common-ui/shadcn-ui/textarea";
 import { useClickOutside } from "@/hooks/useClickOutside";
@@ -28,13 +28,16 @@ const PostComment = ({
 }: PostCommentProps) => {
   const [isCommenting, setIsCommenting] = useState(false);
   const commentRef = useRef<HTMLDivElement>(null);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(`@${comment.author.name} `);
   useClickOutside(commentRef, () => setIsCommenting(false));
   const toggleReply = () => setIsCommenting((prev) => !prev);
   const [isLoading, setIsLoading] = useState(false);
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const router = useRouter();
-  const {toast} = useToast();
+  const { toast } = useToast();
+
+
+ 
 
   const handleComment = async (
     postId: string,
@@ -72,7 +75,6 @@ const PostComment = ({
       });
     } finally {
       setIsLoading(false);
-      
     }
   };
 
@@ -98,10 +100,14 @@ const PostComment = ({
         </div>
       </div>
 
-      <p className="mt-2 text-sm text-zinc-900">{comment.content}</p>
+      <div className="mt-2 text-sm text-zinc-900" >{comment.content}</div>
 
       <div className="flex flex-row gap-2">
-        <CommentVotes commentId={comment.id} initVotesCount={votesCount} initVote={currVote} />
+        <CommentVotes
+          commentId={comment.id}
+          initVotesCount={votesCount}
+          initVote={currVote}
+        />
         <Button
           variant="ghost"
           className="gap-1 rounded-xl text-xs text-zinc-900 hover:bg-sec"
@@ -131,6 +137,12 @@ const PostComment = ({
               placeholder="Write a comment..."
               className="w-full resize-none"
               disabled={isLoading}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleComment(postId, input, comment.replyToId ?? comment.id);
+                }
+              }}
             />
 
             <div className="mt-2 flex justify-end gap-2">
@@ -148,12 +160,20 @@ const PostComment = ({
               <Button
                 onClick={() => {
                   if (!input) return;
-                  handleComment(postId,input, comment.replyToId ?? comment.id);
+                  handleComment(postId, input, comment.replyToId ?? comment.id);
                 }}
                 disabled={input.length === 0}
                 className="gap-1.5 rounded-xl bg-pri text-white hover:bg-[#77b8d1]"
               >
-                { isLoading ? <div className="flex flex-row gap-0.5">Sending <Loader2 className="animate-spin h-5 w-5"/></div> : <div className="flex flex-row gap-0.5">Comment <MessageSquareReply className="h-5 w-5" /></div>}
+                {isLoading ? (
+                  <div className="flex flex-row gap-0.5">
+                    Sending <Loader2 className="h-5 w-5 animate-spin" />
+                  </div>
+                ) : (
+                  <div className="flex flex-row gap-0.5">
+                    Comment <MessageSquareReply className="h-5 w-5" />
+                  </div>
+                )}
               </Button>
             </div>
           </div>
