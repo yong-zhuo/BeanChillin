@@ -6,7 +6,7 @@ import FriendData from "./FriendData";
 export default async function CreateFriend(data: FriendData) {
 
     const { sender_id, receiver_id, status } = data;
-    if (sender_id === null || sender_id === undefined || receiver_id === null || receiver_id === undefined || status === null || status === undefined || status === 'NotFriend' || status === 'Pending') { //null and undefined checks
+    if (sender_id === null || sender_id === undefined || receiver_id === null || receiver_id === undefined || status === null || status === undefined || status === 'NotFriend' || status === 'Pending' || status === 'Confirm') { //null and undefined checks
         return null;
     }
 
@@ -41,7 +41,7 @@ export default async function CreateFriend(data: FriendData) {
                     data: {
                         sender_id: receiver_id,
                         receiver_id: sender_id,
-                        status: 'NotFriend',
+                        status: 'Confirm',
                         key: sender_id + "-" + receiver_id,
                     }
                 });
@@ -55,6 +55,18 @@ export default async function CreateFriend(data: FriendData) {
                         sender_id,
                         receiver_id,
                         status: 'Pending',
+                    }
+                });
+
+                const res2 = await prisma.friendship.update({
+                    where: {
+                        sender_id_receiver_id: {
+                            sender_id: receiver_id,
+                            receiver_id: sender_id,
+                        },
+                    },
+                    data: {
+                        status: 'Confirm',
                     }
                 });
             }
