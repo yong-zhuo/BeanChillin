@@ -35,6 +35,28 @@ export interface ChatListProps {
     }[]
 }
 
+export interface DisplayMessageProps {
+    data: never[] | {
+        messages: {
+            id: string;
+            message: string;
+            createdAt: Date;
+            sender_id?: string | undefined;
+            receiver_id?: string | undefined;
+        }[];
+        friendship: {
+            status: string;
+            key: string | null;
+            sender_id: string;
+            receiver_id: string;
+            receiver: {
+                name: string | null;
+                imageUrl: string | null;
+            } | null;
+        } | null
+    }
+}
+
 export async function getMessages(ids: string[], offset: number) {
     try {
         const dbMessages = await prisma.message.findMany({

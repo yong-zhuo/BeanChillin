@@ -30,7 +30,7 @@ const page = async ({ params }: Props) => {
     return (
         <div className="container mx-auto mt-3 w-6/6 px-12">
             {
-                otherUserId !== 'chat' && (
+                otherUserId !== 'chat' && (//otherUserId will always be chat upon opening chat as its determined by the path.
                     <Chat
                         params={{ sender_id: UserId, receiver_id: otherUserId === undefined ? '' : otherUserId }}
                     />
