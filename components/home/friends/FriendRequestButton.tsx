@@ -5,6 +5,7 @@ import React, { useContext } from 'react'
 import { UserContext } from '../UserContext';
 import CreateFriend from '@/lib/friends/CreateFriend';
 import UpdateFriend from '@/lib/friends/UpdateFriend';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     sender_status: string,
@@ -14,6 +15,8 @@ type Props = {
 
 const FriendRequestButton = (props: Props) => {
 
+    const router = useRouter();
+
     async function AddFriend() {
         const data = {
             sender_id: user?.id!,
@@ -22,6 +25,7 @@ const FriendRequestButton = (props: Props) => {
             id: ''
         }
         await CreateFriend(data);
+        router.refresh();
     }
 
     async function Accept() {
@@ -32,6 +36,7 @@ const FriendRequestButton = (props: Props) => {
             id: ''
         }
         await UpdateFriend(data);
+        router.refresh();
     }
 
     async function Decline() {
@@ -42,6 +47,7 @@ const FriendRequestButton = (props: Props) => {
             id: ''
         }
         await UpdateFriend(data);
+        router.refresh();
     }
 
 
@@ -52,7 +58,7 @@ const FriendRequestButton = (props: Props) => {
         user?.id === receiver_id ? null : //If the user is viewing their own profile
             (
                 receiver_status === 'Confirm' ? //If receiver status is pending
-                    <Button className='bg-pri w-fit text-white disabled'>Pending</Button>
+                    <Button className='bg-pri w-fit text-white' disabled>Pending</Button>
                     : sender_status === 'Confirm' ? //If receiver status is confirm
                         <div className='flex flex-row justify-between'>
                             <Button className='bg-pri w-fit text-white mr-2' onClick={async () => Accept()}>Accept</Button>
