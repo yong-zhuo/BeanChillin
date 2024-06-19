@@ -19,6 +19,8 @@ import { postCloudUpload } from "@/lib/cloudinary/CloudinaryUpload";
 import { usePathname, useRouter } from "next/navigation";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { UserContext } from "../UserContext";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
+import { ArrowRightToLine, Loader2 } from "lucide-react";
 
 interface PostEditorProps {
   groupId: string;
@@ -40,54 +42,6 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
 
   const { user } = useContext(UserContext);
 
-  const onSubmit = async (data: CreatePostType) => {
-    const blocks = await ref.current?.save();
-
-    const payload = {
-      title: data.title,
-      content: blocks,
-      groupId: data.groupId,
-      userId: user?.id,
-    };
-
-    const res = await fetch("/api/group/posts/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-      if (res.status === 403) {
-        toast({
-          title: "Error creating post!",
-          description: "Please join the group to post",
-          variant: "destructive",
-        });
-      } else {
-        toast ({
-          title: "Error creating post!",
-          description: "An unexpected error occurred. Try again later.",
-          variant: "destructive",
-        });
-      }
-    } else {
-      //change pathname to group page
-      const newPathname = pathname.split("/").slice(0, -1).join("/");
-
-      router.push(newPathname);
-
-      router.refresh();
-
-      toast({
-        title: "Post created!",
-        description: "Your post has been successfully created!",
-        variant: "success",
-      });
-    }
-  };
-
   const { toast } = useToast();
 
   const ref = useRef<EditorJS>();
@@ -100,13 +54,75 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
 
   const router = useRouter();
 
+  const [isloading, setIsLoading] = useState(false);
+
+  const onSubmit = async (data: CreatePostType) => {
+    setIsLoading(true);
+
+    const blocks = await ref.current?.save();
+
+    const payload = {
+      title: data.title,
+      content: blocks,
+      groupId: data.groupId,
+      userId: user?.id,
+    };
+
+    const newPathname = pathname.split("/").slice(0, -1).join("/");
+
+    router.prefetch(newPathname);
+
+    try {
+      const res = await fetch("/api/group/posts/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        if (res.status === 403) {
+          toast({
+            title: "Error creating post!",
+            description: "Please join the group to post",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error creating post!",
+            description: "An unexpected error occurred. Try again later.",
+            variant: "destructive",
+          });
+        }
+      } else {
+        //change pathname to group page
+
+        router.push(newPathname);
+
+        router.refresh();
+
+        toast({
+          title: "Post created!",
+          description: "Your post has been successfully created!",
+          variant: "event",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Unable to create post.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const initEditor = useCallback(async () => {
     const Editor = (await import("@editorjs/editorjs")).default;
     const Header = (await import("@editorjs/header")).default;
     const Embed = (await import("@editorjs/embed")).default;
-    const Table = (await import("@editorjs/table")).default;
-    const List = (await import("@editorjs/list")).default;
-    const Code = (await import("@editorjs/code")).default;
+    //const Table = (await import("@editorjs/table")).default;
+    //const List = (await import("@editorjs/list")).default;
+    //const Code = (await import("@editorjs/code")).default;
     const Link = (await import("@editorjs/link")).default;
     const InlineCode = (await import("@editorjs/inline-code")).default;
     const Image = (await import("@editorjs/image")).default;
@@ -145,9 +161,6 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
               },
             },
           },
-          list: List,
-          table: Table,
-          code: Code,
           inlineCode: InlineCode,
           embed: Embed,
         },
@@ -199,29 +212,56 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
   const { ref: titleRef, ...rest } = register("title");
 
   return (
-    <div className="w-full rounded-lg border border-pri bg-white p-4 ">
-      <form
-        id="group-post"
-        className="w-full"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="text-slate-500 ">
-          <TextareaAutosize
-            ref={(e) => {
-              titleRef(e);
-              //@ts-ignore
-              _titleRef.current = e;
-            }}
-            {...rest}
-            placeholder="Add your title here!"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-4xl font-bold focus:outline-none"
-          />
-          <div className="flex flex-col items-start justify-start">
-            <div id="editor" className=" min-h-[300px]" />
+    <>
+      <div className="w-full rounded-lg border border-pri bg-white p-4 ">
+        <form
+          id="group-post"
+          className="w-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="text-slate-500 ">
+            <TextareaAutosize
+              ref={(e) => {
+                titleRef(e);
+                //@ts-ignore
+                _titleRef.current = e;
+              }}
+              {...rest}
+              placeholder="Add your title here!"
+              className="w-full resize-none appearance-none overflow-hidden bg-transparent text-4xl font-bold text-gray-900 focus:outline-none"
+            />
+            <div className="flex flex-col items-start justify-start">
+              <div id="editor" className=" min-h-[300px] text-gray-900" />
+              <p className="text-sm text-gray-500">
+                Use{" "}
+                <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+                  /
+                </kbd>{" "}
+                to open the command menu.
+              </p>
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+      <div className="-mt-5 mb-5 flex w-full justify-end">
+        <Button
+          disabled={isloading}
+          className="mt-2 w-fit bg-pri text-white transition hover:scale-105 hover:bg-slate-500"
+          form="group-post"
+          type="submit"
+        >
+          {isloading ? (
+            <div className="flex flex-row gap-0.5">
+              Posting <Loader2 className="h-5 w-5 animate-spin" />
+            </div>
+          ) : (
+            <div className="flex flex-row gap-0.5">
+              Post <ArrowRightToLine className="h-5 w-5" />
+            </div>
+          )}
+        </Button>
+      </div>
+    </>
   );
 };
 

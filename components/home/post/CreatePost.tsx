@@ -8,10 +8,11 @@ import Button from "@/components/common-ui/button/Button";
 import { ImageIcon, Link2 } from "lucide-react";
 import { Input } from "@/components/common-ui/shadcn-ui/input";
 
-const CreatePost = ({ session }: { session: Session | null }) => {
+const CreatePost = () => {
   const { user } = useContext(UserContext);
   const router = useRouter();
   const pathname = usePathname();
+  router.prefetch(pathname + '/submit-post');
 
   return (
     <li className="overflow-hidden rounded-md bg-white shadow list-none mt-2 mb-4">

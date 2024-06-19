@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
 import { getServerSession } from "next-auth";
-import { parse } from "path";
 import { z } from "zod";
 
 export async function GET(req: Request) {
@@ -14,34 +13,37 @@ export async function GET(req: Request) {
 
     let followedGroupIds: string[] = [];
 
-    if (session) {
-        const followedGroups = await prisma.membership.findMany({
-            where: {
-                user: {
-                    email: session?.user?.email,
-                },
-            },
-            include: {
-                group: true,
-            },
-        });
-
-        followedGroupIds = followedGroups.map((group) => group.group.id);
-    }
 
     try {
-        const {limit, offset, groupName} = z.object
+        const {limit, offset, groupName, feedType} = z.object
             ({
                 limit: z.string(),
                 offset: z.string(),
                 groupName: z.string().nullish().optional(),
+                feedType: z.string().nullish().optional(),
             }).parse({
                 limit: url.searchParams.get("limit"),
                 offset: url.searchParams.get("offset"),
                 groupName:url.searchParams.get("groupName"),
+                feedType:url.searchParams.get("feedType"),
             });
 
         let where = {};
+
+        if (session) {
+            const followedGroups = await prisma.membership.findMany({
+                where: {
+                    user: {
+                        email: session?.user?.email,
+                    },
+                },
+                include: {
+                    group: true,
+                },
+            });
+    
+            followedGroupIds = followedGroups.map((group) => group.group.id);
+        }
 
         if (groupName) {
             where = {
@@ -49,7 +51,7 @@ export async function GET(req: Request) {
                     name: groupName,
                 },
             };
-        } else if (session) {
+        } else if (session && feedType === "group") {
             where = {
                 groupId: {
                     in: followedGroupIds,

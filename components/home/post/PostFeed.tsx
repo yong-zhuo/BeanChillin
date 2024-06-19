@@ -12,9 +12,10 @@ import Post from "./Post";
 interface PostFeedProps {
   initPosts: DetailedPost[];
   groupName?: string;
+  feedType?: "general" | "group";
 }
 
-const PostFeed = ({ initPosts, groupName }: PostFeedProps) => {
+const PostFeed = ({ initPosts, groupName, feedType }: PostFeedProps) => {
   const [offset, setOffset] = useState(INFINITE_SCROLL_RESULTS);
   const [posts, setPosts] = useState<DetailedPost[]>(initPosts);
   const [hasMoreData, setHasMoreData] = useState(true);
@@ -28,7 +29,7 @@ const PostFeed = ({ initPosts, groupName }: PostFeedProps) => {
     try {
       if (hasMoreData) {
         const query =
-          `/api/posts?limit=${INFINITE_SCROLL_RESULTS}&offset=${offset}` +
+          `/api/posts?limit=${INFINITE_SCROLL_RESULTS}&offset=${offset}`+ (!!feedType ? `&feedType=${feedType}` : "") +
           (!!groupName ? `&groupName=${groupName}` : "");
         const res = await fetch(query);
         const newPosts = (await res.json()) as DetailedPost[];
@@ -83,6 +84,7 @@ const PostFeed = ({ initPosts, groupName }: PostFeedProps) => {
                 groupName={post.group.name}
                 votesCount={votesCount}
                 currVote={currVote}
+                groupCreatorId={post.group.creatorId as string}
               />
             </li>
           );
@@ -95,17 +97,18 @@ const PostFeed = ({ initPosts, groupName }: PostFeedProps) => {
               groupName={post.group.name}
               votesCount={votesCount}
               currVote={currVote}
+              groupCreatorId={post.group.creatorId as string}
             />
           );
         }
       })}
 
-      {(hasMoreData && (
+      {hasMoreData && (
         <li className="flex justify-center" ref={scrollTrigger}>
           Loading
           <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
         </li>
-      ) || <p>No more Posts</p>)}
+      )}
     </ul>
   );
 };

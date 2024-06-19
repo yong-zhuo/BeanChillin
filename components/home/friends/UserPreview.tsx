@@ -2,10 +2,11 @@
 
 import UserAvatar from "@/components/common-ui/misc/UserAvatar";
 import { Card, CardHeader } from "@/components/common-ui/shadcn-ui/card";
-import Button from "@/components/common-ui/button/Button";
-import { UserMinus, UserPlus } from "lucide-react";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
 import { Badge } from "@/components/common-ui/shadcn-ui/badge";
 import { User } from "@prisma/client";
+import Link from "next/link";
+import { UserSearch } from "lucide-react";
 
 type UserPreviewProps = {
   otherUser?: User | null;
@@ -34,7 +35,7 @@ const UserPreview = (props: UserPreviewProps) => {
                   <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl">
                     {props.otherUser?.name}
                   </div>
-                  <div className="md:ml-4 text-md font-medium">
+                  <div className="ml-3 md:ml-4 text-md font-medium">
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>
@@ -43,24 +44,13 @@ const UserPreview = (props: UserPreviewProps) => {
               </div>
             </div>
           </div>
-          <div className="flex h-1/4 w-full flex-row space-x-12 md:h-fit md:w-fit md:space-x-5 items-center justify-center">
-            {props.friended ? (
-              <Button
-                text="Unfriend"
-                action="button"
-                addClass="bg-red-400 text-white hover:bg-slate-400 items-center w-fit hover:shadow-lg hover:scale-105 transition"
-              >
-                <UserMinus className="h-5 w-5" />
-              </Button>
-            ) : (
-              <Button
-                text="Friend"
-                action="button"
-                addClass="bg-pri text-white hover:bg-slate-400 items-center w-fit hover:shadow-lg hover:scale-105 transition"
-              >
-                <UserPlus className="h-5 w-5" />
-              </Button>
-            )}
+          <div className="flex w-full flex-col space-x-12  items-center justify-center md:w-fit md:space-x-5 md:items-end md:justify-end">
+          <Button
+            asChild
+            className="w-fit bg-pri text-white  transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg"
+          >
+            <Link href={`/profile/${props.otherUser?.id}`} className="flex flex-row gap-0.5 items-center justify-center">View Profile<UserSearch className="h-5 w-5"/></Link>
+          </Button>
           </div>
         </div>
       </CardHeader>

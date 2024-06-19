@@ -15,7 +15,7 @@ interface GroupProps extends AvatarProps {
 const GroupAvatar = ({group,img, ...props }: GroupProps) => {
   return (
     <Avatar {...props}>
-      {group ? (
+      {img ? (
         <div className="relative aspect-square h-full w-full">
           <Image
             src={img}
