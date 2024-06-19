@@ -104,7 +104,7 @@ const PostVote = ({
     <div className="flex flex-row sm:pl-6 sm:w-12 sm:flex sm:flex-col sm:gap-0 sm:pb-0 justify-center items-center">
       <Button onClick={() => handleVote('UPVOTE')} size="icon" variant="ghost" aria-label="UPVOTE">
         <ArrowBigUp
-          className={cn("h-5 w-5 text-zinc-700", {
+          className={cn("h-5 w-5 text-zinc-700 hover:bg-sec", {
             "fill-pri text-pri": currVote === "UPVOTE",
           })}
         />
@@ -114,7 +114,7 @@ const PostVote = ({
       </p>
       <Button onClick={() => handleVote('DOWNVOTE')} size="icon" variant="ghost" aria-label="DOWNVOTE">
         <ArrowBigDown
-          className={cn("h-5 w-5 text-zinc-700", {
+          className={cn("h-5 w-5 text-zinc-700 hover:bg-sec", {
             "fill-red-400 text-red-400": currVote === "DOWNVOTE",
           })}
         />
