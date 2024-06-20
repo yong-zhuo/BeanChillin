@@ -4,8 +4,8 @@ import { getServerSession } from "next-auth";
 import { z } from "zod";
 
 export async function GET(req: Request) {
-    
-    
+
+
 
     const url = new URL(req.url);
 
@@ -15,17 +15,19 @@ export async function GET(req: Request) {
 
 
     try {
-        const {limit, offset, groupName, feedType} = z.object
+        const { limit, offset, groupName, feedType, authorId } = z.object
             ({
                 limit: z.string(),
                 offset: z.string(),
                 groupName: z.string().nullish().optional(),
                 feedType: z.string().nullish().optional(),
+                authorId: z.string().nullish().optional(),
             }).parse({
                 limit: url.searchParams.get("limit"),
                 offset: url.searchParams.get("offset"),
-                groupName:url.searchParams.get("groupName"),
-                feedType:url.searchParams.get("feedType"),
+                groupName: url.searchParams.get("groupName"),
+                feedType: url.searchParams.get("feedType"),
+                authorId: url.searchParams.get("authorId"),
             });
 
         let where = {};
@@ -41,7 +43,7 @@ export async function GET(req: Request) {
                     group: true,
                 },
             });
-    
+
             followedGroupIds = followedGroups.map((group) => group.group.id);
         }
 
@@ -57,13 +59,16 @@ export async function GET(req: Request) {
                     in: followedGroupIds,
                 },
             };
+        } else if (session && feedType === "user") {
+            where = {
+                authorId: authorId,
+            };
         }
-
         const posts = await prisma.post.findMany({
             take: parseInt(limit),
             skip: parseInt(offset),
             orderBy: {
-                createdAt:'desc',
+                createdAt: 'desc',
             },
             include: {
                 group: true,
@@ -75,8 +80,8 @@ export async function GET(req: Request) {
         });
 
         return new Response(JSON.stringify(posts))
-        
+
     } catch (error) {
-        return new Response('Could not fetch posts', {status: 500})
+        return new Response('Could not fetch posts', { status: 500 })
     }
 }

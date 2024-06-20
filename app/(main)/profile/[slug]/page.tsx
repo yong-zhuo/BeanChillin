@@ -2,6 +2,7 @@
 import UserAvatar from "@/components/common-ui/misc/UserAvatar";
 import { Card, CardContent } from "@/components/common-ui/shadcn-ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/common-ui/shadcn-ui/tabline";
+import UserFeed from "@/components/home/feed/UserFeed";
 import FriendRequestButton from "@/components/home/friends/FriendRequestButton";
 import MembershipButton from "@/components/home/group/MembershipButton";
 import { AboutProfileTab } from "@/components/home/profile/AboutProfileTab";
@@ -35,9 +36,9 @@ export default async function Page({ params }: Props) {
         return res;
     }
 
-    async function getStatus(receiver_id: string) {
+    async function getStatus(receiver_id: string,) {
 
-        const id = await prisma.user.findFirst({
+        const sender_id = await prisma.user.findFirst({
             where: {
                 email: session?.user?.email!
             },
@@ -49,7 +50,7 @@ export default async function Page({ params }: Props) {
         const status = await prisma.friendship.findFirst({
             where: {
                 receiver_id: receiver_id,
-                sender_id: id?.id
+                sender_id: sender_id?.id
             },
             select: {
                 status: true
@@ -58,7 +59,7 @@ export default async function Page({ params }: Props) {
 
         const status1 = await prisma.friendship.findFirst({
             where: {
-                receiver_id: id?.id,
+                receiver_id: sender_id?.id,
                 sender_id: receiver_id,
             },
             select: {
@@ -66,14 +67,40 @@ export default async function Page({ params }: Props) {
             }
         });
 
-        console.log(status, status1)
-        return { sender_status: status?.status, receiver_status: status1?.status };
+        const Nfriends = await prisma.friendship.count({
+            where: {
+                sender_id: receiver_id,
+                status: 'Friend'
+            },
+        });
+        return { sender_status: status?.status, receiver_status: status1?.status, Nfriends: Nfriends };
+    }
+    async function getStats(id: string) {
+        const Ngroups = await prisma.membership.count({
+            where: {
+                userId: id
+            }
+        })
+
+        const Nposts = await prisma.post.count({
+            where: {
+                authorId: id
+            }
+        })
+
+        const Ncomments = await prisma.comment.count({
+            where: {
+                authorId: id
+            }
+        })
+
+        return { Nposts: Nposts, Ncomments: Ncomments, Ngroups }
     }
 
     const { slug } = params;
     const session = await getServerSession(Oauth);
-    const info = await Promise.all([getUserInfo(slug), getStatus(slug)]);
-    const [userInfo, status_obj] = info;
+    const info = await Promise.all([getUserInfo(slug), getStatus(slug), getStats(slug)]);
+    const [userInfo, status_obj, stats] = info;
 
     //get user details
     return (
@@ -89,7 +116,7 @@ export default async function Page({ params }: Props) {
                         </h1>
                     </CardContent>
                 </div>
-                <div className='flex justify-end items-end mr-2 mb-2'>
+                <div className='flex justify-end items-end mr-2 mb-2 z-10'>
                     <FriendRequestButton
                         sender_status={status_obj.sender_status || ""}
                         receiver_status={status_obj.receiver_status || ""}
@@ -110,15 +137,17 @@ export default async function Page({ params }: Props) {
 
                 <TabsContent value="About">
                     <AboutProfileTab
-                        description="This is a description"
-                        creator={null}
-                        members={5}
-                        createdAt={new Date()}
+                        description={userInfo.bio}
+                        Nfriends={status_obj.Nfriends}
+                        Ngroups={stats.Ngroups}
+                        Nposts={stats.Nposts}
+                        Ncomments={stats.Ncomments}
                     />
                 </TabsContent>
                 <TabsContent value="Posts">
-
-
+                    <UserFeed
+                        authorId={slug}
+                    />
                 </TabsContent>
             </Tabs>
         </div>)

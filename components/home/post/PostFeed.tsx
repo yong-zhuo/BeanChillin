@@ -12,10 +12,11 @@ import Post from "./Post";
 interface PostFeedProps {
   initPosts: DetailedPost[];
   groupName?: string;
-  feedType?: "general" | "group";
+  feedType?: "general" | "group" | "user";
+  authorId?: string;
 }
 
-const PostFeed = ({ initPosts, groupName, feedType }: PostFeedProps) => {
+const PostFeed = ({ initPosts, groupName, feedType, authorId }: PostFeedProps) => {
   const [offset, setOffset] = useState(INFINITE_SCROLL_RESULTS);
   const [posts, setPosts] = useState<DetailedPost[]>(initPosts);
   const [hasMoreData, setHasMoreData] = useState(true);
@@ -29,8 +30,8 @@ const PostFeed = ({ initPosts, groupName, feedType }: PostFeedProps) => {
     try {
       if (hasMoreData) {
         const query =
-          `/api/posts?limit=${INFINITE_SCROLL_RESULTS}&offset=${offset}`+ (!!feedType ? `&feedType=${feedType}` : "") +
-          (!!groupName ? `&groupName=${groupName}` : "");
+          `/api/posts?limit=${INFINITE_SCROLL_RESULTS}&offset=${offset}` + (!!feedType ? `&feedType=${feedType}` : "") +
+          (!!groupName ? `&groupName=${groupName}` : "") + (!!authorId ? `&groupName=${authorId}` : "");
         const res = await fetch(query);
         const newPosts = (await res.json()) as DetailedPost[];
 

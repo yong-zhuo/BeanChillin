@@ -1,15 +1,15 @@
 "use client";
 import { Card, CardContent } from "@/components/common-ui/shadcn-ui/card";
-import { User } from "@prisma/client";
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import user from "pusher-js/types/src/core/user";
+
 
 
 type AboutProps = {
     description: string | null;
-    creator: User | null;
-    createdAt: Date;
-    members: number;
+    Ngroups: number;
+    Ncomments: number;
+    Nposts: number;
+    Nfriends: number;
 };
 
 
@@ -21,9 +21,18 @@ export function AboutProfileTab(props: AboutProps) {
                 <h1 className="mt-4 text-2xl font-semibold">Description</h1>
                 <Separator className="bg-pri bg-opacity-30" />
                 <p className="text-lg text-gray-400">{props.description}</p>
-                <h1 className="mt-4 text-2xl font-semibold">Members</h1>
+                <h1 className="mt-4 text-2xl font-semibold">Groups Joined</h1>
                 <Separator className="bg-pri bg-opacity-30" />
-                <p className="text-lg text-gray-400">{props.members} Members</p>
+                <p className="text-lg text-gray-400">{props.Ngroups} Groups</p>
+                <h1 className="mt-4 text-2xl font-semibold">Total Friends</h1>
+                <Separator className="bg-pri bg-opacity-30" />
+                <p className="text-lg text-gray-400">{props.Nfriends} friends</p>
+                <h1 className="mt-4 text-2xl font-semibold">Total Posts</h1>
+                <Separator className="bg-pri bg-opacity-30" />
+                <p className="text-lg text-gray-400">{props.Nposts} posts</p>
+                <h1 className="mt-4 text-2xl font-semibold">Total Comments</h1>
+                <Separator className="bg-pri bg-opacity-30" />
+                <p className="text-lg text-gray-400">{props.Ncomments} comments</p>
             </CardContent>
         </Card>
     );
