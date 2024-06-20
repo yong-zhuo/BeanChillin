@@ -14,7 +14,7 @@ import UserAvatar from "@/components/common-ui/misc/UserAvatar";
 import { signOut } from "next-auth/react";
 
 interface UserProps {
-  user: Pick<User, "imageUrl" | "name" | "email">;
+  user: Pick<User, "imageUrl" | "name" | "email" | "id">;
 }
 
 const UserAccountNav = ({ user }: UserProps) => {
@@ -40,8 +40,8 @@ const UserAccountNav = ({ user }: UserProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href="/" className="block cursor-pointer p-2">
-            Account settings
+          <Link href={`/profile/${user.id}`} className="block cursor-pointer p-2">
+            My Account
           </Link>
         </DropdownMenuItem>
 

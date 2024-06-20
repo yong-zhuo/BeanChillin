@@ -22,6 +22,7 @@ const GroupAvatar = ({group,img, ...props }: GroupProps) => {
             alt="Group Picture"
             referrerPolicy="no-referrer"
             fill
+            priority={true}
           />
         </div>
       ) : (

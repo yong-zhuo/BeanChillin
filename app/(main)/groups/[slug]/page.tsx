@@ -98,6 +98,7 @@ const Page = async ({ params }: PageProps) => {
               alt="Banner"
               fill
               className="rounded-md border-2 border-pri object-cover"
+              priority={true}
             />
           </AspectRatio>
           <GroupAvatar

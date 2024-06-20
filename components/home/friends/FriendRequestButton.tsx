@@ -6,6 +6,7 @@ import { UserContext } from '../UserContext';
 import CreateFriend from '@/lib/friends/CreateFriend';
 import UpdateFriend from '@/lib/friends/UpdateFriend';
 import { useRouter } from 'next/navigation';
+import { Clock, UserMinus, UserPlus } from 'lucide-react';
 
 type Props = {
     sender_status: string,
@@ -58,7 +59,7 @@ const FriendRequestButton = (props: Props) => {
         user?.id === receiver_id ? null : //If the user is viewing their own profile
             (
                 receiver_status === 'Confirm' ? //If receiver status is pending
-                    <Button className='bg-pri w-fit text-white' disabled>Pending</Button>
+                    <Button className='bg-gray-400 w-fit text-white gap-1 flex flex-row items-center justify-center hover:bg-gray-400 hover:scale-105 transition' disabled>Pending<Clock className='h-5 w-5'/></Button>
                     : sender_status === 'Confirm' ? //If receiver status is confirm
                         <div className='flex flex-row justify-between'>
                             <Button className='bg-pri w-fit text-white mr-2' onClick={async () => Accept()}>Accept</Button>
@@ -67,9 +68,9 @@ const FriendRequestButton = (props: Props) => {
                         :
                         (
                             receiver_status === 'Friend' ? //If status is friend
-                                <Button className='bg-pri w-fit text-white' onClick={async () => Decline()}>Remove Friend</Button>
+                                <Button className='bg-red-400 w-fit text-white gap-1 flex flex-row items-center justify-center hover:bg-gray-400 hover:scale-105 transition' onClick={async () => Decline()}>Remove Friend <UserMinus className='h-5 w-5'/></Button>
                                 :
-                                <Button className='bg-pri w-fit text-white' onClick={async () => AddFriend()}>Add Friend</Button>
+                                <Button className='bg-pri w-fit text-white gap-1 flex flex-row items-center justify-center hover:bg-gray-400 hover:scale-105 transition' onClick={async () => AddFriend()}>Add Friend<UserPlus className='h-5 w-5'/></Button>
                         )
             )
     )

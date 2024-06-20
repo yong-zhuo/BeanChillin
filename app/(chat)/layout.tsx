@@ -23,8 +23,8 @@ const layout = async ({ children }: HomeLayoutProps) => {
                 <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
                     <section className="max-w-8xl mx-auto flex h-full w-full items-center 3xl:items-start">
                         <div className='w-full  max-w-xs grow flex-col gap-y-5 overflow-y-auto mt-1 3xl:mt-6  p-5 flex h-[87vh] 3xl:h-[86vh]  justify-between bg-white shadow-md rounded-lg'>
-                            {friends.length > 0 ? (<div className='text-md font-semibold leading-6 text-pri'>Your chats</div>
-                            ) : null}
+                            <div className='text-md font-semibold leading-6 text-pri'>Your chats</div>
+                                {friends.length === 0 && (<p className="">No chats yet</p>)}
                             <nav className="flex flex-1 flex-col">
                                 <ul role='list' className='flex flex-1 flex-col gap-y-7'>
                                     <li><ChatList friends={friends} /></li>

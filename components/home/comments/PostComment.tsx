@@ -6,7 +6,7 @@ import React, { useContext, useRef, useState } from "react";
 import CommentVotes from "./CommentVotes";
 import { Button } from "@/components/common-ui/shadcn-ui/button";
 import { CommentVote } from "@prisma/client";
-import { Loader2, MessageSquarePlus, MessageSquareReply } from "lucide-react";
+import { Loader2, MessageSquarePlus, MessageSquareReply, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/common-ui/shadcn-ui/textarea";
 import { useClickOutside } from "@/hooks/useClickOutside";
@@ -36,8 +36,33 @@ const PostComment = ({
   const router = useRouter();
   const { toast } = useToast();
 
+/*
+ const deleteComment = async (commentId: string, replyToId?: string | null) => {
+  try {
+    const query = `/api/group/posts/comment?comment=${commentId}` + (!!replyToId ? `&replyToId=${replyToId}` : "");
+    const response = await fetch(query , {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
- 
+    if (!response.ok) {
+      throw new Error("Failed to delete comment");
+    } else {
+      router.refresh();
+      
+    }
+  
+  } catch (error) {
+    toast({
+      title: "Failed to delete comment",
+      description: "Please try again later",
+      variant: "destructive",
+    });
+  }
+
+}*/
 
   const handleComment = async (
     postId: string,
@@ -102,7 +127,7 @@ const PostComment = ({
 
       <div className="mt-2 text-sm text-zinc-900" >{comment.content}</div>
 
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 items-center justify-start">
         <CommentVotes
           commentId={comment.id}
           initVotesCount={votesCount}
@@ -119,6 +144,19 @@ const PostComment = ({
           Reply
           <MessageSquareReply className="ml-0.5 h-4 w-4 text-zinc-900" />
         </Button>
+        {/*comment.authorId === user?.id ? <div className="-ml-5">
+          <Button
+            variant="ghost"
+            className="gap-1 rounded-xl text-xs text-zinc-900 hover:bg-red-400 hover:text-white"
+            onClick={() => {
+              //setIsCommenting(true);
+              deleteComment(comment.id, comment.replyToId);
+            }}
+          >
+            Delete
+            <Trash className="ml-0.5 h-4 w-4" />
+          </Button>
+        </div>: null*/}
       </div>
 
       {isCommenting ? (

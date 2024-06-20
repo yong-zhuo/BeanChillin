@@ -35,3 +35,49 @@ export async function PATCH(req: Request) {
         return new Response('Failed to post comment', {status: 500})
     }
 }
+/*
+export async function DELETE(req: Request) {
+    try {
+        const url = new URL(req.url);
+
+        const commentId = url.searchParams.get('comment') as string;
+        const replyToId = url.searchParams.get('replyToId') as string;
+        
+        console.log(commentId, replyToId);
+
+        const session = await getServerSession(Oauth);
+
+        if(!session?.user) {
+            return new Response('Unauthorized', {status: 401});
+        }
+
+        if(replyToId === null) {
+            await prisma.comment.delete({
+                where: {
+                    id: commentId,
+                    
+                }
+            });
+
+            return new Response('Comment deleted', {status: 200});
+        }
+        
+        await prisma.comment.delete({
+            where: {
+                id: commentId,
+                replyToId: replyToId
+                
+                
+            }
+        });
+
+        return new Response('Comment deleted', {status: 200});
+        
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return new Response(error.message, {status: 400});
+        }
+
+        return new Response('Failed to delete comment', {status: 500})
+    }
+}*/
