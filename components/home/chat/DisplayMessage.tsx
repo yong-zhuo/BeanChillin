@@ -60,7 +60,7 @@ export default function DisplayMessage({ data }: DisplayMessageProps) {
             pusher.unbind('my-event');
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [scrollToBottom]);
+    }, [scrollToBottom, totalComments]);
 
     const loadMoreMessages = async () => {
         try {
