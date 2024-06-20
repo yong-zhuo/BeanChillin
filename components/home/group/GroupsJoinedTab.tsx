@@ -9,11 +9,11 @@ const GroupsJoinedTab = ({ groups }: { groups: Group[] }) => {
 
   
   return (
-    <ScrollArea className="h-[430px] w-full overflow-auto rounded-md md:h-[515px] lg:h-[515px]  xl:h-[515px] 3mxl:h-[515px] 3xl:h-[635px]">
+    <div className="">
       {groups.map((group) => (
         <GroupPreview group={group} key={group.id} />
       ))}
-    </ScrollArea>
+    </div>
   );
 };
 

@@ -58,7 +58,7 @@ const GroupPreview = ({ group }: { group: Group }) => {
           </div>
         </CardHeader>
       </Card>
-      <Separator className="bg-pri" />
+      
     </>
   );
 };

@@ -27,7 +27,7 @@ const GroupAvatar = ({group,img, ...props }: GroupProps) => {
       ) : (
         <AvatarFallback>
           <Image
-            src="/profile/avatar.svg"
+            src="/placeholder/pl3.png"
             alt="Group Picture"
             referrerPolicy="no-referrer"
             fill

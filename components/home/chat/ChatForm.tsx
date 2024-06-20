@@ -8,6 +8,7 @@ import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ChatFormProps } from "./Chat";
 import { Textarea } from "@/components/common-ui/shadcn-ui/textarea";
+import { Send } from "lucide-react";
 
 export default function ChatForm({ data }: ChatFormProps) {
   const sender_id = data?.sender_id as string;
@@ -42,7 +43,7 @@ export default function ChatForm({ data }: ChatFormProps) {
   }
 
   return (
-    <div className="mb-2 overflow-hidden border-t p-3 pt-4 sm:mb-0 relative">
+    <div className="mb-2 overflow-hidden border-t p-3 pt-4 sm:mb-0 flex flex-row items-center ">
       <Textarea
         ref={textareaRef}
         onKeyDown={async (e) => {
@@ -57,14 +58,14 @@ export default function ChatForm({ data }: ChatFormProps) {
         placeholder="Type a message..."
         className="sm:text-s block max-h-[120px] w-full resize-none overflow-y-auto border border-pri bg-transparent text-gray-900 outline-none placeholder:text-gray-400 focus-within:ring-0 focus:ring-0 sm:py-1.5 sm:leading-6"
       />
-      <div className="container h-full">
+      <div className="items-center">
           <Button
-            className="bg-transparent text-pri absolute bottom-6 right-4 hover:bg-sec h-1/6 w-fit ml-3"
+            className="bg-transparent text-pri  hover:bg-sec h-1/6 w-fit ml-2 gap-1"
             type="submit"
             onClick={() => handleSubmit()}
             disabled={loading}
           >
-            Send
+            Send <Send className="h-4 w-4 "/>
           </Button>
       </div>
       <div

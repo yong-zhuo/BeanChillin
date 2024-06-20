@@ -21,9 +21,9 @@ const layout = async ({ children }: HomeLayoutProps) => {
             <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-hidden">
                 <NavBar />
                 <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
-                    <section className="max-w-8xl mx-auto flex h-full w-full ">
-                        <div className='w-full flex h-screen max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 p-6'>
-                            {friends.length > 0 ? (<div className='text-s font-semibold leading-6 text-gray-400'>Your chats</div>
+                    <section className="max-w-8xl mx-auto flex h-full w-full items-center 3xl:items-start">
+                        <div className='w-full  max-w-xs grow flex-col gap-y-5 overflow-y-auto mt-1 3xl:mt-6  p-5 flex h-[87vh] 3xl:h-[86vh]  justify-between bg-white shadow-md rounded-lg'>
+                            {friends.length > 0 ? (<div className='text-md font-semibold leading-6 text-pri'>Your chats</div>
                             ) : null}
                             <nav className="flex flex-1 flex-col">
                                 <ul role='list' className='flex flex-1 flex-col gap-y-7'>
