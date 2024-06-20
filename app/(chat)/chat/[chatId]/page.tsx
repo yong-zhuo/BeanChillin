@@ -9,7 +9,7 @@ interface Props {
         chatId: string
     }
 }
-
+export const dynamic = 'force-dynamic';
 const page = async ({ params }: Props) => {
     const { chatId } = params;
     const session = await getServerSession(Oauth);
