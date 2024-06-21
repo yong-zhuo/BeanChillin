@@ -3,9 +3,13 @@
 import postimage from "./postimage";
 
 interface Info {
-  email: string,
-  public_id: string
+  email?: string,
+  public_id?: string,
+  groupName?: string
 }
+
+type groupUploadType = 'groupPicture' | 'banner'
+
 export default async function cloudinaryUpload(file: File | undefined, info: Info) {
 
   if (file === undefined) {
@@ -23,5 +27,44 @@ export default async function cloudinaryUpload(file: File | undefined, info: Inf
     }
   ).then(res => res.json()).catch(e => console.log(e));
 
-  await postimage({ imageUrl: data.secure_url, imagePublicId: data.public_id, email: info.email })
+  await postimage({ imageUrl: data.secure_url, imagePublicId: data.public_id, email: info.email }, 'userImage')
+}
+
+export async function groupCloudUpload(file: File | undefined, groupName:string, groupUploadType: groupUploadType) {
+
+  if (file === undefined) {
+    return;
+  }
+  const form = new FormData();
+  form.append('file', file);
+  form.append('public_id', `${groupName + groupUploadType}`);
+  form.append('upload_preset', 'group_picture')
+  const data = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+    {
+      method: 'POST',
+      body: form,
+    }
+  ).then(res => res.json()).catch(e => console.log(e));
+
+  await postimage({ imageUrl: data.secure_url, groupName: groupName }, groupUploadType)
+}
+
+export async function postCloudUpload(file: File) {
+  
+    if (file === undefined) {
+      return;
+    }
+    const form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', 'post_image')
+    const data = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+      {
+        method: 'POST',
+        body: form,
+      }
+    ).then(res => res.json()).catch(e => console.log(e));
+  
+    return data.secure_url
 }

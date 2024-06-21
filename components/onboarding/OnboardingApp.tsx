@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Button from "../common-ui/button/Button";
 import { onboardPush } from "@/lib/users/OnboardPush";
 import { onboard, onboardSchema } from "@/lib/schemas/onboardSchema";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Stepper from "./Stepper";
 import { useEffect, useState } from "react";
@@ -16,17 +16,20 @@ import IsOnboard from "@/lib/users/IsOnboard";
 import cloudinaryUpload from "@/lib/cloudinary/CloudinaryUpload";
 import { useSession } from "next-auth/react";
 import getinfo from "@/lib/cloudinary/getinfo";
+import { useToast } from "../common-ui/shadcn-ui/toast/use-toast";
+import { ToastAction } from "../common-ui/shadcn-ui/toast/toast";
 
 export default function OnboardingApp() {
 
   const [isloading, setIsLoading] = useState(false);
   const { data: session } = useSession();
-
+  const {toast} = useToast();
   //check if user onboarded
+ 
   const router = useRouter();
   useEffect(() => {
     IsOnboard();
-  }, []);
+  }, []); 
 
   //zod validation for onboarding
   const {
@@ -64,7 +67,7 @@ export default function OnboardingApp() {
         email: info.email,
         isOnboard: true
       }
-
+     
       await Promise.all([
         cloudinaryUpload(data.image, info),
         onboardPush(obj)
@@ -76,14 +79,24 @@ export default function OnboardingApp() {
     }
   };
 
+  const onError: SubmitErrorHandler<onboard> = async (e) => {
+    toast({
+      variant: "destructive",
+      title: e.bio?.message,
+      description:
+        "Please check your details and try again.",
+      action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+    });
+  }
+
   return (
     <div className="relative flex h-full flex-col">
-      <div className="h-auto w-full sm:w-auto">
+      <div className="h-auto w-full hidden md:block  3mxl:mb-10">
         <Stepper step={StepIndex + 1} />
       </div>
       <form
-        className="flex flex-grow flex-col  px-40 pb-5 pt-9"
-        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col  px-40 pb-5 pt-9"
+        onSubmit={handleSubmit(onSubmit, onError)}
       >
         {step}
       </form>
@@ -93,7 +106,7 @@ export default function OnboardingApp() {
             <Button
               handleClick={back}
               text="Back"
-              addClass="text-sec bg-pri hover:bg-slate-500 gap-1 shadow"
+              addClass="text-sec bg-pri hover:bg-slate-500 gap-1 shadow transition hover:-translate-x-1"
               src="/misc/arrow-left.svg"
               alt="arrow-left"
               width={20}
@@ -105,7 +118,7 @@ export default function OnboardingApp() {
         {!isLastStep && (
           <div className="ml-auto">
             <Button
-              addClass="bg-pri text-sec hover:bg-slate-500 gap-1 shadow"
+              addClass="bg-pri text-sec hover:bg-slate-500 gap-1 shadow transition hover:translate-x-1"
               handleClick={next}
               text="Next"
               src="/misc/arrow-right.svg"

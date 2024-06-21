@@ -11,8 +11,8 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { onboard } from "@/lib/schemas/onboardSchema";
-import { useState } from "react";
 import Button from "../common-ui/button/Button";
+import { User } from "lucide-react";
 
 //profile fields to be mapped
 const fields = profileFields;
@@ -38,20 +38,23 @@ const ProfileForm = (props: ProfileProps) => {
   };
   return (
     <>
-      <Header
-        heading="Customise your profile"
-        paragraph="Set your name and profile picture to be displayed"
-      />
+      <div className="flex flex-col justify-center items-center">
+        <div className="md:hidden h-12 w-12 aspect-square rounded-full mb-4 bg-pri flex items-center justify-center"><User className="text-sec"/></div>
+        <Header
+          heading="Customise your profile"
+          paragraph="Set your name and profile picture to be displayed"
+        />
+      </div>
       <div className="relative flex justify-center">
         <div className="relative">
           <Image
             src={props.imageUrl}
             alt="Profile Picture"
             height={200}
-            width={280}
-            className="aspect-square rounded-full object-cover border-pri border-4"
+            width={200}
+            className="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px] md:h-[160px] md:w-[160px]  2mxl:h-[220px] 2mxl:w-[220px] 3mxl:h-[300px] 3mxl:w-[300px]"
           />
-          <div className="absolute bottom-5 right-5 flex flex-col-reverse">
+          <div className="absolute bottom-1 right-1 2mxl:bottom-5 2mxl:right-3 3mxl:bottom-6 3mxl:right-5 flex flex-col-reverse">
             <input
               type="file"
               accept="image/*"
@@ -74,8 +77,8 @@ const ProfileForm = (props: ProfileProps) => {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-center">
-        <div className="w-2/5">
+      <div className="mt-5 flex flex-col items-center justify-center">
+        <div className="w-[150px] sm:w-[200px] md:w-[250px] lg:w-[400px] flex flex-col justify-center">
           {fields.map((field) => (
             <FormInput
               key={field.id}

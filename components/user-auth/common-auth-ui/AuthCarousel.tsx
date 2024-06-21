@@ -3,10 +3,11 @@ import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import images from "@/constants/carouselContent";
+import { Card } from "@/components/common-ui/shadcn-ui/card";
 
 const AuthCarousel = () => {
   return (
-    <div className="flex h-screen items-center justify-center bg-pri">
+    <div className="flex h-[100vh] items-center justify-center 3mxl:items-stretch 3mxl:justify-center bg-pri border-none mt-14">
       <Carousel
         autoPlay
         infiniteLoop
@@ -14,22 +15,20 @@ const AuthCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showArrows={false}
-        className="h-full w-full"
+        className="h-4/5 w-4/5 flex items-center justify-center "
       >
         {images.map((image, id) => (
-          <div key={id} className="flex h-screen flex-col items-center">
-            <div className="flex h-3/5 flex-grow items-center justify-center">
-              <Image
-                src={image.src}
-                alt={`Image ${id}`}
-                width={400}
-                height={400}
-                className="sm:w-full sm:h-auto md:w-full md:h-auto lg:w-full lg:h-auto xl:w-full xl:h-auto"
-              />
-            </div>
-            <div className="flex h-1/3 max-w-sm justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] sm:pt-5 sm:text-xl md:max-w-md lg:max-w-lg lg:text-3xl ">
+          <div key={id} className="flex flex-col justify-center items-center mb-4 pb-4 pt-5 lg:mb-9 lg:pb-9 xl:mb-7 xl:pb-7">
+            <Image
+              src={image.src}
+              alt={`Image ${id}`}
+              width={400}
+              height={400}
+              className="h-[400px] w-[400px] lg:h-[550px] lg:w-[550px] 2xl:h-[550px] 2xl:w-[550px]"
+            />
+            <p className=" p-9 m-7 lg:m-0 lg:p-0 xl:mb-7 xl:pb-7 flex max-w-md justify-center pt-10 text-center text-xl font-semibold text-[#EEF7FF] md:text-2xl">
               {image.text}
-            </div>
+            </p>
           </div>
         ))}
       </Carousel>

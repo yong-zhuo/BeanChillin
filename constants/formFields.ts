@@ -109,4 +109,24 @@ const bioFields = [
     },
 ]
 
-export { loginFields, signupFields, forgetFields, profileFields, bioFields, resetFields }
+const createGroupFields = [
+    {
+        labelText: "Group Name",
+        id: "name",
+        name: "name",
+        type: "text",
+        placeholder: "Enter group name",
+        forRegister: true
+    },
+    {
+        labelText: "Group Description",
+        id: "description",
+        name: "description",
+        type: "text",
+        placeholder: "Enter group description",
+        forRegister: true
+    }
+
+]
+
+export { loginFields, signupFields, forgetFields, profileFields, bioFields, resetFields, createGroupFields }

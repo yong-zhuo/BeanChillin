@@ -58,7 +58,7 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
         paragraph="Enter your new Password"
         logo
       />
-      <form onSubmit={handleSubmit(onSubmit)} className="mb-4 px-40 pb-8 pt-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="m-5 lg:mb-5 lg:px-40 lg:pb-2 lg:pt-6 ">
         {fields.map((field) => (
           <FormInput
             key={field.id}
@@ -77,7 +77,7 @@ const ResetForm = ({ params }: { params: { token: string } }) => {
           <Button
             action="submit"
             text="Reset Password"
-            addClass=" text-white bg-pri hover:bg-slate-400 shadow"
+            addClass=" text-white bg-pri hover:bg-slate-400 shadow transition ease-in-out duration-300 delay-50 hover:-translate-y-1 hover:scale-110"
             state={isLoading}
             height={20}
             width={20}

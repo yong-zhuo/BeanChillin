@@ -15,12 +15,12 @@ interface HomeLayoutProps {
 const layout = ({ children }: HomeLayoutProps) => {
   return (
     <UserProvider>
-      <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')]">
+      <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-auto">
         <NavBar />
         <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
           <section className="max-w-8xl mx-auto flex h-full w-full ">
-            <LeftSideBar />
-            <div className="h-full w-full overflow-auto p-3">{children}</div>
+              <LeftSideBar />
+            <div className="h-full w-full p-3">{children}</div>
             <RightSideBar />
           </section>
         </div>

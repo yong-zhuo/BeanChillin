@@ -13,12 +13,15 @@ const config = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-        '3xl': '1800px'
-      },
     },
     extend: {
+      screens:{
+      "mxl": "1490px",
+      "1mxl": "1500px",
+      "2mxl": "1600px",
+      "3mxl": "1900px",
+      '3xl': '2000px'
+    },
       maxWidth: {'8xl': '120rem'},
       colors: {
         'pri': '#4D869C',
@@ -71,10 +74,19 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        animatedgradient: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+      },
+      backgroundSize: {
+        '300%': '300%',
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        gradient: 'animatedgradient 6s ease infinite alternate',
       },
     },
   },

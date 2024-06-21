@@ -21,6 +21,7 @@ const UserAvatar = ({ user, ...props }: UserProps) => {
             alt="Profile Picture"
             referrerPolicy="no-referrer"
             fill
+            priority={true}
           />
         </div>
       ) : (

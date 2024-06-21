@@ -2,7 +2,18 @@
 
 const nextConfig = {
     images: {
-        domains: ['res.cloudinary.com'],
+        domains: ['res.cloudinary.com', 'lh3.googleusercontent.com'],
     },
+    redirects: async () => {
+        return [
+            {
+                source: '/',
+                destination: '/login',
+                permanent: true
+            },
+
+        ]
+    }
 };
 export default nextConfig
+

@@ -63,7 +63,7 @@ const ForgetForm = () => {
         paragraph="Enter your registered email address to reset your password"
         logo
       />
-      <form onSubmit={handleSubmit(onSubmit)} className="mb-4 px-40 pb-8 pt-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="m-5 lg:mb-5 lg:px-40 lg:pb-2 lg:pt-6 ">
         {fields.map((field) => (
           <FormInput
             key={field.id}
@@ -82,7 +82,7 @@ const ForgetForm = () => {
           <Button
             action="submit"
             text="Email me the link"
-            addClass=" text-white bg-pri hover:bg-slate-400 shadow"
+            addClass=" text-white bg-pri hover:bg-slate-400 shadow transition ease-in-out duration-300 delay-50 hover:-translate-y-1 hover:scale-110"
             state={isLoading}
             height={20}
             width={20}
