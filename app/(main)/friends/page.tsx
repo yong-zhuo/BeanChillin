@@ -28,7 +28,7 @@ const page = async () => {
       receiver: true,
     },
   });
-  console.log(friendList.length);
+
   const friendRequest = await prisma.friendship.findMany({
     where: {
       receiver_id: user?.id,
@@ -48,7 +48,16 @@ const page = async () => {
       <Tabs className="my-6" defaultValue="Your Friends">
         <TabsList className="text-semibold grid grid-cols-2 bg-white shadow">
           <TabsTrigger value="Your Friends">Your Friends</TabsTrigger>
-          <TabsTrigger value="Friend Requests">Friend Requests</TabsTrigger>
+          <TabsTrigger value="Friend Requests">
+            <div className="relative">
+              Friend Requests
+              {friendRequest.length <= 0 ? null : <div className="-right-4 bottom-2 absolute flex aspect-square h-3.5 w-3.5 items-center  justify-center rounded-full bg-red-400 text-sm">
+                <p className="mb-1 mt-1 text-center text-xs text-white">
+                  {friendRequest.length}
+                </p>
+              </div>}
+            </div>
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="Your Friends">
           {friendList.map((friend) => (

@@ -9,7 +9,9 @@ import {
 import { tabsButton } from "@/constants/tabsContent";
 import { useRouter } from "next/navigation";
 
-
+interface TabsCardProps {
+  friendReq?: number
+}
 
 const TabsCard = () => {
 
