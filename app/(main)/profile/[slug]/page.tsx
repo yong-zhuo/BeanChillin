@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/common-ui/shadcn-ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/common-ui/shadcn-ui/tabline";
 import UserFeed from "@/components/home/feed/UserFeed";
 import FriendRequestButton from "@/components/home/friends/FriendRequestButton";
+import SettingsButton from "@/components/home/friends/SettingsButton";
 import MembershipButton from "@/components/home/group/MembershipButton";
 import { AboutProfileTab } from "@/components/home/profile/AboutProfileTab";
 import prisma from "@/lib/prisma";
@@ -117,11 +118,11 @@ export default async function Page({ params }: Props) {
                     </CardContent>
                 </div>
                 <div className='flex justify-end items-end mr-2 mb-2 z-10'>
-                    <FriendRequestButton
+                    {session?.user.email === userInfo.email ? <SettingsButton/> : <FriendRequestButton
                         sender_status={status_obj.sender_status || ""}
                         receiver_status={status_obj.receiver_status || ""}
                         receiver_id={userInfo.id}
-                    />
+                    />}
                 </div>
             </Card>
 

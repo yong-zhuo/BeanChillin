@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const TabsCard = () => {
 
-  const router = useRouter();
+const router = useRouter();
 
   return (
     

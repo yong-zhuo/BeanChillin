@@ -95,10 +95,10 @@ const CreateGroupModal = () => {
       if (!response.ok) {
         if (response.status === 409) {
           toast({
-            variant: "destructive",
             title: "Group already exists",
             description: "Please choose another name for your Group.",
             action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
+            variant: "destructive",
           });
         } else if (response.status === 400) {
           toast({

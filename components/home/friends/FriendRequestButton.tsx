@@ -59,7 +59,7 @@ const FriendRequestButton = (props: Props) => {
 
   const { sender_status, receiver_status, receiver_id } = props;
   const { user } = useContext(UserContext);
-  return user?.id === receiver_id ? null : receiver_status === "Confirm" ? ( //If the user is viewing their own profile //If receiver status is pending
+  return receiver_status === "Confirm" ? ( //If the user is viewing their own profile //If receiver status is pending
     <Button
       className="flex w-fit flex-row items-center justify-center gap-1 bg-gray-400 text-white transition hover:scale-105 hover:bg-gray-400"
       disabled
