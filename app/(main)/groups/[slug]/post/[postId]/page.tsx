@@ -109,7 +109,7 @@ const page = async ({ params }: PageProps) => {
                     </>
                   ) : null}
                   
-                  {post.author.id || post.group.creatorId === user?.id ? (
+                  {(post.author.id === user?.id || post.group.creatorId === user?.id) ? (
             <span className="px-1 flex flex-row">• <DeleteButton postId={post.id} /></span> 
           ) : null}
                 </div>
