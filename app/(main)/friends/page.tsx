@@ -51,7 +51,7 @@ const page = async () => {
           <TabsTrigger value="Friend Requests">
             <div className="relative">
               Friend Requests
-              {friendRequest.length <= 0 ? null : <div className="-right-4 bottom-2 absolute flex aspect-square h-3.5 w-3.5 items-center  justify-center rounded-full bg-red-400 text-sm">
+              {friendRequest.length <= 0 ? null : <div className="-right-4 bottom-2 absolute flex aspect-square h-3.5 w-3.5 items-center  justify-center rounded-full bg-red-400 text-sm ">
                 <p className="mb-1 mt-1 text-center text-xs text-white">
                   {friendRequest.length}
                 </p>

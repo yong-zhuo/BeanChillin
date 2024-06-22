@@ -71,7 +71,8 @@ const MembershipButton = ({
         description: "Group has been deleted successfully",
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
-      router.push("/groups");
+      router.replace("/groups");
+      router.refresh();
     }
   };
 

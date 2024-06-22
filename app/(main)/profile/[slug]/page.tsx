@@ -5,13 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/common-ui
 import UserFeed from "@/components/home/feed/UserFeed";
 import FriendRequestButton from "@/components/home/friends/FriendRequestButton";
 import SettingsButton from "@/components/home/friends/SettingsButton";
-import MembershipButton from "@/components/home/group/MembershipButton";
+import ViewGroupTabs from "@/components/home/group/ViewGroupTabs";
 import { AboutProfileTab } from "@/components/home/profile/AboutProfileTab";
 import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
-import { get } from "http";
 import { getServerSession } from "next-auth";
-import Image from "next/image"; // Import the Image component from the correct module
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -98,10 +96,32 @@ export default async function Page({ params }: Props) {
         return { Nposts: Nposts, Ncomments: Ncomments, Ngroups }
     }
 
+    async function getGroups(id: string) {
+        const [memberships, createdGroups] = await Promise.all([
+            prisma.membership.findMany({
+              where: {
+                userId: id,
+              },
+              include: {
+                group: true,
+              },
+            }), prisma.group.findMany({
+              where: {
+                creatorId: id,
+              },
+            })]);
+      
+      
+          const joinedGroups = memberships.map((membership) => membership.group);
+
+          return [joinedGroups, createdGroups];
+        }
+
     const { slug } = params;
     const session = await getServerSession(Oauth);
-    const info = await Promise.all([getUserInfo(slug), getStatus(slug), getStats(slug)]);
-    const [userInfo, status_obj, stats] = info;
+    const info = await Promise.all([getUserInfo(slug), getStatus(slug), getStats(slug), getGroups(slug)]);
+    
+    const [userInfo, status_obj, stats, groups] = info;
 
     //get user details
     return (
@@ -134,6 +154,9 @@ export default async function Page({ params }: Props) {
                     <TabsTrigger value="Posts" className="text-center hover:bg-gray-100">
                         Posts
                     </TabsTrigger>
+                    <TabsTrigger value="Groups" className="text-center hover:bg-gray-100">
+                        Groups
+                    </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="About">
@@ -149,6 +172,9 @@ export default async function Page({ params }: Props) {
                     <UserFeed
                         authorId={slug}
                     />
+                </TabsContent>
+                <TabsContent value="Groups">
+                    <ViewGroupTabs joinedGroups={groups[0]} createdGroups={groups[1]}/>
                 </TabsContent>
             </Tabs>
         </div>)
