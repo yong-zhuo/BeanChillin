@@ -120,7 +120,11 @@ export default async function Page({ params }: Props) {
     const { slug } = params;
     const session = await getServerSession(Oauth);
     const info = await Promise.all([getUserInfo(slug), getStatus(slug), getStats(slug), getGroups(slug)]);
-    
+    const user = await prisma.user.findFirst({
+        where: {
+            email: session?.user.email
+        }
+    });
     const [userInfo, status_obj, stats, groups] = info;
 
     //get user details
@@ -138,7 +142,7 @@ export default async function Page({ params }: Props) {
                     </CardContent>
                 </div>
                 <div className='flex justify-end items-end mr-2 mb-2 z-10'>
-                    {session?.user.email === userInfo.email ? <SettingsButton/> : <FriendRequestButton
+                    {session?.user.email === userInfo.email ? <SettingsButton user={user}/> : <FriendRequestButton
                         sender_status={status_obj.sender_status || ""}
                         receiver_status={status_obj.receiver_status || ""}
                         receiver_id={userInfo.id}
