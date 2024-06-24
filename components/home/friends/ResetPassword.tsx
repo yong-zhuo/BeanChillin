@@ -100,7 +100,7 @@ function ResetPassword({ user }: ResetPasswordProps) {
           ))}
         </CardContent>
         <CardFooter className="flex items-center justify-center">
-          <Button className="rounded-lg bg-pri text-white transition hover:scale-105 hover:bg-slate-400">
+          <Button className="rounded-lg bg-pri text-white transition hover:scale-105 hover:bg-slate-400" disabled={isLoading}>
             {isLoading ? (
               <div className="flex flex-row gap-0.5">
                 Sending <Loader2 className="h-5 w-5 animate-spin" />

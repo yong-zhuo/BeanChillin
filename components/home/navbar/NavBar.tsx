@@ -8,11 +8,12 @@ import { UserContext } from "../UserContext";
 import Messaging from "./Messaging";
 import Link from "next/link";
 import HamburgerMenu from "./HamburgerMenu";
+import { User } from "@prisma/client";
 
-const NavBar = () => {
+const NavBar = ({user}: {user: User | null}) => {
   
 
-  const { user } = useContext(UserContext);
+
 
   return (
     <div className="fixed inset-x-0 top-0 z-[10] h-[80px] border-b-2 border-pri bg-sec py-2">

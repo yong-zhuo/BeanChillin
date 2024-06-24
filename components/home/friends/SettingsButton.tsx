@@ -31,7 +31,7 @@ import { Loader2, Settings } from "lucide-react";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import cloudinaryUpload from "@/lib/cloudinary/CloudinaryUpload";
+import cloudinaryUpload, { cloudUpdate } from "@/lib/cloudinary/CloudinaryUpload";
 import { onboardPush } from "@/lib/users/OnboardPush";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { Textarea } from "@/components/common-ui/shadcn-ui/textarea";
@@ -86,7 +86,7 @@ const SettingsButton = ({ user }: { user: User | null }) => {
       };
 
       await Promise.all([
-        cloudinaryUpload(data.image, {
+        cloudUpdate(data.image, {
           email: user?.email as string,
           public_id: user?.id,
         }),
@@ -183,6 +183,7 @@ const SettingsButton = ({ user }: { user: User | null }) => {
                     <Button
                       className="rounded-lg bg-pri text-white transition hover:scale-105 hover:bg-slate-400"
                       type="submit"
+                      disabled={isLoading}
                     >
                       {isLoading ? (
                         <div className="flex flex-row gap-0.5">

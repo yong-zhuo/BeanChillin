@@ -11,7 +11,24 @@ interface Info {
 
 type groupUploadType = 'groupPicture' | 'banner'
 
+export async function cloudUpdate(file: File | undefined, info: Info) {
+  
+  if (file === undefined) {
+    return;
+  }
+  const form = new FormData();
+  form.append('file', file);
+  form.append('upload_preset', 'profile_picture')
+  const data = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+    {
+      method: 'POST',
+      body: form,
+    }
+  ).then(res => res.json()).catch(e => console.log(e));
 
+  await postimage({ imageUrl: data.secure_url, imagePublicId: data.public_id, email: info.email }, 'userImage')
+}
 
 
 export default async function cloudinaryUpload(file: File | undefined, info: Info) {
