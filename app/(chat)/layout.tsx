@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { CustomSessionUser, Oauth } from "@/lib/users/OAuth";
 import ChatList from "@/components/home/chat/ChatList";
 import { getFriendsById } from "@/lib/friends/get-friends-by-id";
+import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 export const metadata = {
     title: "Chat | BeanChillin",
@@ -15,11 +17,19 @@ interface HomeLayoutProps {
 }
 
 const layout = async ({ children }: HomeLayoutProps) => {
-    const friends = await getFriendsById();
+    const [session,friends] = await Promise.all([getServerSession(Oauth), getFriendsById()]);
+    if (!session) {
+        redirect("/login");
+    }
+    const user = await prisma.user.findUnique({
+        where: {
+            email: session?.user?.email as string,
+        },
+    });
     return (
         <UserProvider>
             <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-hidden">
-                <NavBar />
+                <NavBar user={user} />
                 <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
                     <section className="max-w-8xl mx-auto flex h-full w-full items-center 3xl:items-start">
                         <div className='w-full  max-w-xs grow flex-col gap-y-5 overflow-y-auto mt-1 3xl:mt-6  p-5 flex h-[87vh] 3xl:h-[86vh]  justify-between bg-white shadow-md rounded-lg'>
