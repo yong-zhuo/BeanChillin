@@ -4,6 +4,7 @@ import ViewGroupTabs from "@/components/home/group/ViewGroupTabs";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
 import { getServerSession } from "next-auth";
 import { Oauth } from "@/lib/users/OAuth";
+import prisma from "@/lib/prisma";
 
 export const metadata = {
   title: "Groups | BeanChillin",
@@ -11,6 +12,39 @@ export const metadata = {
 };
 
 const GroupPage = async () => {
+
+  let user = null;
+    const session = await getServerSession(Oauth);
+
+    if(session?.user?.email) {
+      user = await prisma.user.findUnique({
+          where: {
+              email: session.user.email
+          },
+      });
+    } else {
+        return new Response('User not found', {status: 404})
+    }
+
+
+    const [memberships, createdGroups] = await Promise.all([
+      prisma.membership.findMany({
+        where: {
+          userId: user?.id,
+        },
+        include: {
+          group: true,
+        },
+      }), prisma.group.findMany({
+        where: {
+          creatorId: user?.id
+        },
+      })]);
+
+
+    const joinedGroups = memberships.map((membership) => membership.group);
+
+
   return (
     <div className="container mx-auto mt-3 w-5/6 px-12">
       <h2 className="w-fit text-3xl font-extrabold flex flex-row gap-2 items-center">
@@ -44,7 +78,7 @@ const GroupPage = async () => {
       </div>
       <Separator className="mb-2 bg-pri" />
       <div className="mt-1">
-        <ViewGroupTabs />
+        <ViewGroupTabs joinedGroups={joinedGroups} createdGroups={createdGroups} />
       </div>
     </div>
   );

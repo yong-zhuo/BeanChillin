@@ -37,7 +37,7 @@ export async function postData(formData: FormData) {
             useTLS: true,
         });
 
-        pusher.trigger(key, "my-event", {
+        await pusher.trigger(key, "my-event", {
             message: `${JSON.stringify(data)}\n\n`,
         });
     }

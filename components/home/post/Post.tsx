@@ -5,10 +5,13 @@ import { formatTimeToNow } from "@/lib/utils";
 import type { Post, User, Vote } from "@prisma/client";
 import { MessageSquareText } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { use, useRef } from "react";
 import EditorContent from "./EditorContent";
 import { Badge } from "@/components/common-ui/shadcn-ui/badge";
 import PostVote from "../post-vote/PostVote";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import { title } from "process";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -33,6 +36,7 @@ const Post = ({
   groupCreatorId,
 }: PostProps) => {
   const postRef = useRef<HTMLDivElement>(null);
+ 
 
   return (
     <div className="rounded-md bg-white shadow">

@@ -1,10 +1,9 @@
 
-import { ScrollArea } from "@/components/common-ui/shadcn-ui/scroll-area";
 import GroupPreview from "./GroupPreview";
 import { Group } from "@prisma/client";
 
 
-const GroupsJoinedTab = ({ groups }: { groups: Group[] }) => {
+const GroupsJoinedTab = async ({ groups }: { groups: Group[] }) => {
 
 
   

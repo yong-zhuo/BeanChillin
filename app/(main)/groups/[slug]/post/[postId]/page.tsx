@@ -1,13 +1,27 @@
 import UserAvatar from "@/components/common-ui/misc/UserAvatar";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+} from "@/components/common-ui/shadcn-ui/alert-dialog";
 import { Badge } from "@/components/common-ui/shadcn-ui/badge";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/common-ui/shadcn-ui/dropdown-menu";
 import CommentsSection from "@/components/home/comments/CommentsSection";
 import AsyncPostVote from "@/components/home/post-vote/AsyncPostVote";
 import PostVoteSkeleton from "@/components/home/post-vote/PostVoteSkeleton";
+import DeleteButton from "@/components/home/post/DeleteButton";
 import EditorContent from "@/components/home/post/EditorContent";
 import prisma from "@/lib/prisma";
+import { Oauth } from "@/lib/users/OAuth";
 import { formatTimeToNow } from "@/lib/utils";
 import { Group, Post, User, Vote } from "@prisma/client";
-import { Loader2 } from "lucide-react";
+import { Ellipsis, Loader2 } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
@@ -25,7 +39,12 @@ export const fetchCache = "force-no-store";
 const page = async ({ params }: PageProps) => {
   let post: (Post & { votes: Vote[]; author: User; group: Group }) | null =
     null;
-
+  const session = await getServerSession(Oauth);
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user.email as string,
+    },
+  });
   //find post by id
   post = await prisma.post.findFirst({
     where: {
@@ -35,6 +54,7 @@ const page = async ({ params }: PageProps) => {
       votes: true,
       author: true,
       group: true,
+      
     },
   });
 
@@ -66,7 +86,12 @@ const page = async ({ params }: PageProps) => {
               />
               <div className="ml-4">
                 <div className="flex items-center text-lg font-bold text-gray-900">
-                  {post.author.name}
+                  <Link
+                    href={`/profile/${post.author.id}`}
+                    className="hover:underline"
+                  >
+                    {post.author.name}
+                  </Link>
                   {post.author.id === post.group.creatorId ? (
                     <Badge className="ml-1 h-4 w-fit bg-pri text-xs">
                       Owner
@@ -83,17 +108,22 @@ const page = async ({ params }: PageProps) => {
                       </Link>
                     </>
                   ) : null}
+                  
+                  {(post.author.id === user?.id || post.group.creatorId === user?.id) ? (
+            <span className="px-1 flex flex-row">• <DeleteButton postId={post.id} /></span> 
+          ) : null}
                 </div>
                 {formatTimeToNow(new Date(post.createdAt))}
               </div>
             </div>
           </div>
-          <h1 className="py-2 text-xl font-semibold leading-6 text-gray-900 flex flex-row justify-start items-start">
+          <h1 className="flex flex-row items-start justify-start py-2 text-xl font-semibold leading-6 text-gray-900">
             {post?.title}
-            <div className=" sm:hidden -mt-2">
+            <div className=" -mt-2 sm:hidden">
               <Suspense fallback={<PostVoteSkeleton />}>
                 <AsyncPostVote postId={post?.id} getData={getData} />
               </Suspense>
+              
             </div>
           </h1>
 
@@ -107,7 +137,9 @@ const page = async ({ params }: PageProps) => {
             <CommentsSection postId={post?.id} />
           </Suspense>
         </div>
+       
         <div className="hidden items-start justify-center px-5 pl-0 pt-3 sm:block">
+          
           <Suspense fallback={<PostVoteSkeleton />}>
             <AsyncPostVote postId={post?.id} getData={getData} />
           </Suspense>

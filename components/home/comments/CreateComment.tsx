@@ -5,7 +5,12 @@ import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { set } from "date-fns";
 import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
-import { Loader2, MessageSquareDot, MessageSquarePlus, Router } from "lucide-react";
+import {
+  Loader2,
+  MessageSquareDot,
+  MessageSquarePlus,
+  Router,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface CreateCommentProps {
@@ -55,7 +60,6 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
       });
     } finally {
       setIsLoading(false);
-      
     }
   };
 
@@ -71,15 +75,30 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
           rows={1}
           placeholder="Write a comment..."
           className="w-full resize-none"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleComment(postId, input, replyToId);
+            }
+          }}
         />
 
         <div className="mt-2 flex justify-end">
           <Button
             disabled={input.length === 0}
             onClick={() => handleComment(postId, input, replyToId)}
-            className="rounded-xl bg-pri text-white gap-1.5 hover:bg-[#77b8d1]"
+            className="gap-1.5 rounded-xl bg-pri text-white hover:bg-[#77b8d1]"
+            
           >
-           { isLoading ? <div className="flex flex-row gap-0.5">Sending <Loader2 className="animate-spin h-5 w-5"/></div> : <div className="flex flex-row gap-0.5">Comment <MessageSquarePlus className="h-5 w-5" /></div>}
+            {isLoading ? (
+              <div className="flex flex-row gap-0.5">
+                Sending <Loader2 className="h-5 w-5 animate-spin" />
+              </div>
+            ) : (
+              <div className="flex flex-row gap-0.5">
+                Comment <MessageSquarePlus className="h-5 w-5" />
+              </div>
+            )}
           </Button>
         </div>
       </div>

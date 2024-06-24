@@ -3,7 +3,7 @@ import GroupPreview from "./GroupPreview";
 import { Group } from "@prisma/client";
 
 
-const YourGroupsTab = ({ groups }: { groups: Group[] }) => {
+const YourGroupsTab = async ({ groups }: { groups: Group[] }) => {
   return (
     
       <div>

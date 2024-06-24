@@ -56,7 +56,7 @@ export default function ChatForm({ data }: ChatFormProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type a message..."
-        className="sm:text-s block max-h-[120px] w-full resize-none overflow-y-auto border border-pri bg-transparent text-gray-900 outline-none placeholder:text-gray-400 focus-within:ring-0 focus:ring-0 sm:py-1.5 sm:leading-6"
+        className="sm:text-s block max-h-[120px] scrollbar w-full resize-none overflow-y-auto border border-pri bg-transparent text-gray-900 outline-none placeholder:text-gray-400 focus-within:ring-0 focus:ring-0 sm:py-1.5 sm:leading-6"
       />
       <div className="items-center">
           <Button

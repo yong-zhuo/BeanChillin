@@ -1,4 +1,3 @@
-"use client";
 import { Card, CardHeader } from "@/components/common-ui/shadcn-ui/card";
 import GroupAvatar from "./GroupAvatar";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
@@ -11,17 +10,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowBigRight, Loader2 } from "lucide-react";
 
-const GroupPreview = ({ group }: { group: Group }) => {
-  const [memberCount, setMemberCount] = useState<number | null>(null);
-
-
-  useEffect(() => {
-    const fetchMemberCount = async () => {
-      const count = await getMemberCount(group.id);
-      setMemberCount(count);
-    };
-    fetchMemberCount();
-  }, [group]);
+const GroupPreview = async ({ group }: { group: Group }) => {
+  const memberCount = await getMemberCount(group.id);
 
   return (
     <>
@@ -39,12 +29,17 @@ const GroupPreview = ({ group }: { group: Group }) => {
                   {group.name}
                   <GroupBadge type={group.type as GroupType} />
                 </div>
-                <div className="ml-4 text-sm font-light flex flex-row items-center gap-1">
-                  Members: {memberCount === null? <Loader2 className="h-4 w-4 animate-spin"/> : memberCount}
+                <div className="ml-4 flex flex-row items-center gap-1 text-sm font-light">
+                  Members:{" "}
+                  {memberCount === null ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    memberCount
+                  )}
                 </div>
               </div>
             </div>
-            <div className="flex h-1/4 w-full flex-row space-x-12 lg:h-fit lg:w-fit lg:space-x-5 justify-center items-center lg:items-stretch lg:justify-end">
+            <div className="flex h-1/4 w-full flex-row items-center justify-center space-x-12 lg:h-fit lg:w-fit lg:items-stretch lg:justify-end lg:space-x-5">
               <Button
                 asChild
                 className="group relative mt-9 flex items-center justify-center border border-transparent bg-pri  px-4 py-2 text-sm font-medium text-white transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg"
@@ -58,7 +53,6 @@ const GroupPreview = ({ group }: { group: Group }) => {
           </div>
         </CardHeader>
       </Card>
-      
     </>
   );
 };
