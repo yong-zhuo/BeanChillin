@@ -109,7 +109,7 @@ const PostVote = ({
           })}
         />
       </Button>
-      <p className="m-0 sm:mr-0 py-2 text-center text-sm font-medium text-zinc-900">
+      <p className="m-0 sm:mr-0 py-2 text-center text-sm font-medium text-zinc-900" id="vote">
         {votesCount}
       </p>
       <Button onClick={() => handleVote('DOWNVOTE')} size="icon" variant="ghost" aria-label="DOWNVOTE">

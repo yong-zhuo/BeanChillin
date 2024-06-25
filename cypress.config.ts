@@ -5,8 +5,10 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
+    
   },
-
+  viewportWidth: 1530,
+  viewportHeight: 730,
   component: {
     devServer: {
       framework: "next",

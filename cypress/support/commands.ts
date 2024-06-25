@@ -1,3 +1,4 @@
+
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -49,3 +50,4 @@ Cypress.Commands.add('login', (email:string , password:string ) => {
     cy.contains('Sign In').click();
 
 })
+
