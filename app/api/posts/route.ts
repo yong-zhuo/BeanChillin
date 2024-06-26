@@ -13,7 +13,6 @@ export async function GET(req: Request) {
 
     let followedGroupIds: string[] = [];
 
-
     try {
         const { limit, offset, groupName, feedType, authorId } = z.object
             ({
