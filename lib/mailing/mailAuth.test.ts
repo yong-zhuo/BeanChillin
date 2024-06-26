@@ -1,4 +1,4 @@
-import { prismaMock } from '../context';
+import { prismaMock } from '../../__mocks__/prisma';
 import mailAuth from './mailAuth';
 
 const data1 = {

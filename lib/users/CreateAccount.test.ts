@@ -1,4 +1,4 @@
-import { prismaMock } from "../context";
+import { prismaMock } from "../../__mocks__/prisma";
 
 test('should create new user ', async () => {
     const data = {
