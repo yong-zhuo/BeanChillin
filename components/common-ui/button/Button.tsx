@@ -40,6 +40,7 @@ export default function Button(props: ButtonProps) {
       type={props.action}
       className={classes}
       onClick={props.handleClick}
+      data-testid={props.text}
       disabled={props.state}
       form={props.formId}
     >

@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnboardingApp renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="relative flex h-full flex-col"
+  >
+    <div
+      class="h-auto w-full hidden md:block  3mxl:mb-10"
+    >
+      <div
+        class="flex justify-between"
+      >
+        <div
+          class="step-item active false "
+        >
+          <div
+            class="step"
+          >
+            <svg
+              class="lucide lucide-user-round"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="8"
+                r="5"
+              />
+              <path
+                d="M20 21a8 8 0 0 0-16 0"
+              />
+            </svg>
+          </div>
+          <p
+            class="font-bold text-gray-500 text-xs lg:text-sm"
+          >
+            Customise your profile
+          </p>
+        </div>
+        <div
+          class="step-item false false "
+        >
+          <div
+            class="step"
+          >
+            <svg
+              class="lucide lucide-list-plus"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 12H3"
+              />
+              <path
+                d="M16 6H3"
+              />
+              <path
+                d="M16 18H3"
+              />
+              <path
+                d="M18 9v6"
+              />
+              <path
+                d="M21 12h-6"
+              />
+            </svg>
+          </div>
+          <p
+            class="font-bold text-gray-500 text-xs lg:text-sm"
+          >
+            Tell us about yourself
+          </p>
+        </div>
+        <div
+          class="step-item false false "
+        >
+          <div
+            class="step"
+          >
+            <svg
+              class="lucide lucide-bean"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.165 6.598C9.954 7.478 9.64 8.36 9 9c-.64.64-1.521.954-2.402 1.165A6 6 0 0 0 8 22c7.732 0 14-6.268 14-14a6 6 0 0 0-11.835-1.402Z"
+              />
+              <path
+                d="M5.341 10.62a4 4 0 1 0 5.279-5.28"
+              />
+            </svg>
+          </div>
+          <p
+            class="font-bold text-gray-500 text-xs lg:text-sm"
+          >
+            Welcome to BeanChillin
+          </p>
+        </div>
+      </div>
+    </div>
+    <form
+      class="flex flex-col  px-40 pb-5 pt-9"
+    >
+      <div
+        class="flex flex-col justify-center items-center"
+      >
+        <div
+          class="md:hidden h-12 w-12 aspect-square rounded-full mb-4 bg-pri flex items-center justify-center"
+        >
+          <svg
+            class="lucide lucide-user text-sec"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+            />
+            <circle
+              cx="12"
+              cy="7"
+              r="4"
+            />
+          </svg>
+        </div>
+        <div
+          class="mb-5"
+        >
+          <div
+            class="flex justify-center"
+          />
+          <h2
+            class="text-center text-2xl md:text-3xl font-extrabold text-gray-700"
+          >
+            Customise your profile
+          </h2>
+          <p
+            class="mt-2 text-center text-sm md:text-lg text-gray-500"
+          >
+            Set your name and profile picture to be displayed 
+          </p>
+        </div>
+      </div>
+      <div
+        class="relative flex justify-center"
+      >
+        <div
+          class="relative"
+        >
+          <img
+            alt="Profile Picture"
+            class="aspect-square rounded-full object-cover border-pri border-4 min-w-[150px] min-h-[150px] md:h-[160px] md:w-[160px]  2mxl:h-[220px] 2mxl:w-[220px] 3mxl:h-[300px] 3mxl:w-[300px]"
+            data-nimg="1"
+            decoding="async"
+            height="200"
+            loading="lazy"
+            src="/profile/avatar.svg"
+            style="color: transparent;"
+            width="200"
+          />
+          <div
+            class="absolute bottom-1 right-1 2mxl:bottom-5 2mxl:right-3 3mxl:bottom-6 3mxl:right-5 flex flex-col-reverse"
+          >
+            <input
+              accept="image/*"
+              class="hidden"
+              id="File"
+              type="file"
+            />
+            <button
+              class="rounded-full aspect-square overflow-hidden w-12 h-12 group relative flex text-sm font-medium py-2 px-4 mt-9 bg-sec text-sec hover:bg-white border-2 border-pri items-center justify-center"
+              type="button"
+            >
+              <img
+                alt="Edit Profile Picture"
+                class="absolute inset-0 w-4/5 h-4/5 m-auto object-contain"
+                data-nimg="1"
+                decoding="async"
+                height="40"
+                loading="lazy"
+                src="/profile/camera.svg"
+                style="color: transparent;"
+                width="50"
+              />
+              <div
+                class="flex flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-5 flex flex-col items-center justify-center"
+      >
+        <div
+          class="w-[150px] sm:w-[200px] md:w-[250px] lg:w-[400px] flex flex-col justify-center"
+        >
+          <div
+            class="flex justify-between"
+          >
+            <label
+              class="text-md text-black-700 mb-2 block font-bold sm:text-base md:text-sm"
+              for="firstName"
+            >
+              First Name 
+            </label>
+          </div>
+          <div
+            class="mb-7"
+          >
+            <label
+              class="hidden"
+              for="firstName"
+            >
+              First Name
+            </label>
+            <input
+              class="shadow rounded-md appearance-none relative block w-full px-3 py-2 border placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-pri focus:border-pri focus:z-10 sm:text-sm "
+              data-testid="firstName"
+              name="firstName"
+              placeholder="John"
+              type="text"
+            />
+          </div>
+          <div
+            class="flex justify-between"
+          >
+            <label
+              class="text-md text-black-700 mb-2 block font-bold sm:text-base md:text-sm"
+              for="lastName"
+            >
+              Last Name 
+            </label>
+          </div>
+          <div
+            class="mb-7"
+          >
+            <label
+              class="hidden"
+              for="lastName"
+            >
+              Last Name
+            </label>
+            <input
+              class="shadow rounded-md appearance-none relative block w-full px-3 py-2 border placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-pri focus:border-pri focus:z-10 sm:text-sm "
+              data-testid="lastName"
+              name="lastName"
+              placeholder="Doe"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      class="absolute bottom-0 mt-5 flex w-full"
+    >
+      <div
+        class="ml-auto"
+      >
+        <button
+          class="rounded-md w-full group relative flex justify-center border border-transparent text-sm font-medium py-2 px-4 mt-9 bg-pri text-sec hover:bg-slate-500 gap-1 shadow transition hover:translate-x-1"
+          data-testid="Next"
+        >
+          <div
+            class="flex flex-row items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            Next
+          </div>
+          <img
+            alt="arrow-right"
+            data-nimg="1"
+            decoding="async"
+            height="20"
+            loading="lazy"
+            src="/misc/arrow-right.svg"
+            style="color: transparent;"
+            width="20"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

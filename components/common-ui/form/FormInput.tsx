@@ -51,6 +51,7 @@ const FormInput = <T extends fieldState>({
         {/*Extra label for Jest to detect input field */}  
         <label htmlFor={id} className="hidden" >{labelText}</label>
         <input
+          data-testid={id}
           placeholder={placeholder}
           className={`${fixedInputClass} ${addClass || ""}`}
           {...props}
