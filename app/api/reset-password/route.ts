@@ -4,7 +4,7 @@ import { hash } from "bcrypt";
 export async function POST(req: Request) {
     const data = await req.json();
     const password = data.password;
-    if(!data.password || !data.userId) {
+    if (!data.password || !data.userId) {
         throw new Error("Invalid request");
     }
 

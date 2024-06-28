@@ -1,13 +1,12 @@
 /* eslint-disable testing-library/no-wait-for-side-effects */
 import React from "react";
-import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import LoginForm from "./LoginForm";
 import "@testing-library/jest-dom/";
 import { useRouter } from "next/navigation";
 import { SessionProvider, signIn } from "next-auth/react";
 import { Session } from "next-auth";
-import { mock } from "node:test";
+
 let mockedSession: Session | null = null;
 
 jest.mock("next/navigation", () => ({
@@ -43,7 +42,7 @@ describe("Login Form", () => {
       </SessionProvider>,
     );
 
-    
+
     // Simulate form submission without providing any input
     fireEvent.click(screen.getByRole("button", { name: "Sign In" }));
 
