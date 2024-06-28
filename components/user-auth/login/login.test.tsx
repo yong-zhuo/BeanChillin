@@ -55,3 +55,25 @@ describe("Login Form", () => {
     });
   });
 });
+
+describe("Login Form", () => {
+  let signInSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    signInSpy = jest.spyOn(require('next-auth/react'), 'signIn').mockResolvedValueOnce(true);
+  });
+  test("Integration testing for login form", async () => {
+    render(
+      <SessionProvider session={mockedSession}>
+        <LoginForm />
+      </SessionProvider>,
+    );
+
+    fireEvent.change(screen.getByTestId('email'), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByTestId('password'), { target: { value: 'password123' } });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    await waitFor(() => expect(signInSpy).toHaveBeenCalledTimes(1));
+  });
+});
+
