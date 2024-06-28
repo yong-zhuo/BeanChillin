@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import SignUpForm from './SignUpForm'; 
+import SignUpForm from './SignUpForm';
 import "@testing-library/jest-dom/";
 import { useRouter } from 'next/navigation';
 import CreateAccount from '@/lib/users/CreateAccount';
@@ -55,6 +55,6 @@ describe('SignUpForm', () => {
       // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
       expect(passwordErrors).toHaveLength(2);
     });
-   
+
   });
 });
