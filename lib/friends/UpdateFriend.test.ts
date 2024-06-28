@@ -8,15 +8,6 @@ describe('UpdateFriend', () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Mock data for sender_id and receiver_id
-        prismaMock.friendship.findFirst.mockResolvedValueOnce({
-            id: '1',
-            sender_id: 'admin@gmail.com',
-            receiver_id: 'dragon@gmail.com',
-            status: 'Pending',
-            key: null,
-        });
-
         prismaMock.friendship.findFirst.mockResolvedValueOnce({
             id: '2',
             sender_id: 'dragon@gmail.com',
@@ -26,7 +17,7 @@ describe('UpdateFriend', () => {
         });
     });
 
-    it('should update friendship status to "Friend" when status is "Friend"', async () => {
+    it('should update friendship status to "Friend" when the user accept the friend request', async () => {
         const data: FriendData = {
             sender_id: 'admin@gmail.com',
             receiver_id: 'dragon@gmail.com',
