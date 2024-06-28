@@ -3,7 +3,7 @@
 exports[`OnboardingApp renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="relative flex h-full flex-col"
+    class="relative flex h-full flex-col "
   >
     <div
       class="h-auto w-full hidden md:block  3mxl:mb-10"
