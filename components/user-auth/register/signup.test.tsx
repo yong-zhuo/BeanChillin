@@ -4,29 +4,40 @@ import SignUpForm from './SignUpForm';
 import "@testing-library/jest-dom/";
 import { useRouter } from 'next/navigation';
 import CreateAccount from '@/lib/users/CreateAccount';
-import { signIn } from 'next-auth/react';
-
+import { SessionProvider, signIn } from 'next-auth/react';
+import { Session } from 'next-auth';
+import * as nextAuthReact from 'next-auth/react';
+let mockedSession: Session | null = null;
 jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+}));
+jest.mock("next-auth/next", () => ({
+  getServerSession: jest.fn(() => Promise.resolve(mockedSession)),
 }));
 
 
+
+
 describe('SignUpForm', () => {
-  test('renders SignUpForm component', () => {
+  test('snapshot matches', () => {
     (useRouter as jest.Mock).mockReturnValue({
       push: jest.fn(),
     });
-    render(<SignUpForm />);
+    const { asFragment } = render(
+      <SessionProvider
+        session={mockedSession}
+      >
+        <SignUpForm/>
+      </SessionProvider>,
+    );
 
-
-    expect(screen.getByText('Create an account')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Login Now' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Create Account' })).toBeInTheDocument();
-    expect(screen.getByTestId('email')).toBeInTheDocument();
-    expect(screen.getByTestId('password')).toBeInTheDocument();
-    expect(screen.getByTestId('confirm')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
+    
   });
 });
+
 
 
 
