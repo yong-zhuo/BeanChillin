@@ -50,7 +50,7 @@ const ProfileCard = async () => {
                   imageUrl: user.imageUrl || null,
                 }}
               />
-              <p className="mt-1">{user.name}</p>
+              <p className="mt-1  text-lg text-center">{user.name}</p>
             </div>
           ) : (
             <div className="flex items-center">
@@ -67,11 +67,11 @@ const ProfileCard = async () => {
         <Separator className="bg-pri" />
         <div className="flex h-9 items-center justify-evenly space-x-4 text-sm">
           <div className="flex flex-col items-center">
-            <span className="text pt-1 font-bold">{Nfriends} {Nfriends === 1 ? 'Friend' : 'Friends'}</span>
+            <span className="text-md pt-1 font-bold text-center">{Nfriends} {Nfriends === 1 ? 'Friend' : 'Friends'}</span>
           </div>
           <Separator className="bg-pri" orientation="vertical" />
           <div className="flex flex-col items-center">
-            <span className="text pt-1 font-bold">{Nposts} {Nposts === 1 ? 'Post' : 'Posts'}</span>
+            <span className="text-md pt-1 font-bold text-center">{Nposts} {Nposts === 1 ? 'Post' : 'Posts'}</span>
           </div>
         </div>
       </CardHeader>

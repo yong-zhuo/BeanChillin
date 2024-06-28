@@ -48,7 +48,7 @@ const RightSideBar = async () => {
     <div className="sticky mb-2 mt-10 hidden w-1/4 flex-col justify-start space-y-16 pt-12 lg:block">
       <Card className="">
         <CardHeader>
-          <CardTitle className="flex flex-row gap-2 2mxl:text-xl 2xl:text-lg text-lg items-center">
+          <CardTitle className="flex flex-row gap-2 2mxl:text-xl 2xl:text-lg text-md items-center">
             Suggested Groups <UserSearch className="h-5 w-5" />
           </CardTitle>
           <Separator className="my-2 bg-pri" />
@@ -63,7 +63,7 @@ const RightSideBar = async () => {
       </Card>
       <Card className="">
         <CardHeader>
-          <CardTitle className="flex flex-row gap-2 2mxl:text-xl 2xl:text-lg text-lg items-center">
+          <CardTitle className="flex flex-row gap-2 2mxl:text-xl 2xl:text-lg text-md items-center">
             Suggested Friends <UserSearch className="h-5 w-5  "/>
           </CardTitle>
           <Separator className="mt-2 bg-pri" />
