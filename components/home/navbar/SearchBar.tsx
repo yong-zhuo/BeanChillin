@@ -127,10 +127,10 @@ const SearchBar = () => {
                 
                   {groupResults?.map((group) => (
                     <CommandItem
-                      onSelect={(e) => {
-                        router.push(`/groups/${e}`);
-                        router.refresh();
-                      }}
+                    onSelect={(e) => {
+                      router.push(`/groups/${group.name}`);
+                      router.refresh();
+                    }}
                       key={group.id}
                       value={group.name as string}
                       className="cursor-pointer"
