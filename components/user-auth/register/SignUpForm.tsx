@@ -41,6 +41,7 @@ const SignUpForm = () => {
     try {
       const res = (await CreateAccount(data)) as string;
       if (res !== "ok") {
+        console.log(res);
         throw new Error(res);
       }
       console.log(res);

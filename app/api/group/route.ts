@@ -47,7 +47,7 @@ export async function POST(req:Request) {
                 groupId: group.id,
             },})
 
-            return Response.json(group.name);
+        return new Response(JSON.stringify(group.name));
     
     } catch (e) {
         console.log(e)

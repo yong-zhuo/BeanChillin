@@ -9,7 +9,7 @@ export async function PATCH(req: Request) {
         const data = await req.json();
 
         const {postId, content, replyToId} = commentSchema.parse(data);
-
+        
         const session = await getServerSession(Oauth);
 
         if(!session?.user) {

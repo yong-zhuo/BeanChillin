@@ -9,9 +9,9 @@ export async function POST(req: Request) {
         const session = await getServerSession(Oauth);
 
         const data = await req.json();
-
+        console.log(data);
         const { title, groupId, content } = createPostSchema.parse(data);
-
+        
         if (!session?.user) {
             return new Response("Unauthorized", { status: 401 });
         }
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   
 
     } catch (error) {
-
+        console.log(error);
         if (error instanceof z.ZodError) {
             return new Response(error.message, { status: 400 });
         }

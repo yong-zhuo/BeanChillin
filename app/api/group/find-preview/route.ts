@@ -35,5 +35,5 @@ export async function GET() {
     const joinedGroups = memberships.map((membership) => membership.group);
 
     
-    return Response.json([joinedGroups, createdGroups]);
+    return new Response(JSON.stringify([joinedGroups, createdGroups]));
   };
