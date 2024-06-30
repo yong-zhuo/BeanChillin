@@ -32,10 +32,10 @@ const UserPreview = (props: UserPreviewProps) => {
             />
             <div className="flex w-2/3 flex-col items-center md:w-4/5 md:items-start">
               <div className="lg:flex lg:flex-row lg:items-center">
-                  <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl">
+                  <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl truncate">
                     {props.otherUser?.name}
                   </div>
-                  <div className="ml-3 md:ml-4 text-md font-medium">
+                  <div className="ml-3 md:ml-4 text-md font-medium text-nowrap">
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>
