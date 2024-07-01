@@ -19,6 +19,7 @@ import GroupBadge from "@/components/home/group/GroupBadge";
 import MembershipButton from "@/components/home/group/MembershipButton";
 import { GroupType } from "@/types/groupType";
 import PostFeed from "@/components/home/post/PostFeed";
+import MembersList from "@/components/home/group/MembersList";
 
 
 export const metadata = {
@@ -70,13 +71,18 @@ const Page = async ({ params }: PageProps) => {
 
   const isMember = !!membership;
 
-  const memberCount = await prisma.membership.count({
+  const memberships = await prisma.membership.findMany({
     where: {
       group: {
         name: slug,
       },
     },
+    include: {
+      user: true, 
+    },
   });
+
+  const members = memberships.map((member) => member.user);
 
   const friendCount = await prisma.friendship.count({
     where: {
@@ -123,6 +129,9 @@ const Page = async ({ params }: PageProps) => {
           <TabsTrigger value="Posts" className="text-center hover:bg-gray-100">
             Posts
           </TabsTrigger>
+          <TabsTrigger value="Members" className="text-center hover:bg-gray-100">
+            Members
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="About">
@@ -130,13 +139,16 @@ const Page = async ({ params }: PageProps) => {
             description={group.description || "No description available"}
             creator={group.Creator}
             createdAt={group.createdAt}
-            members={memberCount}
+            members={members.length}
             friendCount={friendCount}
           />
         </TabsContent>
         <TabsContent value="Posts">
           <CreatePost  />
           <PostFeed initPosts={group.posts} groupName={group.name} />
+        </TabsContent>
+        <TabsContent value="Members">
+          <MembersList members={members}/>
         </TabsContent>
       </Tabs>
     </div>

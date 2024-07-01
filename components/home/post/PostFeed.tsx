@@ -38,7 +38,7 @@ const PostFeed = ({ initPosts, groupName, feedType, authorId }: PostFeedProps) =
         if (!res.ok) {
           throw new Error("Failed to fetch posts");
         }
-        console.log(newPosts.length);
+        
         if (newPosts.length === 0) {
           setHasMoreData(false);
         }

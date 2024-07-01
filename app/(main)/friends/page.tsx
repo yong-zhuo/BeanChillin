@@ -5,8 +5,11 @@ import {
   TabsTrigger,
 } from "@/components/common-ui/shadcn-ui/tabs";
 import UserPreview from "@/components/home/friends/UserPreview";
+import { getFriendCount } from "@/lib/friends/getFriendCount";
 import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
+import { User } from "@prisma/client";
+import { get } from "http";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 
@@ -28,6 +31,8 @@ const page = async () => {
       receiver: true,
     },
   });
+  const transformedFriendList = friendList.map((friend) => friend.receiver) as User[]
+  const friendListCount = await getFriendCount(transformedFriendList);
 
   const friendRequest = await prisma.friendship.findMany({
     where: {
@@ -38,6 +43,9 @@ const page = async () => {
       sender: true,
     },
   });
+
+  const transformedFriendRequest = friendRequest.map((friend) => friend.sender) as User[]
+  const friendRequestCount = await getFriendCount(transformedFriendRequest);
 
   return (
     <div className="container mx-auto mt-3 w-5/6 px-12">
@@ -51,11 +59,13 @@ const page = async () => {
           <TabsTrigger value="Friend Requests">
             <div className="relative">
               Friend Requests
-              {friendRequest.length <= 0 ? null : <div className="-right-4 bottom-2 absolute flex aspect-square h-3.5 w-3.5 items-center  justify-center rounded-full bg-red-400 text-sm ">
-                <p className="mb-1 mt-1 text-center text-xs text-white">
-                  {friendRequest.length}
-                </p>
-              </div>}
+              {friendRequest.length <= 0 ? null : (
+                <div className="absolute -right-4 bottom-2 flex aspect-square h-3.5 w-3.5 items-center  justify-center rounded-full bg-red-400 text-sm ">
+                  <p className="mb-1 mt-1 text-center text-xs text-white">
+                    {friendRequest.length}
+                  </p>
+                </div>
+              )}
             </div>
           </TabsTrigger>
         </TabsList>
@@ -64,7 +74,7 @@ const page = async () => {
             <UserPreview
               key={friend?.receiver?.id}
               otherUser={friend?.receiver}
-              friends={friendList.length}
+              friends={friendListCount[friend?.receiver?.id as string] || 0}
             />
           ))}
         </TabsContent>
@@ -73,7 +83,7 @@ const page = async () => {
             <UserPreview
               key={friend?.sender?.id}
               otherUser={friend?.sender}
-              friends={friendList.length}
+              friends={friendRequestCount[friend?.sender?.id as string] || 0}
             />
           ))}
         </TabsContent>
