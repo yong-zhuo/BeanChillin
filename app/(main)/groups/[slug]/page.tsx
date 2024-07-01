@@ -35,6 +35,11 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const session = await getServerSession(Oauth);
+  const user = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email,
+    },
+  });
   const { slug } = params;
 
   //find group by slug
@@ -117,7 +122,7 @@ const Page = async ({ params }: PageProps) => {
           <h1 className="text-2xl font-semibold">
             {group.name} <GroupBadge type={group.type as GroupType} />
           </h1>
-          <MembershipButton status={isMember} group={group} />
+          <MembershipButton status={isMember} group={group} user={user}/>
         </CardContent>
       </Card>
 
@@ -148,7 +153,7 @@ const Page = async ({ params }: PageProps) => {
           <PostFeed initPosts={group.posts} groupName={group.name} />
         </TabsContent>
         <TabsContent value="Members">
-          <MembersList members={members}/>
+          <MembersList members={members} group={group} currUser={user}/>
         </TabsContent>
       </Tabs>
     </div>

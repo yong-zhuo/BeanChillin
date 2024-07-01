@@ -12,7 +12,6 @@ const CreatePost = () => {
   const { user } = useContext(UserContext);
   const router = useRouter();
   const pathname = usePathname();
-  router.prefetch(pathname + '/submit-post');
 
   return (
     <li className="overflow-hidden rounded-md bg-white shadow list-none mt-2 mb-4">

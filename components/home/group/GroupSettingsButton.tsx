@@ -240,7 +240,7 @@ const GroupSettingsButton = ({ group }: Props) => {
       <Tabs defaultValue="account">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="flex w-fit flex-row items-center justify-center gap-1 bg-gray-400 text-white transition hover:scale-105 hover:bg-gray-600">
+            <Button className="flex w-fit flex-row items-center justify-center gap-1 bg-gray-400 text-white transition hover:scale-105 hover:bg-gray-600 shadow-md">
               Group Settings
               <Settings className="h-5 w-5" />
             </Button>

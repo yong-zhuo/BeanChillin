@@ -7,6 +7,8 @@ import { Badge } from "@/components/common-ui/shadcn-ui/badge";
 import { Group, User } from "@prisma/client";
 import Link from "next/link";
 import { UserSearch } from "lucide-react";
+import ManageMemberButton from "./ManageMemberButton";
+import { group } from "console";
 
 type MembersPreviewProps = {
   otherUser?: User | null;
@@ -36,7 +38,7 @@ const MembersPreview = (props: MembersPreviewProps) => {
                   <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl truncate">
                     {props.otherUser?.name}
                   </div>
-                  <div className="ml-3 md:ml-4 text-md font-medium text-nowrap">
+                  <div className="ml-2 md:ml-4 text-md font-medium text-nowrap">
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>
@@ -45,7 +47,8 @@ const MembersPreview = (props: MembersPreviewProps) => {
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-col space-x-12  items-center justify-center md:w-fit md:space-x-5 md:items-end md:justify-end">
+          <div className="flex w-full flex-row space-x-12  items-center justify-center md:w-fit md:space-x-5 md:items-end md:justify-end">
+            {props.otherUser?.id  === props.currUser?.id ?  null : props.currUser?.id === props.group?.creatorId ? <ManageMemberButton member={props.otherUser as User} group={props.group as Group}/> : null}
           <Button
             asChild
             className="w-fit bg-pri text-white  transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg"

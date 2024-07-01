@@ -13,11 +13,13 @@ import GroupSettingsButton from "./GroupSettingsButton";
 const MembershipButton = ({
   status,
   group,
+  user,
 }: {
   status: boolean;
   group: Group;
+  user: User | null;
 }) => {
-  const { user } = useContext(UserContext);
+  
   const { toast } = useToast();
   const isCreator = user?.id === group.creatorId;
   const [loading, setLoading] = useState(false);
