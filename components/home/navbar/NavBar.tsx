@@ -16,7 +16,7 @@ const NavBar = ({user}: {user: User | null}) => {
 
 
   return (
-    <div className="fixed inset-x-0 top-0 z-[10] h-[80px] border-b-2 border-pri bg-sec py-2">
+    <div className="fixed inset-x-0 top-0 z-[15] h-[80px] border-b-2 border-pri bg-sec py-2">
       <div className="mx-auto flex h-full items-center justify-between gap-2 px-8 sm:max-w-7xl md:max-w-full ">
         <Link href="/home" className="h-[80px] w-fit flex items-center">
           <Image

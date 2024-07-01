@@ -141,7 +141,7 @@ export default async function Page({ params }: Props) {
                         </h1>
                     </CardContent>
                 </div>
-                <div className='flex justify-end items-end mr-2 mb-2 z-10'>
+                <div className='flex justify-end items-end mr-2 mb-4 z-10'>
                     {session?.user.email === userInfo.email ? <SettingsButton user={user}/> : <FriendRequestButton
                         sender_status={status_obj.sender_status || ""}
                         receiver_status={status_obj.receiver_status || ""}
