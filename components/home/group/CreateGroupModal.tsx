@@ -35,6 +35,7 @@ import { useRouter } from "next/navigation";
 import GroupImages from "./GroupImages";
 import { groupCloudUpload } from "@/lib/cloudinary/CloudinaryUpload";
 import Loading from "@/components/common-ui/misc/Loading";
+import { Card, CardContent } from "@/components/common-ui/shadcn-ui/card";
 
 const fields = createGroupFields;
 let fieldsState: fieldState = {};
@@ -165,8 +166,7 @@ const CreateGroupModal = () => {
         <DialogContent
           className="max-h-[90vh] w-[300px] overflow-y-auto sm:w-[800px] sm:max-w-[425px] "
           onInteractOutside={(e) => {
-            if (isLoading)
-            e.preventDefault();
+            if (isLoading) e.preventDefault();
           }}
         >
           <DialogHeader>
@@ -208,16 +208,41 @@ const CreateGroupModal = () => {
                   </p>
                 )}
               </div>
-              <SelectTrigger className="text-gray-500 shadow ">
+              <SelectTrigger className="text-gray-500 shadow">
                 <SelectValue placeholder="Select a category that best suits your Group" />
               </SelectTrigger>
-              <SelectContent className="z-20 bg-white ">
-                <SelectGroup className="border-2">
-                  <SelectItem value="Academics">Academics</SelectItem>
-                  <SelectItem value="Interests">Interests</SelectItem>
-                  <SelectItem value="CCA">CCA</SelectItem>
-                  <SelectItem value="Events">Events</SelectItem>
-                  <SelectItem value="Social">Social</SelectItem>
+              <SelectContent className="z-[20] w-[26.5vh] bg-white sm:w-[38vh] md:w-[39.5vh]">
+                <SelectGroup className="border-2 ">
+                  <SelectItem
+                    value="Academics"
+                    className="flex items-center justify-center"
+                  >
+                    Academics
+                  </SelectItem>
+                  <SelectItem
+                    value="Interests"
+                    className="flex items-center justify-center"
+                  >
+                    Interests
+                  </SelectItem>
+                  <SelectItem
+                    value="CCA"
+                    className="flex items-center justify-center"
+                  >
+                    CCA
+                  </SelectItem>
+                  <SelectItem
+                    value="Events"
+                    className="flex items-center justify-center"
+                  >
+                    Events
+                  </SelectItem>
+                  <SelectItem
+                    value="Social"
+                    className="flex items-center justify-center"
+                  >
+                    Social
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -232,7 +257,6 @@ const CreateGroupModal = () => {
                 setValue={setValue}
               />
             </div>
-
             <Button
               text="Create"
               addClass="bg-pri text-sec transform hover:-translate-y-1 transition duration-400 hover:animate-pulse shadow"

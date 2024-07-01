@@ -8,6 +8,7 @@ import { Group, User } from "@prisma/client";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { useRouter } from "next/navigation";
+import GroupSettingsButton from "./GroupSettingsButton";
 //TODO:Create tabs list for group page
 const MembershipButton = ({
   status,
@@ -189,21 +190,10 @@ const MembershipButton = ({
     <>
     
       {isCreator ? (
-        <Button
-          addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
-          text="Delete Group"
-          action="submit"
-          handleClick={deleteGroup}
-          state={loading}
-          width={20}
-          height={20}
-          loadText="Deleting"
-        >
-          <Trash className="h-5 w-5" />
-        </Button>
+        <GroupSettingsButton group={group}/>
       ) : status ? (
         <Button
-          addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
+          addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
           text="Leave Group"
           action="submit"
           handleClick={leaveGroup}
@@ -216,7 +206,7 @@ const MembershipButton = ({
         </Button>
       ) : (
         <Button
-          addClass="bg-pri text-white w-1/3 text-sm md:w-fit mr-0 mt-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
+          addClass="bg-pri text-white w-1/3 text-sm md:w-fit mr-0 mt-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
           text="Join Group"
           action="submit"
           handleClick={joinGroup}
