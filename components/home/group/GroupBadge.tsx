@@ -16,7 +16,7 @@ const GroupBadge = ({ type }: { type: GroupType }) => {
     type !== undefined ? groupColours[type] : "bg-gray-400";
 
   return (
-    <Badge className={`ml-2 ${groupColor} h-1/6 font-medium md:h-1/4`}>
+    <Badge className={`sm:ml-2 ${groupColor} h-1/6 font-medium md:h-1/4`}>
       {type}
     </Badge>
   );

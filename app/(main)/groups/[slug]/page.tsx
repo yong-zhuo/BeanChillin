@@ -115,13 +115,13 @@ const Page = async ({ params }: PageProps) => {
           <GroupAvatar
             group
             img={group.picture || "/placeholder/pl3.png"}
-            className="absolute bottom-0 aspect-square h-14 w-14 -translate-y-20 translate-x-1/3 transform rounded-lg border-2 border-pri lg:h-20 lg:w-20 lg:-translate-y-3/4 lg:translate-x-1/3"
+            className="absolute bottom-0 aspect-square h-14 w-14 -translate-y-20 translate-x-1/3 transform rounded-lg border-2 border-pri lg:h-20 lg:w-20 lg:-translate-y- lg:translate-x-1/3"
           />
         </div>
         <CardContent className="-ml-1 flex items-center justify-between pt-8 md:ml-4">
-          <h1 className="text-2xl font-semibold">
+          <div className="text-2xl font-semibold truncate">
             {group.name} <GroupBadge type={group.type as GroupType} />
-          </h1>
+          </div>
           <MembershipButton status={isMember} group={group} user={user}/>
         </CardContent>
       </Card>

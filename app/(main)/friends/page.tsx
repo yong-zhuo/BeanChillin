@@ -48,8 +48,8 @@ const page = async () => {
   const friendRequestCount = await getFriendCount(transformedFriendRequest);
 
   return (
-    <div className="container mx-auto mt-3 w-5/6 px-12">
-      <h2 className="flex flex-row items-center gap-2 text-3xl font-extrabold">
+    <div className="container mx-auto mt-3 w-full sm:w-5/6 lg:px-12">
+      <h2 className="flex flex-row items-center gap-2 text-3xl font-extrabold sm:justify-normal justify-center">
         Friends
         <Image src="/misc/friends.svg" alt="group" width={30} height={30} />
       </h2>

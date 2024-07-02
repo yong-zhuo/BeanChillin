@@ -25,8 +25,8 @@ const GroupPreview = async ({ group }: { group: Group }) => {
                 className="h-16 w-16 rounded-md border-2 border-pri xl:h-20 xl:w-20"
               />
               <div className="flex w-2/3 flex-col items-center lg:items-start xl:w-4/5">
-                <div className="ml-4 flex flex-col items-center justify-between font-bold lg:flex-row xl:text-2xl">
-                  {group.name}
+                <div className="ml-4 flex flex-col items-center justify-center sm:justify-between font-bold lg:flex-row lg:text-xl xl:text-2xl text-nowrap">
+                  <div className="max-w-32 lg:max-w-[90px] 1xl:max-w-[150px] xl:max-w-[230px] 2xl:max-w-full truncate">{group.name}</div>
                   <GroupBadge type={group.type as GroupType} />
                 </div>
                 <div className="ml-4 flex flex-row items-center gap-1 text-sm font-light">

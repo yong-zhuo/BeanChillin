@@ -34,11 +34,11 @@ const MembersPreview = (props: MembersPreviewProps) => {
               className="h-16 w-16 rounded-full border-2 border-pri md:h-20 md:w-20"
             />
             <div className="flex w-2/3 flex-col items-center md:w-4/5 md:items-start">
-              <div className="lg:flex lg:flex-row lg:items-center">
+              <div className="lg:flex md:flex-row lg:items-center flex flex-col items-center sm:justify-normal justify-center">
                   <div className="md:ml-4 flex flex-col items-center justify-between font-bold md:flex-row md:text-2xl truncate">
                     {props.otherUser?.name}
                   </div>
-                  <div className="ml-2 md:ml-4 text-md font-medium text-nowrap">
+                  <div className="md:ml-4 text-md font-medium text-nowrap">
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>

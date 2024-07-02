@@ -46,8 +46,8 @@ const GroupPage = async () => {
 
 
   return (
-    <div className="container mx-auto mt-3 w-5/6 px-12">
-      <h2 className="w-fit text-3xl font-extrabold flex flex-row gap-2 items-center">
+    <div className="container mx-auto mt-3 w-full sm:w-5/6 sm:px-12">
+      <h2 className="justify-center sm:w-fit text-3xl font-extrabold flex flex-row gap-2 items-center">
         Groups
         <Image src="/misc/group.svg" alt="group" width={30} height={30} />
       </h2>

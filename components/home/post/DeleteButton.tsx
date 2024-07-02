@@ -58,7 +58,10 @@ const DeleteButton = ({ postId }: { postId: string }) => {
   return (
     <div className="px-1 py-1">
         <AlertDialog>
-          <AlertDialogTrigger className=" font-semibold text-red-400 text-sm flex flex-row items-center justify-center rounded-lg hover:bg-red-400 hover:text-white">
+          <AlertDialogTrigger className="sm:hidden font-semibold text-red-400 text-sm flex flex-row items-center justify-center rounded-lg ">
+            <Trash className="h-5 w-5 " />
+          </AlertDialogTrigger>
+          <AlertDialogTrigger className="hidden font-semibold text-red-400 text-sm sm:flex flex-row items-center justify-center rounded-lg hover:bg-red-400 hover:text-white">
             Delete Post<Trash className="h-5 w-5 " />
           </AlertDialogTrigger>
           <AlertDialogContent>
