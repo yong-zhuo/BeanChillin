@@ -67,7 +67,7 @@ const Post = ({
                         className="max-w-16 truncate text-xs sm:text-sm text-pri underline underline-offset-2 sm:max-w-24 md:max-w-16 lg:max-w-24 xl:max-w-full"
                         href={`/groups/${groupName}`}
                       >
-                        {groupName}eeeeeeeeeeeee
+                        {groupName}
                       </Link>
                     </>
                   ) : null}

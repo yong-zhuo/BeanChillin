@@ -114,7 +114,7 @@ const SearchBar = () => {
           setInput(value);
           debounceRequest();
         }}
-        className="border-none outline-none ring-0 focus:border-none focus:outline-none"
+        className="border-none outline-none ring-0 focus:border-none focus:outline-none  text-xs sm:text-sm"
         placeholder="Search for groups or users"
       />
 
