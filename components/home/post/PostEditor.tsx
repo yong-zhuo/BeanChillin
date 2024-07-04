@@ -121,7 +121,7 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
 
   const initEditor = useCallback(async () => {
     const Editor = (await import("@editorjs/editorjs")).default;
-    const Header = (await import("@editorjs/header")).default;
+    //const Header = (await import("@editorjs/header")).default;
     const Embed = (await import("@editorjs/embed")).default;
     //const Table = (await import("@editorjs/table")).default;
     //const List = (await import("@editorjs/list")).default;
@@ -140,7 +140,6 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
         inlineToolbar: true,
         data: { blocks: [] },
         tools: {
-          header: Header,
           linkTool: {
             class: Link,
             config: {

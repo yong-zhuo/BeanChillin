@@ -86,10 +86,10 @@ const Post = ({
             className="relative max-h-40 w-full overflow-clip text-sm"
             ref={postRef}
           >
-            <EditorContent content={post.content} />
-            {postRef.current && postRef.current?.clientHeight === 160 ? (
-              <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent" />
-            ) : null}
+            <Link href={`/groups/${groupName}/post/${post.id}`}><EditorContent content={post.content} />
+              {postRef.current && postRef.current?.clientHeight === 160 ? (
+                <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent" />
+              ) : null}</Link>
           </div>
         </div>
         <div className="flex items-start justify-center">
@@ -101,10 +101,10 @@ const Post = ({
         </div>
       </div>
 
-      <div className="z-20 bg-sec px-4 py-4 text-sm sm:px-6">
+      <div className="z-20 bg-sec text-sm">
         <Link
           href={`/groups/${groupName}/post/${post.id}`}
-          className="flex w-fit items-center gap-2"
+          className="flex w-full items-center gap-2 px-4 py-4 sm:px-6"
         >
           <MessageSquareText className="h-5 w-5" />
           {commentCount} comments
