@@ -9,7 +9,6 @@ import { getFriendCount } from "@/lib/friends/getFriendCount";
 import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
 import { User } from "@prisma/client";
-import { get } from "http";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 

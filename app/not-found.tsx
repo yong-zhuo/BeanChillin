@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function NotFound() {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/login");
+    router.back();
   };
 
   return (
@@ -36,7 +36,7 @@ export default function NotFound() {
           <div className="mt-auto w-1/4">
             <Button
               handleClick={handleClick}
-              text="Back to Login"
+              text="Back to previous page"
               src="/misc/arrow-left.svg"
               alt="arrow-left"
               width={20}
