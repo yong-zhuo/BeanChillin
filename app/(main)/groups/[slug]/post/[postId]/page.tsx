@@ -85,7 +85,7 @@ const page = async ({ params }: PageProps) => {
                 className="h-12 w-12 border-2 border-pri"
               />
               <div className="ml-4">
-                <div className="flex items-center text-lg font-bold text-gray-900">
+                <div className="flex items-center text-sm sm:text-lg font-bold text-gray-900">
                   <Link
                     href={`/profile/${post.author.id}`}
                     className="hover:underline"
@@ -117,7 +117,7 @@ const page = async ({ params }: PageProps) => {
               </div>
             </div>
           </div>
-          <h1 className="flex flex-row items-start justify-start py-2 text-xl font-semibold leading-6 text-gray-900">
+          <h1 className="flex flex-row items-start justify-between py-2 text-xl font-semibold leading-6 text-gray-900">
             {post?.title}
             <div className=" -mt-2 sm:hidden">
               <Suspense fallback={<PostVoteSkeleton />}>

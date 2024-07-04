@@ -24,7 +24,7 @@ const NavBar = ({user}: {user: User | null}) => {
             alt="Logo"
             height={80}
             width={85}
-            className="transition translate-y-0 hover:-translate-y-1"
+            className="transition translate-y-0 hover:-translate-y-1 "
           />
         </Link>
 

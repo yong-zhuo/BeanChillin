@@ -87,12 +87,14 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
             description: "Please join the group to post",
             variant: "destructive",
           });
+          router.push(newPathname);
         } else {
           toast({
             title: "Error creating post!",
             description: "An unexpected error occurred. Try again later.",
             variant: "destructive",
           });
+          router.push(newPathname);
         }
       } else {
         //change pathname to group page
@@ -113,6 +115,7 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
         description: "Please try again later.",
         variant: "destructive",
       });
+      router.push(newPathname);
     }
   };
 

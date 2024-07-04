@@ -30,14 +30,14 @@ const CreatePost = () => {
         <Input onClick={() => router.push(pathname + '/submit-post')} readOnly placeholder="Click here to create a post. (Only group members can create a post)" className="w-full focus-visible:ring-pri border-pri " />
         <Button
           handleClick={() => router.push(pathname + '/submit-post')}
-          addClass="bg-transparent hover:bg-sec w-fit h-fit mt-0 mb-0 p-2 rounded-full"
+          addClass="bg-transparent hover:bg-sec w-fit h-fit mt-0 mb-0 p-2 rounded-full hidden sm:block"
         >
           <ImageIcon className="text-pri" />
         </Button>
 
         <Button
           handleClick={() => router.push(pathname + '/submit-post')}
-          addClass="bg-transparent hover:bg-sec w-fit mt-0 mb-0 p-2 h-fit rounded-full"
+          addClass="bg-transparent hover:bg-sec w-fit mt-0 mb-0 p-2 h-fit rounded-full hidden sm:block"
         >
           <Link2 className="text-pri" />
         </Button>

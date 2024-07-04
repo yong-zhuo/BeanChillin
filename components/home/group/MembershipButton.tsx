@@ -195,7 +195,7 @@ const MembershipButton = ({
         <GroupSettingsButton group={group}/>
       ) : status ? (
         <Button
-          addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
+          addClass="bg-red-400 text-white w-2/5 sm:w-1/3 text-xs sm:text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
           text="Leave Group"
           action="submit"
           handleClick={leaveGroup}
@@ -204,11 +204,11 @@ const MembershipButton = ({
           height={20}
           loadText="Leaving"
         >
-          <LogOut className="h-5 w-5" />
+          <LogOut className="h-5 w-5 hidden sm:block" />
         </Button>
       ) : (
         <Button
-          addClass="bg-pri text-white w-1/3 text-sm md:w-fit mr-0 mt-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
+          addClass="bg-pri text-white  w-2/5 sm:w-1/3 text-xs sm:text-sm md:w-fit mr-0 mt-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
           text="Join Group"
           action="submit"
           handleClick={joinGroup}
@@ -217,7 +217,7 @@ const MembershipButton = ({
           height={20}
           loadText="Joining"
         >
-          <Plus className="h-5 w-5" />
+          <Plus className="h-5 w-5 hidden sm:block" />
         </Button>
       )}
     </>
