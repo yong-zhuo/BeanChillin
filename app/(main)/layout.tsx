@@ -27,14 +27,22 @@ const layout = async ({ children }: HomeLayoutProps) => {
       email: session.user.email as string,
     },
   });
+  const notifCount = await prisma.notification.count({
+    where: {
+      userId: user?.id,
+      isRead: false,
+    },
+  });
 
   return (
     <UserProvider>
       <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-auto">
-        <NavBar user={user}/>
+        <NavBar user={user} notifCount={notifCount}/>
+        
         <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
           <section className="max-w-8xl mx-auto flex h-full w-full ">
               <LeftSideBar />
+              
             <div className="h-full w-full sm:p-3">{children}</div>
             <RightSideBar />
           </section>

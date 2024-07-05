@@ -120,7 +120,7 @@ export default function DisplayMessage({ data }: DisplayMessageProps) {
     }, [handleScroll]);
 
     return (
-        <div className="p-6 flex-grow max-h-screen overflow-y-auto h-[55vh] 2mxl:h-[67vh] 2xl:h-[62vh] md:h-[60vh] sm:h-[67vh] scrollbar " ref={scrollContainerRef}>
+        <div className="p-6 flex-grow max-h-screen overflow-y-auto h-[55vh] 2mxl:h-[67.5vh] xl:h-[67.5vh] 2xl:h-[67.5vh] md:h-[60vh] sm:h-[67vh] scrollbar " ref={scrollContainerRef}>
             <div className="flex flex-col gap-4">
                 {totalComments.map((msg, index): JSX.Element => (
                     <React.Fragment key={index}>

@@ -14,7 +14,7 @@ export default function ChatHeader({ params }: { params: ChatHeaderProps }) {
   const { name, imageUrl } = params;
   const router = useRouter();
   return (
-    <div className="flex h-full max-h-[calc(100vh-6rem)] flex-1 flex-col justify-between">
+    <div className="flex h-full max-h-[calc(100vh-6rem)] flex-1  flex-col justify-between">
       <div className="flex sm:justify-start items-center space-x-4 rounded-t-md border-b-2 border-gray-200 bg-pri px-6 py-3 justify-between">
         <div className="relative items-center justify-center">
           <Button

@@ -11,7 +11,7 @@ import HamburgerMenu from "./HamburgerMenu";
 import { User } from "@prisma/client";
 import Notifications from "./Notifications";
 
-const NavBar = ({user}: {user: User | null}) => {
+const NavBar = ({user, notifCount}: {user: User | null; notifCount: number}) => {
   
 
 
@@ -38,7 +38,7 @@ const NavBar = ({user}: {user: User | null}) => {
             <Messaging />
           </div>
           <div className="hidden sm:block">
-            <Notifications/>
+            <Notifications notifCount={notifCount}/>
           </div>
           {user ? (
             <UserAccountNav user={user} />

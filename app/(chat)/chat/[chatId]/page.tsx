@@ -28,7 +28,7 @@ const page = async ({ params }: Props) => {
     const otherUserId = userId1 === id?.id ? userId2 : userId1;
 
     return (
-        <div className="sm:container mx-auto mt-3 w-6/6 sm:px-12">
+        <div className="sm:container mx-auto -mt-2 w-6/6 sm:px-12 h-full sm:h-fit">
             {
                 otherUserId !== 'chat' && (//otherUserId will always be chat upon opening chat as its determined by the path.
                     <Chat

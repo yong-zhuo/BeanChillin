@@ -14,6 +14,7 @@ import {
   UserRound,
   UserRoundX,
 } from "lucide-react";
+import createNotif from "@/lib/notifications/createNotif";
 
 type Props = {
   sender_status: string;
@@ -31,7 +32,12 @@ const FriendRequestButton = (props: Props) => {
       status: "Friend",
       id: "",
     };
-    await CreateFriend(data);
+    const notifData = {
+      fromId: user?.id!,
+      toId: receiver_id,
+      type: "friendRequest",
+    }
+    await Promise.all([CreateFriend(data), createNotif(notifData, 'friendRequest')]);
     router.refresh();
   }
 
@@ -42,7 +48,12 @@ const FriendRequestButton = (props: Props) => {
       status: "Friend",
       id: "",
     };
-    await UpdateFriend(data);
+    const notifData = {
+      fromId: user?.id!,
+      toId: receiver_id,
+      type: "acceptFriendRequest",
+    }
+    await Promise.all([UpdateFriend(data), createNotif(notifData, 'acceptFriendRequest')]);
     router.refresh();
   }
 

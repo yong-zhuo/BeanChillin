@@ -29,11 +29,11 @@ const layout = async ({ children }: HomeLayoutProps) => {
 
     return (
         <UserProvider>
-            <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-hidden">
+            <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-y-auto">
                 <NavBar user={user} />
                 <div className="sm:container max-w-8xl sm:mx-auto h-full pt-14 mt-5">
-                    <section className="max-w-8xl mx-auto flex h-full w-full items-center 3xl:items-start">
-                        <div className='hidden sm:flex w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto mt-1 3xl:mt-6  p-5 sm:h-[85vh] 3xl:h-[86vh]  justify-between bg-white shadow-md rounded-lg'>
+                    <section className="max-w-8xl mx-auto flex h-full w-full sm:mt-6 sm:items-start 3xl:items-start">
+                        <div className='hidden sm:flex w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto mt-1 p-5 sm:h-[79vh]  3xl:h-[79vh]   justify-between bg-white shadow-md rounded-lg'>
                             <div className='text-md font-semibold leading-6 text-pri'>Your chats</div>
                             {friends.length === 0 && (<p className="">No chats yet</p>)}
                             <nav className="flex flex-1 flex-col">

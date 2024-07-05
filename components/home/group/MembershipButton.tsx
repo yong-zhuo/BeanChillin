@@ -9,6 +9,7 @@ import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { useRouter } from "next/navigation";
 import GroupSettingsButton from "./GroupSettingsButton";
+import createNotifs from "@/lib/notifications/createNotif";
 //TODO:Create tabs list for group page
 const MembershipButton = ({
   status,
@@ -129,6 +130,7 @@ const MembershipButton = ({
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
       router.refresh()
+      await createNotifs({fromId: user?.id, groupId: group.id, toId:group.creatorId, type: "joinedGroup"}, "joinedGroup")
     }
   };
 

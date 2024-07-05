@@ -12,6 +12,7 @@ import {
   Router,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import createNotifs from "@/lib/notifications/createNotif";
 
 interface CreateCommentProps {
   postId: string;
@@ -51,6 +52,13 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
       } else {
         router.refresh();
         setInput("");
+        const notif = {
+          fromId: user?.id,
+          postId: postId ,
+          type: "postComment",
+        };
+        
+        await createNotifs(notif, 'postComment')
       }
     } catch (error) {
       toast({
