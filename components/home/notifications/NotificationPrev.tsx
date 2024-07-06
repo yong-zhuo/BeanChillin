@@ -6,7 +6,7 @@ import markAsRead from "@/lib/notifications/markAsRead";
 import { formatTimeToNow } from "@/lib/utils";
 import { DetailedNotif } from "@/types/notification";
 import { Notification } from "@prisma/client";
-import { MessageCirclePlus, UserCheck, UserPlus, X } from "lucide-react";
+import { Ban, Flag, MessageCirclePlus, MessageSquarePlus, MessageSquareReply, ShieldCheck, SquareX, User2, UserCheck, UserMinus, UserPlus, Users, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ReactNode, useState } from "react";
@@ -42,6 +42,7 @@ const NotifPreview = ({ notification }: NotifPreviewProps) => {
     }
   };
 
+  //notification logic
   switch (notification.type) {
     case "friendRequest":
       title = "Friend Request";
@@ -58,15 +59,51 @@ const NotifPreview = ({ notification }: NotifPreviewProps) => {
     case "joinedGroup":
       title = "New Group Member";
       description = ` has joined ${notification.group?.name}`;
-      icon = <UserCheck className="h-12 w-12" />;
+      icon = <Users className="h-12 w-12" />;
       link = `/groups/${notification.group?.name}`;
       break;
     case "postComment":
       title = "New Comment";
       description = " commented on your post";
-      icon = <MessageCirclePlus className="h-12 w-12" />;
+      icon = <MessageSquarePlus className="h-12 w-12" />;
       link = `/groups/${notification.group?.name}/post/${notification.postId}`;
       break;
+    case "replyComment":
+        title = "New Reply";
+        description = " replied to your comment";
+        icon = <MessageSquareReply className="h-12 w-12" />;
+        link = `/groups/${notification.group?.name}/post/${notification.postId}`;
+        break;
+    case "removeGroupMember":
+            title = "Removed from Group";
+            description = ` removed you from ${notification.group?.name}`;
+            icon = <UserMinus className="h-12 w-12" />;
+            link = `/groups/${notification.group?.name}`;
+            break;
+    case "moderatorAdded":
+            title = "New Moderator";
+            description = ` added you as a moderator in ${notification.group?.name}`;
+            icon = <ShieldCheck className="h-12 w-12" />;
+            link = `/groups/${notification.group?.name}`;
+            break;
+    case "banned":
+            title = "Banned from Group";
+            description = ` banned you from ${notification.group?.name}`;
+            icon = <Ban className="h-12 w-12" />;
+            link = `/groups/${notification.group?.name}`;
+            break;
+    case "deletedPost":
+            title = "Post Deleted";
+            description = ` deleted your post in ${notification.group?.name}`;
+            icon = <SquareX className="h-12 w-12" />;
+            link = `/groups/${notification.group?.name}`;
+            break;
+    case "flaggedPost":
+            title = "Post Flagged";
+            description = ` has flagged a post in ${notification.group?.name} for inappropriate content`;
+            icon = <Flag className="h-12 w-12" />;
+            link = `/groups/${notification.group?.name}/post/${notification.postId}`;
+            break;
   }
 
   return (
@@ -78,8 +115,8 @@ const NotifPreview = ({ notification }: NotifPreviewProps) => {
         </Button>
         {icon}
         <div className="">
-          <div className="sm:text-md mb-2 text-sm font-bold">{title}</div>
-          <div className="sm:text-md mb-2 text-sm">
+          <div className="sm:text-md mb-2 text-lg font-bold">{title}</div>
+          <div className="sm:text-md mb-2 text-sm" suppressHydrationWarning>
             {formatTimeToNow(new Date(notification.createdAt))}
           </div>
           <div className="sm:text-md text-sm">
@@ -109,7 +146,7 @@ const NotifPreview = ({ notification }: NotifPreviewProps) => {
             router.push(link);
             router.refresh();
           }}
-          disabled
+         
         >
           Read
         </Button>}

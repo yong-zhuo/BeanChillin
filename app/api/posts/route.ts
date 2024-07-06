@@ -74,6 +74,7 @@ export async function GET(req: Request) {
                 votes: true,
                 author: true,
                 comments: true,
+                
             },
             where: where
         });

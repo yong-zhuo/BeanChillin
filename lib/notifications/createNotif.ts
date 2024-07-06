@@ -62,6 +62,88 @@ export default async function createNotifs(data:any, notifType: string) {
                     }
                 });
                 break;
+
+            case ("replyComment"):
+
+            const [comment, post] = await Promise.all([
+                prisma.comment.findUnique({
+                    where: {
+                        id: data.replyToId
+                    },
+                    include: {
+                        author: true
+                    }
+                }),
+                prisma.post.findUnique({
+                    where: {
+                        id: data.postId
+                    }, include: {
+                        group: true
+                    }
+                })
+                ]);
+
+                if (comment?.authorId === data.fromId) {
+                    return;
+                }
+
+                const res5 = await prisma.notification.create({
+                    data: {
+                        fromId: data.fromId,
+                        userId: comment?.authorId as string,
+                        type: "replyComment",
+                        postId: data.postId,
+                        groupId: post?.group?.id,
+                        isRead: false
+                    }
+                });
+
+            case ("removeGroupMember"):
+                const res6 = await prisma.notification.create({
+                    data: {
+                        fromId: data.fromId,
+                        userId: data.toId,
+                        type: "removeGroupMember",
+                        groupId: data.groupId,
+                        isRead: false
+                    }
+                });
+                break;
+            case ("banned"):
+                const res7 = await prisma.notification.create({
+                    data: {
+                        fromId: data.fromId,
+                        userId: data.toId,
+                        type: "banned",
+                        groupId: data.groupId,
+                        isRead: false
+                    }
+                });
+                break;
+            case ("moderatorAdded"):
+                const res8 = await prisma.notification.create({
+                    data: {
+                        fromId: data.fromId,
+                        userId: data.toId,
+                        type: "moderatorAdded",
+                        groupId: data.groupId,
+                        isRead: false
+                    }
+                });
+                break;
+            case("deletedPost"):
+                const res9 = await prisma.notification.create({
+                    data: {
+                        fromId: data.fromId,
+                        userId: data.toId,
+                        type: "deletedPost",
+                        postId: data.postId,
+                        groupId: data.groupId,
+                        isRead: false
+                    }
+                });
+                break;
+            
         }
     } catch (e) {
         console.log(e);

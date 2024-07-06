@@ -78,18 +78,14 @@ const SearchBar = () => {
         
         setGroupResults(data[0] as GroupResult[]);
         setUserResults(data[1] as UserResult[]);
-        console.log(groupResults);
+       
         setIsFetching(false);
         setIsFetched(true);
       }
     } catch (error) {
       setUserResults([]);
       setGroupResults([]);
-      toast({
-        title: "Error",
-        description: "Failed to fetch search results",
-        variant: "destructive",
-      });
+   
     }
   };
 

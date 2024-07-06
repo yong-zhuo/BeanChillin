@@ -11,20 +11,17 @@ import { Notification } from "@prisma/client";
 import {
   Grid2x2Check,
   Loader2,
-  StickyNote,
-  User2,
-  UserCheck,
-  Users,
+  
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import NotifPreview from "./NotifPreview";
+import NotifPreview from "./NotificationPrev";
 import { DetailedNotif } from "@/types/notification";
 
 
 interface NotifFeedProps {
   initNotifications: DetailedNotif[];
-  filter?: string;
+  filter?: 'posts' | 'groups' | 'friends';
 }
 
 const NotifFeed = ({ initNotifications,filter }: NotifFeedProps) => {

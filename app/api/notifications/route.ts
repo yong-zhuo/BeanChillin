@@ -32,7 +32,7 @@ export async function GET(req: Request) {
                 where = {
                         userId: user?.id,
                         type: {
-                            in: ['joinedGroup']
+                            in: ['joinedGroup', 'removeGroupMember']
                         }
                     }
             
@@ -48,7 +48,7 @@ export async function GET(req: Request) {
                 where = {
                         userId: user?.id,
                         type: {
-                            in: ['postComment']
+                            in: ['postComment', 'replyComment']
                         }
                     }
             

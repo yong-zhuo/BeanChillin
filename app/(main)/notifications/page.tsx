@@ -6,8 +6,8 @@ import {
   TabsTrigger,
 } from "@/components/common-ui/shadcn-ui/tabs";
 import NotifFeed from "@/components/home/notifications/NotifFeed";
-import NotifPreview from "@/components/home/notifications/NotifPreview";
 import { INFINITE_SCROLL_RESULTS } from "@/config";
+import getFilteredNotifications from "@/lib/notifications/getFilteredNotif";
 import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
 import { formatTimeToNow } from "@/lib/utils";
@@ -45,6 +45,12 @@ const page = async () => {
     },
   })) as DetailedNotif[];
 
+  const [friendsNotif, postsNotif, groupsNotif] = await Promise.all([
+    getFilteredNotifications(initNotifications, "friends"),
+    getFilteredNotifications(initNotifications, "posts"),
+    getFilteredNotifications(initNotifications, "groups"),
+  ]);
+
   return (
     <div className="mx-auto mt-3 w-full sm:container sm:w-5/6 sm:px-16">
       <h2 className="mb-3 flex flex-row items-center justify-center gap-2 text-3xl font-extrabold sm:justify-normal">
@@ -68,6 +74,17 @@ const page = async () => {
         </TabsList>
         <TabsContent value="all">
           <NotifFeed initNotifications={initNotifications} />
+        </TabsContent>
+        <TabsContent value="posts">
+          <NotifFeed initNotifications={postsNotif} filter="posts" />
+        </TabsContent>
+
+        <TabsContent value="groups">
+          <NotifFeed initNotifications={groupsNotif} filter="groups" />
+        </TabsContent>
+
+        <TabsContent value="friends">
+          <NotifFeed initNotifications={friendsNotif} filter="friends"/>
         </TabsContent>
       </Tabs>
     </div>

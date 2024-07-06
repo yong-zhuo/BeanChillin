@@ -20,6 +20,7 @@ import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
 import { formatTimeToNow } from "@/lib/utils";
 import { Group, Post, User, Vote } from "@prisma/client";
+import { group } from "console";
 import { Ellipsis, Loader2 } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -54,7 +55,6 @@ const page = async ({ params }: PageProps) => {
       votes: true,
       author: true,
       group: true,
-      
     },
   });
 
@@ -74,6 +74,15 @@ const page = async ({ params }: PageProps) => {
     });
   }
 
+  const mod = await prisma.moderator.findFirst({
+    where: {
+      userId: user?.id,
+      groupId: post.group.id,
+    },
+  });
+
+  const isCurrUserMod = !!mod;
+
   return (
     <div>
       <div className="flex h-full flex-col items-center justify-between bg-white sm:flex-row sm:items-start">
@@ -85,7 +94,7 @@ const page = async ({ params }: PageProps) => {
                 className="h-12 w-12 border-2 border-pri"
               />
               <div className="ml-4">
-                <div className="flex items-center text-sm sm:text-lg font-bold text-gray-900">
+                <div className="flex items-center text-sm font-bold text-gray-900 sm:text-lg">
                   <Link
                     href={`/profile/${post.author.id}`}
                     className="hover:underline"
@@ -108,10 +117,21 @@ const page = async ({ params }: PageProps) => {
                       </Link>
                     </>
                   ) : null}
-                  
-                  {(post.author.id === user?.id || post.group.creatorId === user?.id) ? (
-            <span className="px-1 flex flex-row">• <DeleteButton postId={post.id} /></span> 
-          ) : null}
+
+                  {post.author.id === user?.id ||
+                  post.group.creatorId === user?.id ||
+                  (isCurrUserMod && post.group.creatorId !== post.author.id) ? (
+                    <span className="flex flex-row px-1">
+                      •
+                      <DeleteButton
+                        postId={post.id}
+                        userId={user?.id as string}
+                        authorId={post.authorId}
+                        group={post.group}
+                        isCurrUserMod={isCurrUserMod}
+                      />
+                    </span>
+                  ) : null}
                 </div>
                 {formatTimeToNow(new Date(post.createdAt))}
               </div>
@@ -123,7 +143,6 @@ const page = async ({ params }: PageProps) => {
               <Suspense fallback={<PostVoteSkeleton />}>
                 <AsyncPostVote postId={post?.id} getData={getData} />
               </Suspense>
-              
             </div>
           </h1>
 
@@ -137,9 +156,8 @@ const page = async ({ params }: PageProps) => {
             <CommentsSection postId={post?.id} />
           </Suspense>
         </div>
-       
+
         <div className="hidden items-start justify-center px-5 pl-0 pt-3 sm:block">
-          
           <Suspense fallback={<PostVoteSkeleton />}>
             <AsyncPostVote postId={post?.id} getData={getData} />
           </Suspense>

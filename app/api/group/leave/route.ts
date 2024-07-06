@@ -14,17 +14,31 @@ export async function POST(req: Request) {
         const data = await req.json();
 
         //check if membership exists
-        const membershipExists = await prisma.membership.findFirst({
+        const [membershipExists, moderatorExists] = await Promise.all([prisma.membership.findFirst({
             where: {
                 userId: data.userId,
                 groupId: data.groupId,
             },
-        });
+        }), prisma.moderator.findFirst({
+            where: {
+                userId: data.userId,
+                groupId: data.groupId,
+            },})]);
 
         if (!membershipExists) {
             return new Response("You are not a member of this group", { status: 400 });
         }
 
+        if(moderatorExists){
+            await prisma.moderator.delete({
+                where: {
+                    groupId_userId: {
+                        userId: data.userId,
+                        groupId: data.groupId,
+                    },
+                },
+            });
+        }
         //delete membership
         await prisma.membership.delete({
             where: {

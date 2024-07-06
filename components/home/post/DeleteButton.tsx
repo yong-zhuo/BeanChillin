@@ -12,10 +12,20 @@ import {
   AlertDialogTrigger,
 } from "@/components/common-ui/shadcn-ui/alert-dialog";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import createNotifs from "@/lib/notifications/createNotif";
+import { Group } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
-const DeleteButton = ({ postId }: { postId: string }) => {
+interface DeleteButtonProps {
+  postId: string;
+  isCurrUserMod: boolean;
+  authorId: string;
+  group: Group;
+  userId: string;
+}
+
+const DeleteButton = ({ postId, isCurrUserMod, authorId, group, userId}: DeleteButtonProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const pathname = usePathname();
@@ -53,6 +63,10 @@ const DeleteButton = ({ postId }: { postId: string }) => {
       const newPath = pathname.split("/").slice(0, -2).join("/");
       router.replace(newPath)
       router.refresh()
+      if((isCurrUserMod || userId === group.creatorId) && (userId !== authorId)) {
+        await createNotifs({fromId: userId, toId: authorId, postId: postId, type:"deletedPost", groupId:group.id}, "deletedPost")
+      }
+      
     }
   };
   return (

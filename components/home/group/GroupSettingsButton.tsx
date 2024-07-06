@@ -236,7 +236,7 @@ const GroupSettingsButton = ({ group }: Props) => {
   };
 
   return (
-    <div className="">
+    <div className="md:mr-3">
       <Tabs defaultValue="account">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
