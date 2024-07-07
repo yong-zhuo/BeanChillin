@@ -58,18 +58,18 @@ const page = async () => {
         <Image src="/home/bell.svg" alt="notification" width={30} height={30} />
       </h2>
       <Tabs defaultValue="all" className="mt-2 ">
-        <TabsList className="flex w-fit items-center justify-start   bg-white shadow">
+        <TabsList className="flex w-full items-center justify-start   bg-white shadow">
           <TabsTrigger value="all" className="flex gap-2">
-            All <Grid2x2Check className="hidden h-5 w-5 sm:block" />
+            All <Grid2x2Check className="hidden h-5 w-5 xl:block" />
           </TabsTrigger>
           <TabsTrigger value="posts" className="flex gap-2">
-            Posts <StickyNote className="hidden h-5 w-5 sm:block" />
+            Posts <StickyNote className="hidden h-5 w-5 xl:block" />
           </TabsTrigger>
           <TabsTrigger value="groups" className="flex gap-2">
-            Groups <Users className="hidden h-5 w-5 sm:block" />
+            Groups <Users className="hidden h-5 w-5 xl:block" />
           </TabsTrigger>
           <TabsTrigger value="friends" className="flex gap-2">
-            Friends <UserCheck className="hidden h-5 w-5 sm:block" />
+            Friends <UserCheck className="hidden h-5 w-5 xl:block" />
           </TabsTrigger>
         </TabsList>
         <TabsContent value="all">

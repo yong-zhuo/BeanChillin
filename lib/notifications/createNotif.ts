@@ -143,6 +143,41 @@ export default async function createNotifs(data:any, notifType: string) {
                     }
                 });
                 break;
+            case("flaggedPostMod"):
+                const moderators = await prisma.moderator.findMany({
+                    where: {
+                        groupId: data.groupId
+                    },
+                    select: {
+                        userId: true
+                    }
+                });
+
+                for (const mod of moderators) {
+                    const res10 = await prisma.notification.create({
+                        data: {
+                            fromId: data.fromId,
+                            userId: mod.userId,
+                            type: "flaggedPost",
+                            postId: data.postId,
+                            groupId: data.groupId,
+                            isRead: false
+                        }
+                    });
+                }
+                break;
+            case("flaggedPostOwner"):
+                const res11 = await prisma.notification.create({
+                    data: {
+                        fromId: data.fromId,
+                        userId: data.toId,
+                        type: "flaggedPost",
+                        postId: data.postId,
+                        groupId: data.groupId,
+                        isRead: false
+                    }
+                });
+                break;
             
         }
     } catch (e) {

@@ -162,7 +162,7 @@ const PostComment = ({
         />
         {reply ? <Button
           variant="ghost"
-          className="gap-1 rounded-xl text-xs text-zinc-900 hover:bg-sec -mr-5 "
+          className="gap-1 rounded-xl text-xs text-zinc-700 hover:text-black hover:bg-transparent -mr-5 "
           onClick={() => {
             //setIsCommenting(true);
             toggleReply();
@@ -177,7 +177,7 @@ const PostComment = ({
               <AlertDialogTrigger asChild>
                 <Button
                   variant="ghost"
-                  className=" gap-1 rounded-xl text-xs text-red-400 hover:bg-red-400 hover:text-white"
+                  className=" gap-1 rounded-xl text-xs text-red-400 hover:text-red-600 hover:bg-transparent"
                 >
                   Delete
                   <Trash className="ml-0.5 h-4 w-4" />

@@ -31,7 +31,7 @@ export async function GET(req: Request) {
 
         let where = {};
 
-        if (session) {
+        if (feedType === "group") {
             const followedGroups = await prisma.membership.findMany({
                 where: {
                     user: {
@@ -62,7 +62,49 @@ export async function GET(req: Request) {
             where = {
                 authorId: authorId,
             };
+        } else if (session && feedType === "trend") {
+            const trendPosts = await prisma.post.findMany({
+                include: {
+                    _count: {
+                        select: { votes: true },
+                    },
+                    group: true,
+                    votes: true,
+                    author: true,
+                    comments: true,
+                },
+                orderBy: {
+                    votes: {
+                         _count: 'desc',
+                    },
+                },
+                take: parseInt(limit),
+                skip: parseInt(offset),
+                });
+                return new Response(JSON.stringify(trendPosts));
+        } else if (session && feedType === "popular") {
+            const popularPosts = await prisma.post.findMany({
+                include: {
+                    _count: {
+                        select: { comments: true },
+                    },
+                    group: true,
+                    votes: true,
+                    author: true,
+                    comments: true,
+                },
+                orderBy: {
+                    comments: {
+                        _count: 'desc',
+                    },
+                },
+                take: parseInt(limit),
+                skip: parseInt(offset),
+                });
+
+                return new Response(JSON.stringify(popularPosts));
         }
+    
         const posts = await prisma.post.findMany({
             take: parseInt(limit),
             skip: parseInt(offset),

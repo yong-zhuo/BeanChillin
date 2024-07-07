@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import Logo from "@/components/common-ui/logo/Logo";
-import Button from "@/components/common-ui/button/Button";
+
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
+import { ArrowLeft } from "lucide-react";
 export default function NotFound() {
   const router = useRouter();
   const handleClick = () => {
@@ -20,31 +22,20 @@ export default function NotFound() {
           <Image
             src="/not-found/404.svg"
             alt="404"
-            height={700}
-            width={700}
+            height={500}
+            width={500}
             className="object-contain"
           />
         </div>
         <div className="mb-20 ml-8 flex flex-1 flex-col justify-start text-left">
-          <h2 className="text-5xl font-extrabold text-gray-900">Oops...</h2>
-          <p className="mt-2 text-left text-xl  text-gray-600">
-            Sorry, the page that you are looking for does not seem to exist
+          <h2 className="text-2xl sm:text-5xl font-extrabold text-gray-900">Oops...</h2>
+          <p className="mt-2 text-left text-sm sm:text-xl  text-gray-600">
+            Sorry, the page that you are looking for does not seem to exist or has been removed
           </p>
-          <p className="text-left text-xl  text-gray-600">
-            or has been removed
-          </p>
-          <div className="mt-auto w-1/4">
-            <Button
-              handleClick={handleClick}
-              text="Back to previous page"
-              src="/misc/arrow-left.svg"
-              alt="arrow-left"
-              width={20}
-              height={20}
-              addClass="gap-2 bg-pri text-white hover:bg-slate-400"
-              orientation="left"
-            />
-          </div>
+
+          <div className="mt-2 w-1/4">
+            <Button onClick={async () => router.back()} className="bg-pri w-fit h-fit shadow rounded-md sm:text-md text-xs text-white hover:bg-slate-500 hover:scale-105 transition"><ArrowLeft className="w-5 h-5"/>Back to previous page</Button>
+          </div> 
         </div>
       </div>
     </main>
