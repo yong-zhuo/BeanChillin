@@ -20,6 +20,8 @@ import MembershipButton from "@/components/home/group/MembershipButton";
 import { GroupType } from "@/types/groupType";
 import PostFeed from "@/components/home/post/PostFeed";
 import MembersList from "@/components/home/group/MembersList";
+import { Ban } from "lucide-react";
+import { Button } from "@/components/common-ui/shadcn-ui/button";
 
 
 export const metadata = {
@@ -35,6 +37,11 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const session = await getServerSession(Oauth);
+  const user = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email,
+    },
+  });
   const { slug } = params;
 
   //find group by slug
@@ -57,32 +64,56 @@ const Page = async ({ params }: PageProps) => {
     },
   });
 
-  //find membership status of user
-  const membership = await prisma.membership.findFirst({
-    where: {
-      group: {
-        name: slug,
+  //find status of user
+  const [membership, banned] = await Promise.all([
+    prisma.membership.findFirst({
+      where: {
+        group: {
+          name: slug,
+        },
+        user: {
+          email: session?.user?.email,
+        },
       },
-      user: {
-        email: session?.user?.email,
+    }),
+    prisma.bannedUser.findFirst({
+      where: {
+        groupId: group?.id,
+        userId: user?.id,
       },
-    },
-  });
+    }),
+
+  ]);
 
   const isMember = !!membership;
+  const isBanned = !!banned;
 
-  const memberships = await prisma.membership.findMany({
-    where: {
-      group: {
-        name: slug,
+
+  const [memberships, bannedUsers] = await Promise.all([
+    prisma.membership.findMany({
+      where: {
+        group: {
+          name: slug,
+        },
       },
-    },
-    include: {
-      user: true, 
-    },
-  });
+      include: {
+        user: true,
+      },
+    }),
+   prisma.bannedUser.findMany({
+      where: {
+        group: {
+          name: slug,
+        }
+      },
+      include: {
+        user: true
+      }
+    }),
+  ]);
 
   const members = memberships.map((member) => member.user);
+  const bannedUsersList = bannedUsers.map((bannedUser) => bannedUser.user);
 
   const friendCount = await prisma.friendship.count({
     where: {
@@ -90,7 +121,6 @@ const Page = async ({ params }: PageProps) => {
       status: "Friend",
     },
   });
-
 
   if (!group) return notFound();
 
@@ -110,14 +140,24 @@ const Page = async ({ params }: PageProps) => {
           <GroupAvatar
             group
             img={group.picture || "/placeholder/pl3.png"}
-            className="absolute bottom-0 aspect-square h-14 w-14 -translate-y-20 translate-x-1/3 transform rounded-lg border-2 border-pri lg:h-20 lg:w-20 lg:-translate-y-3/4 lg:translate-x-1/3"
+            className="lg:-translate-y- absolute bottom-0 aspect-square h-14 w-14 -translate-y-20 translate-x-1/3 transform rounded-lg border-2 border-pri lg:h-20 lg:w-20 lg:translate-x-1/3"
           />
         </div>
         <CardContent className="-ml-1 flex items-center justify-between pt-8 md:ml-4">
-          <h1 className="text-2xl font-semibold">
+          <div className="truncate text-2xl font-semibold">
             {group.name} <GroupBadge type={group.type as GroupType} />
-          </h1>
-          <MembershipButton status={isMember} group={group} />
+          </div>
+          {isBanned ? (
+            <Button
+              variant={"outline"}
+              disabled
+              className="gap-1 bg-red-400 text-white  xl:mr-3"
+            >
+              Banned <Ban className="h-5 w-5" />
+            </Button>
+          ) : (
+            <MembershipButton status={isMember} group={group} user={user} />
+          )}
         </CardContent>
       </Card>
 
@@ -129,9 +169,17 @@ const Page = async ({ params }: PageProps) => {
           <TabsTrigger value="Posts" className="text-center hover:bg-gray-100">
             Posts
           </TabsTrigger>
-          <TabsTrigger value="Members" className="text-center hover:bg-gray-100">
+          <TabsTrigger
+            value="Members"
+            className="text-center hover:bg-gray-100"
+          >
             Members
           </TabsTrigger>
+          {group.creatorId === user?.id ? (
+            <TabsTrigger value="Ban" className="text-center hover:bg-gray-100">
+              Ban List
+            </TabsTrigger>
+          ) : null}
         </TabsList>
 
         <TabsContent value="About">
@@ -144,11 +192,14 @@ const Page = async ({ params }: PageProps) => {
           />
         </TabsContent>
         <TabsContent value="Posts">
-          <CreatePost  />
+          <CreatePost />
           <PostFeed initPosts={group.posts} groupName={group.name} />
         </TabsContent>
         <TabsContent value="Members">
-          <MembersList members={members}/>
+          <MembersList members={members} group={group} currUser={user} />
+        </TabsContent>
+        <TabsContent value="Ban">
+          <MembersList members={bannedUsersList} group={group} currUser={user} forBan/>
         </TabsContent>
       </Tabs>
     </div>

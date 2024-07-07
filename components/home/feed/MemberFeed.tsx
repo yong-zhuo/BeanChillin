@@ -7,7 +7,7 @@ import { Oauth } from "@/lib/users/OAuth";
 
 const MemberFeed = async () => {
   const session = await getServerSession(Oauth);
-
+  let followedGroupIds: string[] = [];
   const followedGroups = await prisma.membership.findMany({
     where: {
       user: {
@@ -18,13 +18,13 @@ const MemberFeed = async () => {
       group: true,
     },
   });
-
+  followedGroupIds = followedGroups.map((group) => group.group.id);
   //get posts from followed groups
   const posts = await prisma.post.findMany({
     where: {
       group: {
-        name: {
-          in: followedGroups.map(({ group }) => group.id),
+        id: {
+          in: followedGroupIds
         },
       },
     },
@@ -39,7 +39,9 @@ const MemberFeed = async () => {
     },
     take: INFINITE_SCROLL_RESULTS
   });
-  return <PostFeed initPosts={posts} />;
+
+
+  return <PostFeed initPosts={posts} feedType="group" />;
 };
 
 export default MemberFeed;

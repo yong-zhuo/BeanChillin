@@ -23,9 +23,9 @@ const BioForm = (props: BioProps) => {
         heading="Tell us about yourself"
         paragraph="Add a short description of yourself"
       />
-      <div className="w-4/5 min-w-[400px] ">
+      <div className="w-4/5 min-w-[400px] flex flex-col justify-center items-center sm:block ">
         <label
-          className="text-md flex flex-row justify-between font-semibold text-black"
+          className="text-md flex flex-row justify-between font-semibold text-black "
           htmlFor="bio"
         >
           Your Bio
@@ -33,11 +33,13 @@ const BioForm = (props: BioProps) => {
             <p className="text-sm text-red-400 ">{errorMessage}</p>
           )}
         </label>
-        <Textarea
-          className="resize-none shadow h-[150px] lg:h-[200px] w-full"
-          placeholder="Add your bio here"
-          {...(props.register && props.register("bio"))}
-        />
+        <div className="flex justify-start items-start">
+          <Textarea
+            className="resize-none shadow h-[150px] lg:h-[180px] w-[250px]  sm:w-[75vh]"
+            placeholder="Add your bio here"
+            {...(props.register && props.register("bio"))}
+          />
+        </div>
         <p className="text-sm text-muted-foreground">
           Your bio will be added to your profile.
         </p>

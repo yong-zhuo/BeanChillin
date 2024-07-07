@@ -35,15 +35,14 @@ export async function PATCH(req: Request) {
         return new Response('Failed to post comment', {status: 500})
     }
 }
-/*
+
 export async function DELETE(req: Request) {
     try {
         const url = new URL(req.url);
 
         const commentId = url.searchParams.get('comment') as string;
         const replyToId = url.searchParams.get('replyToId') as string;
-        
-        console.log(commentId, replyToId);
+    
 
         const session = await getServerSession(Oauth);
 
@@ -80,4 +79,4 @@ export async function DELETE(req: Request) {
 
         return new Response('Failed to delete comment', {status: 500})
     }
-}*/
+}

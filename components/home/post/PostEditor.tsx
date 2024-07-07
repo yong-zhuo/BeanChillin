@@ -87,12 +87,14 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
             description: "Please join the group to post",
             variant: "destructive",
           });
+          router.push(newPathname);
         } else {
           toast({
             title: "Error creating post!",
             description: "An unexpected error occurred. Try again later.",
             variant: "destructive",
           });
+          router.push(newPathname);
         }
       } else {
         //change pathname to group page
@@ -113,12 +115,13 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
         description: "Please try again later.",
         variant: "destructive",
       });
+      router.push(newPathname);
     }
   };
 
   const initEditor = useCallback(async () => {
     const Editor = (await import("@editorjs/editorjs")).default;
-    const Header = (await import("@editorjs/header")).default;
+    //const Header = (await import("@editorjs/header")).default;
     const Embed = (await import("@editorjs/embed")).default;
     //const Table = (await import("@editorjs/table")).default;
     //const List = (await import("@editorjs/list")).default;
@@ -137,7 +140,6 @@ const PostEditor = ({ groupId }: PostEditorProps) => {
         inlineToolbar: true,
         data: { blocks: [] },
         tools: {
-          header: Header,
           linkTool: {
             class: Link,
             config: {

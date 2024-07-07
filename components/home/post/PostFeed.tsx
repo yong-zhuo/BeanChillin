@@ -12,7 +12,7 @@ import Post from "./Post";
 interface PostFeedProps {
   initPosts: DetailedPost[];
   groupName?: string;
-  feedType?: "general" | "group" | "user";
+  feedType?: "general" | "group" | "user" | "trend" | "popular";
   authorId?: string;
 }
 

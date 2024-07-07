@@ -9,8 +9,9 @@ import Messaging from "./Messaging";
 import Link from "next/link";
 import HamburgerMenu from "./HamburgerMenu";
 import { User } from "@prisma/client";
+import Notifications from "./Notifications";
 
-const NavBar = ({user}: {user: User | null}) => {
+const NavBar = ({user, notifCount}: {user: User | null; notifCount: number}) => {
   
 
 
@@ -24,7 +25,7 @@ const NavBar = ({user}: {user: User | null}) => {
             alt="Logo"
             height={80}
             width={85}
-            className="transition translate-y-0 hover:-translate-y-1"
+            className="transition translate-y-0 hover:-translate-y-1 "
           />
         </Link>
 
@@ -32,8 +33,13 @@ const NavBar = ({user}: {user: User | null}) => {
           <SearchBar />
         </div>
 
-        <div className="flex items-center space-x-2 md:space-x-5">
-          <Messaging />
+        <div className="flex items-center space-x-2 md:space-x-5 ">
+          <div className="hidden sm:block">
+            <Messaging />
+          </div>
+          <div className="hidden sm:block">
+            <Notifications notifCount={notifCount}/>
+          </div>
           {user ? (
             <UserAccountNav user={user} />
           ) : (

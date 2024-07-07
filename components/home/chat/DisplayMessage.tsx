@@ -120,22 +120,22 @@ export default function DisplayMessage({ data }: DisplayMessageProps) {
     }, [handleScroll]);
 
     return (
-        <div className="p-6 flex-grow max-h-screen overflow-y-auto h-[67vh] 2mxl:h-[67vh] 2xl:h-[62vh] md:h-[67vh] sm:h-[67vh] scrollbar " ref={scrollContainerRef}>
+        <div className="p-6 flex-grow max-h-screen overflow-y-auto h-[55vh] 2mxl:h-[67.5vh] xl:h-[67.5vh] 2xl:h-[67.5vh] md:h-[60vh] sm:h-[67vh] scrollbar " ref={scrollContainerRef}>
             <div className="flex flex-col gap-4">
                 {totalComments.map((msg, index): JSX.Element => (
                     <React.Fragment key={index}>
                         {
                             friendship?.sender_id === msg.sender_id ?
                                 < div key={index} className="flex flex-col items-end " >
-                                    <div className="flex ">
-                                        <p className="flex  items-end rounded-lg rounded-tr-none  bg-pri text-white p-2 shadow-md ">{msg.message}</p>
+                                    <div className="flex">
+                                        <p className="flex  items-end rounded-lg rounded-tr-none  bg-pri text-white p-2 shadow-md flow-text break-all">{msg.message}</p>
                                     </div>
                                     <p className="font-light text-sm text-gray-600">{moment(msg.createdAt as Date).local().calendar()}</p>
                                 </div>
                                 :
                                 < div key={index} className="flex flex-col " >
                                     <div className="flex items-center">
-                                        <div className="flex items-end rounded-lg rounded-tl-none bg-gray-500 text-white p-2 shadow-md">{msg.message}</div>
+                                        <div className="flex items-end rounded-lg rounded-tl-none bg-gray-500 text-white p-2 shadow-md flow-text break-all">{msg.message}</div>
                                     </div>
                                     <p className="font-light text-sm text-gray-600">{moment(msg.createdAt as Date).local().calendar()}</p>
                                 </div>

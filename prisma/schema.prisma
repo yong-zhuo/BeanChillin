@@ -54,11 +54,15 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
 
-  createdGroups Group[]      @relation("CreatedBy")
-  joinedGroups  Membership[]
-  votes         Vote[]
-  Posts         Post[]
-  Comments      Comment[]
+  createdGroups   Group[]        @relation("CreatedBy")
+  joinedGroups    Membership[]
+  moderatedGroups Moderator[]
+  bannedGroups    BannedUser[]
+  votes           Vote[]
+  Posts           Post[]
+  Comments        Comment[]
+  Notifications   Notification[] @relation("Notification")
+  Activity        Notification[] @relation("NotificationFrom")
 
   imageUrl            String?
   imagePublicId       String?
@@ -94,9 +98,12 @@ model Group {
   banner      String?
   type        String?
 
-  creatorId String?
-  Creator   User?        @relation("CreatedBy", fields: [creatorId], references: [id])
-  members   Membership[]
+  creatorId   String?
+  Creator     User?        @relation("CreatedBy", fields: [creatorId], references: [id])
+  members     Membership[]
+  moderators  Moderator[]
+  bannedUsers BannedUser[]
+  Activity   Notification[]
 }
 
 model Membership {
@@ -106,6 +113,41 @@ model Membership {
   groupId String
 
   @@id([userId, groupId])
+}
+
+model Moderator {
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  @@id([groupId, userId])
+}
+
+model BannedUser {
+  groupId     String
+  userId      String
+  group       Group     @relation(fields: [groupId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+  reason      String?
+  bannedUntil DateTime?
+
+  @@id([groupId, userId])
+}
+
+model Notification {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("Notification", fields: [userId], references: [id])
+  isRead Boolean @default(false)
+  type   String
+  fromId String
+  fromUser User @relation("NotificationFrom", fields: [fromId], references: [id])
+  groupId String?
+  group   Group? @relation(fields: [groupId], references: [id])
+  postId String?
+  createdAt   DateTime  @default(now())
+  @@index([userId])
 }
 
 model Post {
@@ -134,7 +176,7 @@ model Comment {
   postId String
 
   replyToId String?
-  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   replies   Comment[] @relation("ReplyTo")
 
   commentId   String?

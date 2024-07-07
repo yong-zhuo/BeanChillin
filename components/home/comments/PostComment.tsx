@@ -6,18 +6,36 @@ import React, { useContext, useRef, useState } from "react";
 import CommentVotes from "./CommentVotes";
 import { Button } from "@/components/common-ui/shadcn-ui/button";
 import { CommentVote } from "@prisma/client";
-import { Loader2, MessageSquarePlus, MessageSquareReply, Trash } from "lucide-react";
+import {
+  Loader2,
+  MessageSquarePlus,
+  MessageSquareReply,
+  Trash,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/common-ui/shadcn-ui/textarea";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { UserContext } from "../UserContext";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/common-ui/shadcn-ui/alert-dialog";
+import createNotifs from "@/lib/notifications/createNotif";
 
 interface PostCommentProps {
   comment: DetailedComment;
   votesCount: number;
   currVote: CommentVote | undefined;
   postId: string;
+  reply?: boolean;
 }
 
 const PostComment = ({
@@ -25,6 +43,7 @@ const PostComment = ({
   votesCount,
   currVote,
   postId,
+  reply,
 }: PostCommentProps) => {
   const [isCommenting, setIsCommenting] = useState(false);
   const commentRef = useRef<HTMLDivElement>(null);
@@ -36,33 +55,34 @@ const PostComment = ({
   const router = useRouter();
   const { toast } = useToast();
 
-/*
- const deleteComment = async (commentId: string, replyToId?: string | null) => {
-  try {
-    const query = `/api/group/posts/comment?comment=${commentId}` + (!!replyToId ? `&replyToId=${replyToId}` : "");
-    const response = await fetch(query , {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const deleteComment = async (
+    commentId: string,
+    replyToId?: string | null,
+  ) => {
+    try {
+      const query =
+        `/api/group/posts/comment?comment=${commentId}` +
+        (!!replyToId ? `&replyToId=${replyToId}` : "");
+      const response = await fetch(query, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to delete comment");
-    } else {
-      router.refresh();
-      
+      if (!response.ok) {
+        throw new Error("Failed to delete comment");
+      } else {
+        router.refresh();
+      }
+    } catch (error) {
+      toast({
+        title: "Failed to delete comment",
+        description: "Please try again later",
+        variant: "destructive",
+      });
     }
-  
-  } catch (error) {
-    toast({
-      title: "Failed to delete comment",
-      description: "Please try again later",
-      variant: "destructive",
-    });
-  }
-
-}*/
+  };
 
   const handleComment = async (
     postId: string,
@@ -91,6 +111,13 @@ const PostComment = ({
       } else {
         router.refresh();
         setInput("");
+        await createNotifs({
+          type: "replyComment",
+          fromId: user?.id as string,
+          toId: comment.authorId,
+          postId: postId,
+          replyToId: replyToId,
+        }, 'replyComment');
       }
     } catch (error) {
       toast({
@@ -118,24 +145,24 @@ const PostComment = ({
             {comment.author.name}
           </p>
           <span className="flex flex-row items-center justify-center gap-0.5 text-gray-900">
-            <p className="max-h-40 truncate text-xs text-zinc-500">
+            <p className="max-h-40 truncate text-xs text-zinc-500" suppressHydrationWarning>
               {formatTimeToNow(new Date(comment.createdAt))}
             </p>
           </span>
         </div>
       </div>
 
-      <div className="mt-2 text-sm text-zinc-900" >{comment.content}</div>
+      <div className="mt-2 text-sm text-zinc-900">{comment.content}</div>
 
-      <div className="flex flex-row gap-2 items-center justify-start">
+      <div className="flex flex-row items-center justify-start gap-2">
         <CommentVotes
           commentId={comment.id}
           initVotesCount={votesCount}
           initVote={currVote}
         />
-        <Button
+        {reply ? <Button
           variant="ghost"
-          className="gap-1 rounded-xl text-xs text-zinc-900 hover:bg-sec"
+          className="gap-1 rounded-xl text-xs text-zinc-700 hover:text-black hover:bg-transparent -mr-5 "
           onClick={() => {
             //setIsCommenting(true);
             toggleReply();
@@ -143,20 +170,44 @@ const PostComment = ({
         >
           Reply
           <MessageSquareReply className="ml-0.5 h-4 w-4 text-zinc-900" />
-        </Button>
-        {/*comment.authorId === user?.id ? <div className="-ml-5">
-          <Button
-            variant="ghost"
-            className="gap-1 rounded-xl text-xs text-zinc-900 hover:bg-red-400 hover:text-white"
-            onClick={() => {
-              //setIsCommenting(true);
-              deleteComment(comment.id, comment.replyToId);
-            }}
-          >
-            Delete
-            <Trash className="ml-0.5 h-4 w-4" />
-          </Button>
-        </div>: null*/}
+        </Button> : null}
+        {comment.authorId === user?.id ? (
+          <div className="">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className=" gap-1 rounded-xl text-xs text-red-400 hover:text-red-600 hover:bg-transparent"
+                >
+                  Delete
+                  <Trash className="ml-0.5 h-4 w-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Are you sure you want to delete this comment?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Note: Deleting the root comment will delete all associated comments.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-gray-500 text-white hover:bg-gray-600 hover:text-white">Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      
+                      deleteComment(comment.id, comment.replyToId);
+                    }}
+                    className="hover:bg-red-600 hover:text-white bg-red-500 text-white"
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        ) : null}
       </div>
 
       {isCommenting ? (

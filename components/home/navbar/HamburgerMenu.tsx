@@ -12,7 +12,7 @@ import Image from "next/image";
 import { Squash as Hamburger } from "hamburger-react";
 import { Card, CardContent } from "@/components/common-ui/shadcn-ui/card";
 import Button from "@/components/common-ui/button/Button";
-import { tabsButton } from "@/constants/tabsContent";
+import { hamburgerTabs, tabsButton } from "@/constants/tabsContent";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/common-ui/shadcn-ui/separator";
 
@@ -20,7 +20,7 @@ const HamburgerMenu = () => {
   const router = useRouter();
   const [isOpen, setOpen] = useState(false);
   return (
-    <div className="relative block md:hidden">
+    <div className="relative block sm:hidden">
       <div className="absolute -bottom-6 -left-3 ">
         <Hamburger
           toggle={setOpen}
@@ -32,7 +32,7 @@ const HamburgerMenu = () => {
         {isOpen && (
           <Card className="fixed right-2 top-14 ">
             <CardContent className="mb-0 mt-2 p-0">
-              {tabsButton.map((tab) => (
+              {hamburgerTabs.map((tab) => (
                 <>
                   <Button
                     key={tab.alt}

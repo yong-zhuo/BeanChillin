@@ -16,6 +16,7 @@ const config = {
     },
     extend: {
       screens:{
+      "1xl": "1120px",
       "mxl": "1490px",
       "1mxl": "1500px",
       "2mxl": "1600px",

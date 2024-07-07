@@ -78,18 +78,14 @@ const SearchBar = () => {
         
         setGroupResults(data[0] as GroupResult[]);
         setUserResults(data[1] as UserResult[]);
-        console.log(groupResults);
+       
         setIsFetching(false);
         setIsFetched(true);
       }
     } catch (error) {
       setUserResults([]);
       setGroupResults([]);
-      toast({
-        title: "Error",
-        description: "Failed to fetch search results",
-        variant: "destructive",
-      });
+   
     }
   };
 
@@ -114,7 +110,7 @@ const SearchBar = () => {
           setInput(value);
           debounceRequest();
         }}
-        className="border-none outline-none ring-0 focus:border-none focus:outline-none"
+        className="border-none outline-none ring-0 focus:border-none focus:outline-none  text-xs sm:text-sm"
         placeholder="Search for groups or users"
       />
 

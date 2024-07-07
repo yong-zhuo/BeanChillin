@@ -12,10 +12,20 @@ import {
   AlertDialogTrigger,
 } from "@/components/common-ui/shadcn-ui/alert-dialog";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
+import createNotifs from "@/lib/notifications/createNotif";
+import { Group } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
-const DeleteButton = ({ postId }: { postId: string }) => {
+interface DeleteButtonProps {
+  postId: string;
+  isCurrUserMod: boolean;
+  authorId: string;
+  group: Group;
+  userId: string;
+}
+
+const DeleteButton = ({ postId, isCurrUserMod, authorId, group, userId}: DeleteButtonProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const pathname = usePathname();
@@ -53,17 +63,24 @@ const DeleteButton = ({ postId }: { postId: string }) => {
       const newPath = pathname.split("/").slice(0, -2).join("/");
       router.replace(newPath)
       router.refresh()
+      if((isCurrUserMod || userId === group.creatorId) && (userId !== authorId)) {
+        await createNotifs({fromId: userId, toId: authorId, postId: postId, type:"deletedPost", groupId:group.id}, "deletedPost")
+      }
+      
     }
   };
   return (
-    <div className="px-1 py-1">
+    <div className="px-1 py-0 sm:py-1">
         <AlertDialog>
-          <AlertDialogTrigger className=" font-semibold text-red-400 text-sm flex flex-row items-center justify-center rounded-lg hover:bg-red-400 hover:text-white">
+          <AlertDialogTrigger className="sm:hidden font-semibold text-red-400 text-xs flex flex-row items-center justify-center rounded-lg hover:scale-105 hover:text-red-500">
+           <Trash className="h-5 w-5 " />
+          </AlertDialogTrigger>
+          <AlertDialogTrigger className="hidden font-semibold text-red-400 text-sm sm:flex flex-row items-center justify-center rounded-lg hover:bg-red-400 hover:text-white">
             Delete Post<Trash className="h-5 w-5 " />
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogTitle>Delete Post?</AlertDialogTitle>
               <AlertDialogDescription>
                 Your post will be permanently deleted.
               </AlertDialogDescription>

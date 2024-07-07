@@ -8,15 +8,19 @@ import { Group, User } from "@prisma/client";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { ToastAction } from "@/components/common-ui/shadcn-ui/toast/toast";
 import { useRouter } from "next/navigation";
+import GroupSettingsButton from "./GroupSettingsButton";
+import createNotifs from "@/lib/notifications/createNotif";
 //TODO:Create tabs list for group page
 const MembershipButton = ({
   status,
   group,
+  user,
 }: {
   status: boolean;
   group: Group;
+  user: User | null;
 }) => {
-  const { user } = useContext(UserContext);
+  
   const { toast } = useToast();
   const isCreator = user?.id === group.creatorId;
   const [loading, setLoading] = useState(false);
@@ -126,6 +130,7 @@ const MembershipButton = ({
         action: <ToastAction altText="Dismiss">Dismiss</ToastAction>,
       });
       router.refresh()
+      await createNotifs({fromId: user?.id, groupId: group.id, toId:group.creatorId, type: "joinedGroup"}, "joinedGroup")
     }
   };
 
@@ -189,21 +194,10 @@ const MembershipButton = ({
     <>
     
       {isCreator ? (
-        <Button
-          addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
-          text="Delete Group"
-          action="submit"
-          handleClick={deleteGroup}
-          state={loading}
-          width={20}
-          height={20}
-          loadText="Deleting"
-        >
-          <Trash className="h-5 w-5" />
-        </Button>
+        <GroupSettingsButton group={group}/>
       ) : status ? (
         <Button
-          addClass="bg-red-400 text-white w-1/3 text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
+          addClass="bg-red-400 text-white w-2/5 sm:w-1/3 text-xs sm:text-sm md:w-fit mt-0 mr-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
           text="Leave Group"
           action="submit"
           handleClick={leaveGroup}
@@ -212,11 +206,11 @@ const MembershipButton = ({
           height={20}
           loadText="Leaving"
         >
-          <LogOut className="h-5 w-5" />
+          <LogOut className="h-5 w-5 hidden sm:block" />
         </Button>
       ) : (
         <Button
-          addClass="bg-pri text-white w-1/3 text-sm md:w-fit mr-0 mt-0 md:mr-3 hover:bg-slate-400 transition hover:-translate-y-1 hover:-translate-x-1 shadow-md"
+          addClass="bg-pri text-white  w-2/5 sm:w-1/3 text-xs sm:text-sm md:w-fit mr-0 mt-0 md:mr-3 hover:bg-slate-400 transition hover:scale-105 hover:-translate-x-1 shadow-md"
           text="Join Group"
           action="submit"
           handleClick={joinGroup}
@@ -225,7 +219,7 @@ const MembershipButton = ({
           height={20}
           loadText="Joining"
         >
-          <Plus className="h-5 w-5" />
+          <Plus className="h-5 w-5 hidden sm:block" />
         </Button>
       )}
     </>

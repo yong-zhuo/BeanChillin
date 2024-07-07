@@ -70,6 +70,7 @@ const CommentsSection = async ({ postId }: CommentSectionProps) => {
                     currVote={topCommentsVote}
                     votesCount={topCommentsCount}
                     postId={postId}
+                    reply={true}
                   />
                 </div>
                 {
