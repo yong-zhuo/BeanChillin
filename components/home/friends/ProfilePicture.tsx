@@ -25,7 +25,7 @@ const ProfilePicture = (props: Props) => {
         user = {{name: "Random User", imageUrl: props.imageUrl}}
         className="h-36 w-36 rounded-full aspect-square border-2 border-pri xl:h-36 xl:w-36"
       />
-      <div className="absolute -bottom-1 right-20 flex flex-col-reverse">
+      <div className="absolute -bottom-1 right-8 sm:right-24 flex flex-col-reverse">
         <input
           type="file"
           accept="image/*"

@@ -211,7 +211,7 @@ const CreateGroupModal = () => {
               <SelectTrigger className="text-gray-500 shadow">
                 <SelectValue placeholder="Select a category that best suits your Group" />
               </SelectTrigger>
-              <SelectContent className="z-[20] w-[26.5vh] bg-white sm:w-[38vh] md:w-[39.5vh]">
+              <SelectContent className="z-[20]  bg-white ">
                 <SelectGroup className="border-2 ">
                   <SelectItem
                     value="Academics"
