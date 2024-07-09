@@ -22,7 +22,7 @@ import PostFeed from "@/components/home/post/PostFeed";
 import MembersList from "@/components/home/group/MembersList";
 import { Ban } from "lucide-react";
 import { Button } from "@/components/common-ui/shadcn-ui/button";
-
+import { VideoCall } from "@/components/home/discussion_rooms/VideoCall";
 
 export const metadata = {
   title: "Groups | BeanChillin",
@@ -100,7 +100,7 @@ const Page = async ({ params }: PageProps) => {
         user: true,
       },
     }),
-   prisma.bannedUser.findMany({
+    prisma.bannedUser.findMany({
       where: {
         group: {
           name: slug,
@@ -175,6 +175,9 @@ const Page = async ({ params }: PageProps) => {
           >
             Members
           </TabsTrigger>
+          <TabsTrigger value="Rooms" className="text-center hover:bg-gray-100">
+            Rooms
+          </TabsTrigger>
           {group.creatorId === user?.id ? (
             <TabsTrigger value="Ban" className="text-center hover:bg-gray-100">
               Ban List
@@ -198,8 +201,11 @@ const Page = async ({ params }: PageProps) => {
         <TabsContent value="Members">
           <MembersList members={members} group={group} currUser={user} />
         </TabsContent>
+        <TabsContent value="Rooms">
+          <VideoCall user={user} />
+        </TabsContent>
         <TabsContent value="Ban">
-          <MembersList members={bannedUsersList} group={group} currUser={user} forBan/>
+          <MembersList members={bannedUsersList} group={group} currUser={user} forBan />
         </TabsContent>
       </Tabs>
     </div>
