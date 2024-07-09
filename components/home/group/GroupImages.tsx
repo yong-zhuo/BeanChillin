@@ -70,18 +70,18 @@ const GroupImages = (props: GroupImagesProp) => {
           </div>
         </div>
       </div>
-      <div className="relative mb-7 flex flex-col justify-center">
+      <div className=" mb-7 flex flex-col justify-center">
         <p className="text-md text-black-700  block font-bold sm:text-base md:text-sm">
           Group Picture
         </p>
         <Separator className="bg-pri mb-2" />
-        <div className=" w-full flex justify-center items-center">
+        <div className="relative w-full flex justify-center items-center">
           <GroupAvatar
             group
             img={props.picture}
-            className="h-36 w-36 rounded-lg border-2 border-pri xl:h-36 xl:w-36"
+            className=" h-40 w-40 rounded-lg border-2 border-pri xl:h-36 xl:w-36"
           />
-          <div className="absolute -bottom-2 right-24 flex flex-col-reverse">
+          <div className="absolute -bottom-2 right-2 sm:right-20 flex flex-col-reverse 2xl:right-14 2mxl:right-20 3mxl:right-24 3xl:right-40">
             <input
               type="file"
               accept="image/*"
