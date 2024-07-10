@@ -77,10 +77,10 @@ const GroupSettingsButton = ({ group }: Props) => {
   const router = useRouter();
 
   //group picture state
-  const [picture, setPicture] = useState<string>("/placeholder/pl3.png");
+  const [picture, setPicture] = useState<string>(group.picture || "/placeholder/pl3.png");
 
   //group banner state
-  const [banner, setBanner] = useState<string>("/placeholder/pl2.jpg");
+  const [banner, setBanner] = useState<string>(group.banner || "/placeholder/pl2.jpg");
 
   //zod validation for create group
   const {
@@ -90,7 +90,16 @@ const GroupSettingsButton = ({ group }: Props) => {
     watch,
     formState: { errors },
     reset,
-  } = useForm<createGroup>({ resolver: zodResolver(createGroupSchema) });
+  } = useForm<createGroup>({
+    defaultValues: {
+      name: group.name,
+      description: group.description as string,
+      type: group.type as string,
+      picture: undefined,
+      banner: undefined,
+    },
+    resolver: zodResolver(createGroupSchema),
+  });
 
   const onSubmit = async (data: createGroup) => {
     //TODO: #39 Add create group logic and send data to backend
@@ -155,10 +164,10 @@ const GroupSettingsButton = ({ group }: Props) => {
         ]);
         toast({
           variant: "success",
-          title: "Group Successfully created",
+          title: "Group Successfully updated",
           description: "Please wait while we change your Group details.",
         });
-        router.push(`/groups/${name}`);
+        router.refresh();
       }
     } catch (e) {
       console.error(e);
@@ -240,7 +249,7 @@ const GroupSettingsButton = ({ group }: Props) => {
       <Tabs defaultValue="account">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="flex w-fit flex-row items-center justify-center gap-1 bg-gray-400 text-white transition hover:scale-105 hover:bg-gray-600 shadow-md">
+            <Button className="flex w-fit flex-row items-center justify-center gap-1 bg-gray-400 text-white shadow-md transition hover:scale-105 hover:bg-gray-600">
               Group Settings
               <Settings className="h-5 w-5" />
             </Button>
@@ -262,7 +271,7 @@ const GroupSettingsButton = ({ group }: Props) => {
               <TabsTrigger value="Delete Group">Delete Group</TabsTrigger>
             </TabsList>
             <TabsContent value="details">
-              <Card >
+              <Card>
                 <CardHeader>
                   <CardTitle>Group Details</CardTitle>
                   <CardDescription>
@@ -304,15 +313,34 @@ const GroupSettingsButton = ({ group }: Props) => {
                         )}
                       </div>
                       <SelectTrigger className="text-gray-500 shadow ">
-                        <SelectValue placeholder="Select a category that best suits your Group" />
+                        <SelectValue
+                          placeholder="Select a category that best suits your Group"
+                          defaultValue={group.type as string}
+                        />
                       </SelectTrigger>
                       <SelectContent className="z-50 bg-white ">
                         <SelectGroup className="border-1">
-                          <SelectItem value="Academics" className="hover:bg-sec">Academics</SelectItem>
-                          <SelectItem value="Interests" className="hover:bg-sec">Interests</SelectItem>
-                          <SelectItem value="CCA" className="hover:bg-sec">CCA</SelectItem>
-                          <SelectItem value="Events" className="hover:bg-sec">Events</SelectItem>
-                          <SelectItem value="Social" className="hover:bg-sec">Social</SelectItem>
+                          <SelectItem
+                            value="Academics"
+                            className="hover:bg-sec"
+                          >
+                            Academics
+                          </SelectItem>
+                          <SelectItem
+                            value="Interests"
+                            className="hover:bg-sec"
+                          >
+                            Interests
+                          </SelectItem>
+                          <SelectItem value="CCA" className="hover:bg-sec">
+                            CCA
+                          </SelectItem>
+                          <SelectItem value="Events" className="hover:bg-sec">
+                            Events
+                          </SelectItem>
+                          <SelectItem value="Social" className="hover:bg-sec">
+                            Social
+                          </SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -329,7 +357,7 @@ const GroupSettingsButton = ({ group }: Props) => {
                     </div>
                   </CardContent>
                   <CardFooter className="flex items-center justify-center">
-                  <Button
+                    <Button
                       className="rounded-lg bg-pri text-white transition hover:scale-105 hover:bg-slate-400"
                       type="submit"
                       disabled={isLoading}
@@ -361,7 +389,13 @@ const GroupSettingsButton = ({ group }: Props) => {
                   <label className="text-md pb-1 font-semibold">
                     Name of Group
                   </label>
-                  <Input className="border-gray-500 focus-visible:border-red-400 focus-visible:ring-transparent " type='text' value={groupNameInput} onChange={handleGroupNameInputChange} placeholder={group.name}/>
+                  <Input
+                    className="border-gray-500 focus-visible:border-red-400 focus-visible:ring-transparent "
+                    type="text"
+                    value={groupNameInput}
+                    onChange={handleGroupNameInputChange}
+                    placeholder={group.name}
+                  />
                 </CardContent>
                 <CardFooter className="flex items-center justify-center">
                   <Button
