@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+.str-video__participant-details {
+  color: white;
+}
+
+.str-video__menu-container {
+  color: white;
+}
+
+.str-video__notification {
+  color: white;
+}
+
+.str-video__device-settings__button {
+  color: white;
+  background-color: #4D869C;
+}
+
+
+
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;

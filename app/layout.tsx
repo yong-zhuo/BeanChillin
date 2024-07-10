@@ -23,6 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     
+    
       <SessionWrapper>
         <html lang="en">
           <body className={inter.className}>

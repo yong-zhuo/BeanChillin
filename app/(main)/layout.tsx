@@ -1,4 +1,5 @@
 import { UserProvider } from "@/components/home/UserContext";
+import VideoProvider from "@/components/home/discussion_rooms/VideoProvider";
 import NavBar from "@/components/home/navbar/NavBar";
 import LeftSideBar from "@/components/home/sidebar-left/LeftSideBar";
 import RightSideBar from "@/components/home/sidebar-right/RightSideBar";
@@ -17,10 +18,9 @@ interface HomeLayoutProps {
 }
 
 const layout = async ({ children }: HomeLayoutProps) => {
-
-  const session = await getServerSession(Oauth)
+  const session = await getServerSession(Oauth);
   if (!session) {
-    redirect("/login")
+    redirect("/login");
   }
   const user = await prisma.user.findUnique({
     where: {
@@ -36,13 +36,13 @@ const layout = async ({ children }: HomeLayoutProps) => {
 
   return (
     <UserProvider>
-      <div className="flex h-screen flex-col bg-[url('/patterns/pattern-light.png')] overflow-auto">
-        <NavBar user={user} notifCount={notifCount}/>
-        
-        <div className="container max-w-8xl mx-auto h-full pt-14 mt-5">
-          <section className="max-w-8xl mx-auto flex h-full w-full ">
-              <LeftSideBar />
-              
+      <div className="flex h-screen flex-col overflow-auto bg-[url('/patterns/pattern-light.png')]">
+        <NavBar user={user} notifCount={notifCount} />
+
+        <div className="container mx-auto mt-5 h-full max-w-8xl pt-14">
+          <section className="mx-auto flex h-full w-full max-w-8xl ">
+            <LeftSideBar />
+
             <div className="h-full w-full sm:p-3">{children}</div>
             <RightSideBar />
           </section>
