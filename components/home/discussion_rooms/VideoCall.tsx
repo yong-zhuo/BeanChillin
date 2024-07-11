@@ -7,7 +7,7 @@ import {
   StreamVideoClient,
   useStreamVideoClient,
 } from "@stream-io/video-react-sdk";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, PhoneOff, Plus, Video } from "lucide-react";
 import { getVideoToken } from "@/lib/videocall/action";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,6 +35,7 @@ import RoomPreview from "./RoomPreview";
 import { useToast } from "@/components/common-ui/shadcn-ui/toast/use-toast";
 import { useRouter } from "next/navigation";
 import { DetailedRoom } from "@/types/room";
+import { Card, CardContent, CardHeader } from "@/components/common-ui/shadcn-ui/card";
 
 interface VideoCallProps {
   user?: User | null;
@@ -51,10 +52,10 @@ export const VideoCall = (props: VideoCallProps) => {
 
   return (
     <VideoProvider user={props.user}>
-      <div className="order-first my-3 h-fit rounded-lg md:order-last">
+      <div className="order-first my-3 h-fit rounded-lg md:order-last shadow">
         <div className="rounded-lg bg-pri ">
-          <h2 className="flex items-center gap-1.5 px-6 py-4 font-semibold text-sec">
-            Create a new discussion room
+          <h2 className="flex items-center gap-1.5 px-6 py-4 font-semibold text-sec flex-row">
+            Create a new discussion room <Video className="h-5 w-5"/>
           </h2>
           <dl className="px-8py-2 -my-2 divide-y divide-pri bg-white leading-6">
             <DescriptionInput
@@ -67,9 +68,16 @@ export const VideoCall = (props: VideoCallProps) => {
         </div>
       </div>
       <Separator className="mt-5 bg-pri" />
-      {props.rooms?.map((room) => (
-        <RoomPreview key={room.id} room={room} isMember={props.isMember} />
-      ))}
+      {props.rooms?.length !== 0 ? (
+        props.rooms?.map((room) => (
+          <RoomPreview key={room.id} room={room} isMember={props.isMember} />
+        ))
+      ) : (
+        <Card className="mt-3">
+          <CardHeader><h1 className="font-semibold text-md sm:text-lg flex flex-row gap-1">No discussion rooms available </h1></CardHeader>
+          <CardContent><h2 className="font-medium text-sm sm:text-md">There are no new discussions rooms right now. <br/><br/>Check back later or create one now.</h2></CardContent>
+        </Card>
+      )}
     </VideoProvider>
   );
 };
@@ -116,7 +124,7 @@ function DescriptionInput({
       const id = crypto.randomUUID();
       const call = client.call("default", id);
 
-      call.join({ create: true });
+     
       await call.getOrCreate({
         data: {
           custom: {
@@ -126,7 +134,8 @@ function DescriptionInput({
           },
         },
       });
-      
+      setCall(call);
+      handleCallId(id);
       const res = await fetch("/api/room", {
         method: "POST",
         headers: {
@@ -143,8 +152,7 @@ function DescriptionInput({
       if (!res.ok) {
         throw new Error("Failed to create room");
       }
-      setCall(call);
-      handleCallId(id);
+      
       router.refresh();
       toast({
         title: "Room created successfully",
@@ -226,7 +234,7 @@ function DescriptionInput({
               className="border-gray-500 focus-visible:border-pri focus-visible:ring-transparent "
             />
 
-            <label
+            {/**<label
               htmlFor="members"
               className="text-md text-black-700 mb-1 mt-4 block font-bold sm:text-base md:text-sm"
             >
@@ -237,7 +245,7 @@ function DescriptionInput({
               className="border-gray-500 focus-visible:border-pri focus-visible:ring-transparent "
               data-testid={"members"}
               {...(register && register("members"))}
-            />
+            />*/}
             <div className="flex w-full flex-col items-center">
               {isMember ? (
                 <Button

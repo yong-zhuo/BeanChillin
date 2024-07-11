@@ -21,9 +21,9 @@ interface RoomPreviewProps {
   isMember: boolean;
 }
 
-const RoomPreview = ({ room }: RoomPreviewProps) => {
+const RoomPreview = ({ room, isMember}: RoomPreviewProps) => {
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = React.useState(false);
   return (
     <Card className="mb-3 mt-3">
       <CardHeader suppressHydrationWarning>
@@ -54,12 +54,13 @@ const RoomPreview = ({ room }: RoomPreviewProps) => {
 
       <CardContent className="-mt-2 flex flex-row items-center justify-between">
         <p className="text-sm sm:text-lg truncate ">{room.description}</p>
-        <Button
+        {isMember ? <Button
           className="w-fit bg-pri text-white transition hover:scale-105 hover:bg-slate-500 gap-1"
           onClick={async () => router.push(`/rooms/${room.groupId}/${room.id}`)}
+          disabled={isLoading}
         >
           Join Room <PhoneForwarded className="h-4 w-4"/>
-        </Button>
+        </Button> : <Button className="text-sm bg-pri text-white w-fit" disabled>Only group Members can Join</Button>}
       </CardContent>
     </Card>
   );

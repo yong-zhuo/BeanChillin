@@ -49,7 +49,7 @@ const MeetPage = async ({ params: { id, groupId } }: PageProps) => {
 
   return (
     <VideoProvider user={user}>
-      <div className="h-screen overflow-auto bg-[url('/patterns/pattern-light.png')]">
+      <div className="h-screen overflow-auto bg-[url('/patterns/pattern-light.png')] ">
         <MeetingPage id={id} groupName={membership.group.name} user={user!} />
       </div>
     </VideoProvider>

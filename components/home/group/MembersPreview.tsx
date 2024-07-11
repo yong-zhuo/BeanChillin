@@ -101,32 +101,32 @@ const MembersPreview = (props: MembersPreviewProps) => {
               
               <Button
                 asChild
-                className="w-fit text-wrap bg-pri text-white  shadow transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg sm:text-nowrap"
+                className="text-center text-xs sm:text-md w-fit text-wrap bg-pri text-white  shadow transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg sm:text-nowrap"
               >
                 <Link
                   href={`/profile/${props.otherUser?.id}`}
                   className="flex flex-row items-center justify-center gap-0.5"
                 >
                   View Profile
-                  <UserSearch className="h-8 w-8 sm:h-5 sm:w-5" />
+                  <UserSearch className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </Button>
             </div>
           ) : (
            <div className="flex w-full flex-row  items-center  justify-center space-x-5 md:w-fit md:items-end md:justify-end md:space-x-5">
-              <Button onClick={() => handleUnban()} className="gap-0.5 w-fit text-wrap bg-red-400 text-white shadow transition hover:scale-105 hover:bg-red-500 sm:text-nowrap">
-                Unban <CircleOff className="h-8 w-8 sm:h-5 sm:w-5"/>
+              <Button onClick={() => handleUnban()} className="text-xs sm:text-md gap-0.5 w-fit text-wrap bg-red-400 text-white shadow transition hover:scale-105 hover:bg-red-500 sm:text-nowrap">
+                Unban <CircleOff className="h-4 w-4 sm:h-5 sm:w-5"/>
               </Button>
               <Button
                 asChild
-                className="w-fit text-wrap bg-pri text-white  shadow transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg sm:text-nowrap"
+                className="text-xs sm:text-md w-fit text-wrap bg-pri text-white  shadow transition hover:scale-105 hover:bg-slate-400 hover:shadow-lg sm:text-nowrap"
               >
                 <Link
                   href={`/profile/${props.otherUser?.id}`}
                   className="flex flex-row items-center justify-center gap-0.5"
                 >
                   View Profile
-                  <UserSearch className="h-8 w-8 sm:h-5 sm:w-5" />
+                  <UserSearch className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </Button>
             </div>

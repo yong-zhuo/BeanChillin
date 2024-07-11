@@ -13,7 +13,7 @@ import {
   useStreamVideoClient,
   VideoPreview,
 } from "@stream-io/video-react-sdk";
-import { Loader2 } from "lucide-react";
+import { Loader2, LogIn } from "lucide-react";
 import { useEffect, useState } from "react";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import useLoadCall from "@/hooks/useLoadCall";
@@ -74,6 +74,7 @@ function MeetingScreen({groupName, user}: {groupName: string; user: User}) {
 
   const title = call?.state.custom.title;
   const description = call?.state.custom.description;
+  const name = call?.state.createdBy?.name;
  
   return (
     <div className=" ">
@@ -82,8 +83,8 @@ function MeetingScreen({groupName, user}: {groupName: string; user: User}) {
           <CallUI user={user} />
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center  h-screen">
-            <div className="space-y-6 px-10 py-5 bg-white w-1/2 rounded-lg shadow ">
+        <div className="flex flex-col items-center justify-center  h-screen w-full ">
+            <div className="space-y-6 px-10 py-5 bg-white/60 backdrop-blur-4xl rounded-lg shadow ">
               {title && (
                 <p className="text-center">
                   Title: <span className="font-bold">{title}</span>
@@ -92,6 +93,11 @@ function MeetingScreen({groupName, user}: {groupName: string; user: User}) {
               {description && (
                 <p className="text-center">
                   Description: <span className="font-bold">{description}</span>
+                </p>
+              )}
+              {name && (
+                <p className="text-center">
+                  Hosted By: <span className="font-bold">{name}</span>
                 </p>
               )}
               <SetupUI onSetupComplete={handleSetupComplete} />
@@ -131,9 +137,11 @@ function SetupUI({ onSetupComplete }: SetupUIProps) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3 justify-center">
       <h1 className="text-center text-2xl font-bold">Setup</h1>
-      <VideoPreview />
+      <div className="sm:w-full sm:h-full w-[350px]  flex justify-center items-center">
+        <VideoPreview />
+      </div>
       <div className="flex h-16 items-center gap-3">
         <AudioVolumeIndicator />
         <DeviceSettings />
@@ -148,9 +156,9 @@ function SetupUI({ onSetupComplete }: SetupUIProps) {
       </label>
       <Button
         onClick={onSetupComplete}
-        className="w-fit rounded-md bg-pri text-white shadow transition hover:scale-105 hover:bg-slate-500"
+        className="w-fit rounded-md bg-pri text-white shadow transition hover:scale-105 hover:bg-slate-500 gap-1"
       >
-        Enter room
+        Enter room <LogIn className="w-4 h-4"/>
       </Button>
     </div>
   );
