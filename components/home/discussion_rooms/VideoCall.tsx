@@ -255,7 +255,7 @@ function DescriptionInput({
                 >
                   {isLoading ? (
                     <p className="flex flex-row items-center">
-                      Creating <Loader2 className="h-4 w-4" />
+                      Creating <Loader2 className="h-4 w-4 animate-spin" />
                     </p>
                   ) : (
                     <p>Create Room</p>
