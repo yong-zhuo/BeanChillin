@@ -22,7 +22,7 @@ import PostFeed from "@/components/home/post/PostFeed";
 import MembersList from "@/components/home/group/MembersList";
 import { Ban } from "lucide-react";
 import { Button } from "@/components/common-ui/shadcn-ui/button";
-
+import { VideoCall } from "@/components/home/discussion_rooms/VideoCall";
 
 export const metadata = {
   title: "Groups | BeanChillin",
@@ -100,7 +100,7 @@ const Page = async ({ params }: PageProps) => {
         user: true,
       },
     }),
-   prisma.bannedUser.findMany({
+    prisma.bannedUser.findMany({
       where: {
         group: {
           name: slug,
@@ -120,6 +120,15 @@ const Page = async ({ params }: PageProps) => {
       sender_id: group?.creatorId as string,
       status: "Friend",
     },
+  });
+
+  const rooms = await prisma.room.findMany({
+    where: {
+      groupId: group?.id as string,
+    },
+    include: {
+      creator: true,
+    }
   });
 
   if (!group) return notFound();
@@ -162,21 +171,24 @@ const Page = async ({ params }: PageProps) => {
       </Card>
 
       <Tabs className="-mt-[2px]" defaultValue="Posts">
-        <TabsList className="grid w-full grid-cols-5 -space-x-1.5 rounded-b-lg rounded-t-none border bg-white text-center text-black shadow-sm">
-          <TabsTrigger value="About" className="text-center hover:bg-gray-100">
+        <TabsList className="grid w-full grid-cols-5  -space-x-1.5 rounded-b-lg rounded-t-none border bg-white text-center text-black shadow-sm">
+          <TabsTrigger value="About" className="text-center hover:bg-gray-100 text-xs sm:text-lg">
             About
           </TabsTrigger>
-          <TabsTrigger value="Posts" className="text-center hover:bg-gray-100">
+          <TabsTrigger value="Posts" className="text-center hover:bg-gray-100 text-xs sm:text-lg">
             Posts
           </TabsTrigger>
           <TabsTrigger
             value="Members"
-            className="text-center hover:bg-gray-100"
+            className="text-center hover:bg-gray-100 text-xs sm:text-lg"
           >
             Members
           </TabsTrigger>
+          <TabsTrigger value="Rooms" className="text-center hover:bg-gray-100 text-xs sm:text-lg">
+            Rooms
+          </TabsTrigger>
           {group.creatorId === user?.id ? (
-            <TabsTrigger value="Ban" className="text-center hover:bg-gray-100">
+            <TabsTrigger value="Ban" className="text-center hover:bg-gray-100 text-xs sm:text-lg">
               Ban List
             </TabsTrigger>
           ) : null}
@@ -198,8 +210,11 @@ const Page = async ({ params }: PageProps) => {
         <TabsContent value="Members">
           <MembersList members={members} group={group} currUser={user} />
         </TabsContent>
+        <TabsContent value="Rooms">
+          <VideoCall user={user} groupId={group.id} isMember={isMember} rooms={rooms} />
+        </TabsContent>
         <TabsContent value="Ban">
-          <MembersList members={bannedUsersList} group={group} currUser={user} forBan/>
+          <MembersList members={bannedUsersList} group={group} currUser={user} forBan />
         </TabsContent>
       </Tabs>
     </div>

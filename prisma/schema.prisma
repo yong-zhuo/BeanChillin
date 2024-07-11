@@ -75,6 +75,7 @@ model User {
   FriendList          FriendList[]
   friendshipsReceived Friendship[]         @relation("ReceiverRelation")
   CommentVote         CommentVote[]
+  createdRooms       Room[]
 }
 
 model PasswordResetToken {
@@ -104,6 +105,20 @@ model Group {
   moderators  Moderator[]
   bannedUsers BannedUser[]
   Activity   Notification[]
+  Rooms       Room[]
+}
+
+model Room {
+  id        String   @id @default(cuid())
+  title     String
+  description String?
+  callId    String?
+  createdAt DateTime @default(now())
+
+  creatorId String
+  creator   User   @relation(fields: [creatorId], references: [id])
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id])
 }
 
 model Membership {

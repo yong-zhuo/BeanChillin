@@ -177,9 +177,9 @@ const ManageMemberButton = ({
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="flex w-fit flex-row items-center justify-center gap-1 text-wrap bg-gray-400 text-white shadow transition hover:scale-105 hover:bg-gray-600 sm:text-nowrap">
+          <Button className="text-center text-xs sm:text-md flex w-fit flex-row items-center justify-center gap-1 text-wrap bg-gray-400 text-white shadow transition hover:scale-105 hover:bg-gray-600 sm:text-nowrap">
             Manage Member
-            <Settings className="h-8 w-8 sm:h-5 sm:w-5" />
+            <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
         </DialogTrigger>
         <DialogContent
