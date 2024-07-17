@@ -60,7 +60,7 @@ model User {
   bannedGroups      BannedUser[]
   votes             Vote[]
   Posts             Post[]         @relation("CreatedPost")
-  latestViewedPosts String[]     
+  latestViewedPosts String[]
   Comments          Comment[]
   Notifications     Notification[] @relation("Notification")
   Activity          Notification[] @relation("NotificationFrom")
@@ -123,10 +123,11 @@ model Room {
 }
 
 model Membership {
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
-  group   Group  @relation(fields: [groupId], references: [id])
-  groupId String
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  group         Group    @relation(fields: [groupId], references: [id])
+  groupId       String
+  lastVisitedAt DateTime @default(now())
 
   @@id([userId, groupId])
 }
