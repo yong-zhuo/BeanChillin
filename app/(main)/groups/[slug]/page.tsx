@@ -64,6 +64,15 @@ const Page = async ({ params }: PageProps) => {
     },
   });
 
+  await prisma.membership.updateMany({
+    where: {
+      userId: user?.id!,
+      groupId: group?.id!,
+    },
+    data: {
+      lastVisitedAt: new Date(),
+    },
+  })
   //find status of user
   const [membership, banned] = await Promise.all([
     prisma.membership.findFirst({
@@ -82,7 +91,6 @@ const Page = async ({ params }: PageProps) => {
         userId: user?.id,
       },
     }),
-
   ]);
 
   const isMember = !!membership;

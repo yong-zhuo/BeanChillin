@@ -187,6 +187,7 @@ const GroupSettingsButton = ({ group }: Props) => {
   //handle click for deleting group
   const deleteGroup = async () => {
     setIsLoading(true);
+
     const response = await fetch("/api/group/delete", {
       method: "POST",
       body: JSON.stringify({ groupId: group.id }),

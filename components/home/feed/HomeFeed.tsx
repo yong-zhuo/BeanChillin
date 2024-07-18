@@ -29,7 +29,6 @@ const HomeFeed = async () => {
                 }),
             });
             const recoPosts = await reco.json();
-            console.log(recoPosts);
             posts = await prisma.post.findMany({
                 where: {
                     id: {
@@ -62,7 +61,6 @@ const HomeFeed = async () => {
         console.log(error)
     }
 
-    console.log(posts)
     return (
         <PostFeed initPosts={posts} feedType='home' />
     )

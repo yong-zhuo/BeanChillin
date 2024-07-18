@@ -66,7 +66,6 @@ export async function GET(req: Request) {
                         },
                         take: parseInt(limit),
                     });
-                    console.log(posts)
                     return new Response(JSON.stringify(posts));
                 } else {
                     const posts = await prisma.post.findMany({

@@ -19,6 +19,13 @@ export async function POST(req: Request) {
             },
         });
 
+        await fetch('https://beanchillin-ml.onrender.com/update_posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
         if (!postExists) {
             return new Response("Post does not exists", { status: 409 });
         }
