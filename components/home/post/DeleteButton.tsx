@@ -25,13 +25,14 @@ interface DeleteButtonProps {
   userId: string;
 }
 
-const DeleteButton = ({ postId, isCurrUserMod, authorId, group, userId}: DeleteButtonProps) => {
+const DeleteButton = ({ postId, isCurrUserMod, authorId, group, userId }: DeleteButtonProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const pathname = usePathname();
-  
+
 
   const deletePost = async () => {
+
     const res = await fetch(`/api/group/posts/delete`, {
       method: "POST",
       headers: {
@@ -63,34 +64,34 @@ const DeleteButton = ({ postId, isCurrUserMod, authorId, group, userId}: DeleteB
       const newPath = pathname.split("/").slice(0, -2).join("/");
       router.replace(newPath)
       router.refresh()
-      if((isCurrUserMod || userId === group.creatorId) && (userId !== authorId)) {
-        await createNotifs({fromId: userId, toId: authorId, postId: postId, type:"deletedPost", groupId:group.id}, "deletedPost")
+      if ((isCurrUserMod || userId === group.creatorId) && (userId !== authorId)) {
+        await createNotifs({ fromId: userId, toId: authorId, postId: postId, type: "deletedPost", groupId: group.id }, "deletedPost")
       }
-      
+
     }
   };
   return (
     <div className="px-1 py-0 sm:py-1">
-        <AlertDialog>
-          <AlertDialogTrigger className="sm:hidden font-semibold text-red-400 text-xs flex flex-row items-center justify-center rounded-lg hover:scale-105 hover:text-red-500">
-           <Trash className="h-5 w-5 " />
-          </AlertDialogTrigger>
-          <AlertDialogTrigger className="hidden font-semibold text-red-400 text-sm sm:flex flex-row items-center justify-center rounded-lg hover:bg-red-400 hover:text-white">
-            Delete Post<Trash className="h-5 w-5 " />
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete Post?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Your post will be permanently deleted.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="bg-gray-400 text-white hover:scale-105 transition hover:bg-gray-500 hover:text-white">Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => deletePost()} className="text-white bg-red-400 hover:bg-red-500 hover:scale-105 transition">Delete</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+      <AlertDialog>
+        <AlertDialogTrigger className="sm:hidden font-semibold text-red-400 text-xs flex flex-row items-center justify-center rounded-lg hover:scale-105 hover:text-red-500">
+          <Trash className="h-5 w-5 " />
+        </AlertDialogTrigger>
+        <AlertDialogTrigger className="hidden font-semibold text-red-400 text-sm sm:flex flex-row items-center justify-center rounded-lg hover:bg-red-400 hover:text-white">
+          Delete Post<Trash className="h-5 w-5 " />
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Post?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your post will be permanently deleted.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-gray-400 text-white hover:scale-105 transition hover:bg-gray-500 hover:text-white">Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => deletePost()} className="text-white bg-red-400 hover:bg-red-500 hover:scale-105 transition">Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

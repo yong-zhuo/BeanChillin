@@ -12,7 +12,7 @@ import Post from "./Post";
 interface PostFeedProps {
   initPosts: DetailedPost[];
   groupName?: string;
-  feedType?: "general" | "group" | "user" | "trend" | "popular";
+  feedType?: "general" | "group" | "user" | "trend" | "popular" | "home";
   authorId?: string;
 }
 
@@ -38,7 +38,7 @@ const PostFeed = ({ initPosts, groupName, feedType, authorId }: PostFeedProps) =
         if (!res.ok) {
           throw new Error("Failed to fetch posts");
         }
-        
+
         if (newPosts.length === 0) {
           setHasMoreData(false);
         }

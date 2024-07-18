@@ -16,30 +16,40 @@ export async function POST(req: Request) {
         const groupExists = await prisma.group.findFirst({
             where: {
                 id: data.groupId,
-                
+
             },
         });
 
-    
-        if (!groupExists){
-            return new Response("Group does not exists", { status: 409});
+        const groupQuery = `https://beanchillin-ml.onrender.com/delete_group`;
+        const groupRes = await fetch(groupQuery, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                group: data.groupId,
+            }),
+        });
+
+        if (!groupExists) {
+            return new Response("Group does not exists", { status: 409 });
         }
 
         //delete all memberships and posts of group
         await Promise.all([
-        prisma.membership.deleteMany({
-            where: {
-                groupId: data.groupId,
-            },
-        }),
-        prisma.post.deleteMany({
+            prisma.membership.deleteMany({
+                where: {
+                    groupId: data.groupId,
+                },
+            }),
+            prisma.post.deleteMany({
                 where: {
                     groupId: data.groupId,
                 },
             })
 
         ])
-        
+
 
         //then delete group
         await prisma.group.delete({
@@ -49,7 +59,7 @@ export async function POST(req: Request) {
         });
 
         return new Response("Group deleted successfully", { status: 200 });
-    
+
     } catch (e) {
         return new Response("Could not delete group", { status: 500 });
     }

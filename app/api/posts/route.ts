@@ -31,6 +31,61 @@ export async function GET(req: Request) {
 
         let where = {};
 
+        if (feedType === "home") {
+            const history = await prisma.user.findUnique({
+                where: {
+                    email: session?.user?.email!,
+                },
+            });
+            try {
+                if ((history?.latestViewedPosts.length ?? 0) > 0) {
+                    const reco = await fetch('https://beanchillin-ml.onrender.com/recommend_posts', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: history?.latestViewedPosts,
+                            offset: parseInt(offset),
+                            limit: parseInt(limit),
+                        }),
+                    });
+
+                    const recoPosts = await reco.json();
+                    const posts = await prisma.post.findMany({
+                        where: {
+                            id: {
+                                in: recoPosts,
+                            },
+                        },
+                        include: {
+                            votes: true,
+                            author: true,
+                            comments: true,
+                            group: true
+                        },
+                        take: parseInt(limit),
+                    });
+                    return new Response(JSON.stringify(posts));
+                } else {
+                    const posts = await prisma.post.findMany({
+                        take: parseInt(limit),
+                        skip: parseInt(offset),
+                        orderBy: {
+                            createdAt: 'desc',
+                        },
+                        include: {
+                            group: true,
+                            votes: true,
+                        }
+                    });
+
+                    return new Response(JSON.stringify(posts));
+                }
+            } catch (error) {
+                return new Response('Could not fetch posts', { status: 500 });
+            }
+        }
         if (feedType === "group") {
             const followedGroups = await prisma.membership.findMany({
                 where: {
@@ -75,13 +130,13 @@ export async function GET(req: Request) {
                 },
                 orderBy: {
                     votes: {
-                         _count: 'desc',
+                        _count: 'desc',
                     },
                 },
                 take: parseInt(limit),
                 skip: parseInt(offset),
-                });
-                return new Response(JSON.stringify(trendPosts));
+            });
+            return new Response(JSON.stringify(trendPosts));
         } else if (session && feedType === "popular") {
             const popularPosts = await prisma.post.findMany({
                 include: {
@@ -100,11 +155,11 @@ export async function GET(req: Request) {
                 },
                 take: parseInt(limit),
                 skip: parseInt(offset),
-                });
+            });
 
-                return new Response(JSON.stringify(popularPosts));
+            return new Response(JSON.stringify(popularPosts));
         }
-    
+
         const posts = await prisma.post.findMany({
             take: parseInt(limit),
             skip: parseInt(offset),
@@ -116,7 +171,7 @@ export async function GET(req: Request) {
                 votes: true,
                 author: true,
                 comments: true,
-                
+
             },
             where: where
         });

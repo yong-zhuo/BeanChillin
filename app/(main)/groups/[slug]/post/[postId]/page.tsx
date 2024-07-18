@@ -64,6 +64,40 @@ const page = async ({ params }: PageProps) => {
     return notFound();
   }
 
+
+  //add latest viewed post to user
+  if(user) {
+    const latestViewPosts = user.latestViewedPosts;
+    if(latestViewPosts.length === 0) {
+      await prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          latestViewedPosts: {
+            set: [post.id]
+          }
+        }
+      })
+    } else {
+      latestViewPosts.unshift(post.id);
+      if(latestViewPosts.length > 5) {
+        latestViewPosts.pop();
+      }
+     
+      await prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          latestViewedPosts: {
+            set: latestViewPosts
+          }
+        }
+      })
+    }
+  }
+
   async function getData() {
     return await prisma.post.findUnique({
       where: {
@@ -94,7 +128,7 @@ const page = async ({ params }: PageProps) => {
 
   return (
     <div>
-      <div className="flex h-full flex-col items-center justify-between bg-white sm:flex-row sm:items-start shadow rounded-md">
+      <div className="flex h-full flex-col items-center justify-between rounded-md bg-white shadow sm:flex-row sm:items-start">
         <div className="w-full flex-1 rounded-md bg-white p-4 sm:w-0">
           <div className="mt-1 max-h-40 truncate text-xs text-gray-500">
             <div className="flex flex-row">
@@ -175,7 +209,9 @@ const page = async ({ params }: PageProps) => {
           {isCurrUserBanned ? (
             <div className="mt-4 flex flex-col gap-y-2">
               <hr className="my-4 h-px w-full border-pri" />
-              <div className="text-center italic font-semibold text-red-400">You are banned from commenting on this post</div>
+              <div className="text-center font-semibold italic text-red-400">
+                You are banned from commenting on this post
+              </div>
             </div>
           ) : (
             <Suspense
