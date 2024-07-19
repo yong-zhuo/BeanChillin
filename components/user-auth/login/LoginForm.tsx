@@ -40,7 +40,7 @@ const LoginForm = () => {
   const router = useRouter();
   const { data: session } = useSession();
   if (session) {
-    router.push("/home");
+    router.push("/feed");
   }
 
   //if login credentials match, send users to home

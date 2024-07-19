@@ -11,15 +11,15 @@ import HamburgerMenu from "./HamburgerMenu";
 import { User } from "@prisma/client";
 import Notifications from "./Notifications";
 
-const NavBar = ({user, notifCount}: {user: User | null; notifCount: number}) => {
-  
+const NavBar = ({ user, notifCount }: { user: User | null; notifCount: number }) => {
+
 
 
 
   return (
     <div className="fixed inset-x-0 top-0 z-[15] h-[80px] border-b-2 border-pri bg-sec py-2">
       <div className="mx-auto flex h-full items-center justify-between gap-2 px-8 sm:max-w-7xl md:max-w-full ">
-        <Link href="/home" className="h-[80px] w-fit flex items-center">
+        <Link href="/feed" className="h-[80px] w-fit flex items-center">
           <Image
             src="/logo/logo.svg"
             alt="Logo"
@@ -38,7 +38,7 @@ const NavBar = ({user, notifCount}: {user: User | null; notifCount: number}) => 
             <Messaging />
           </div>
           <div className="hidden sm:block">
-            <Notifications notifCount={notifCount}/>
+            <Notifications notifCount={notifCount} />
           </div>
           {user ? (
             <UserAccountNav user={user} />
@@ -51,7 +51,7 @@ const NavBar = ({user, notifCount}: {user: User | null; notifCount: number}) => 
             />
           )}
         </div>
-        <HamburgerMenu/>
+        <HamburgerMenu />
       </div>
     </div>
   );
