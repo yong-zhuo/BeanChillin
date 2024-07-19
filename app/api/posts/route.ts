@@ -75,11 +75,12 @@ export async function GET(req: Request) {
                             createdAt: 'desc',
                         },
                         include: {
-                            group: true,
                             votes: true,
+                            author: true,
+                            comments: true,
+                            group: true
                         }
                     });
-
                     return new Response(JSON.stringify(posts));
                 }
             } catch (error) {
