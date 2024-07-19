@@ -23,13 +23,13 @@ export default function OnboardingApp() {
 
   const [isloading, setIsLoading] = useState(false);
   const { data: session } = useSession();
-  const {toast} = useToast();
+  const { toast } = useToast();
   //check if user onboarded
- 
+
   const router = useRouter();
   useEffect(() => {
     IsOnboard();
-  }, []); 
+  }, []);
 
   //zod validation for onboarding
   const {
@@ -67,12 +67,12 @@ export default function OnboardingApp() {
         email: info.email,
         isOnboard: true
       }
-     
+
       await Promise.all([
         cloudinaryUpload(data.image, info),
         onboardPush(obj)
       ]);
-      router.replace("/home");
+      router.replace("/feed");
     } catch (e) {
       console.log(e);
       setIsLoading(false);
