@@ -1,8 +1,15 @@
 
 import {
   CallControls,
+  CancelCallButton,
   PaginatedGridLayout,
+  ReactionsButton,
+  ScreenShareButton,
   SpeakerLayout,
+  ToggleAudioOutputButton,
+  ToggleAudioPreviewButton,
+  ToggleAudioPublishingButton,
+  ToggleVideoPublishingButton,
   useCall,
 } from "@stream-io/video-react-sdk";
 import {
@@ -28,7 +35,14 @@ export default function FlexibleCallLayout({user}: {user: User}) {
     <div className="space-y-3 mt-5">
       <CallLayoutButtons layout={layout} setLayout={setLayout} />
       <CallLayoutView layout={layout} />
-      <CallControls onLeave={() => router.back()} />
+      <div className="flex flex-row justify-center items-center gap-4">
+          <ToggleVideoPublishingButton/>
+          <ToggleAudioPublishingButton/>
+          <ReactionsButton/>
+          <ScreenShareButton/>
+          <CancelCallButton onLeave={() => router.back()}/>
+      </div>
+      
       <EndCallButton user={user} />
     </div>
   );
