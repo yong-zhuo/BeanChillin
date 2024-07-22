@@ -58,7 +58,19 @@ const HomeFeed = async () => {
             });
         }
     } catch (error) {
-        console.log(error)
+        posts = await prisma.post.findMany({
+            include: {
+                votes: true,
+                author: true,
+                comments: true,
+                group: true
+            },
+            take: 5,
+            skip: 0,
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
     }
 
     return (
