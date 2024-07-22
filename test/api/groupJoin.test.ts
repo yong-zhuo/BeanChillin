@@ -65,7 +65,7 @@ describe('POST request to join group', () => {
             };
             (getServerSession as jest.Mock).mockResolvedValueOnce(mockUser);
             req.json = jest.fn().mockResolvedValue(req.body);
-            prismaMock.membership.findFirst.mockResolvedValue({userId: 'test2', groupId: 'testgroup2'});
+            prismaMock.membership.findFirst.mockResolvedValue({userId: 'test2', groupId: 'testgroup2', lastVisitedAt: new Date()});
             const res = await POST(req as any);
             expect(res.status).toBe(400);
           });

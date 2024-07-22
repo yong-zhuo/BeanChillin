@@ -46,7 +46,8 @@ describe('POST request to join group', () => {
                 creatorId: 'test2',
                 banner: null,
                 type: 'Interests'
-            }
+            },
+            lastVisitedAt: new Date()
         }
 
         const mockGroup = {
@@ -67,8 +68,7 @@ describe('POST request to join group', () => {
         const res = await GET();
         expect(res.status).toBe(200);
         const data = await res.json();
-        console.log(data);
-        
+
     });
 
     

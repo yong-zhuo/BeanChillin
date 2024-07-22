@@ -2,6 +2,7 @@ import { createMocks } from "node-mocks-http";
 import { prismaMock } from "../../__mocks__/prisma";
 import { POST } from "@/app/api/reset-password/route";
 import bcrypt from 'bcrypt';
+import { late } from "zod";
 
 jest.mock('bcrypt');
 
@@ -36,7 +37,8 @@ describe('GET request to search API', () => {
             emailVerified: null,
             imageUrl: null,
             imagePublicId: null,
-            isOnboard: false
+            isOnboard: false,
+            latestViewedPosts: [],
         }
         prismaMock.user.update.mockResolvedValueOnce(mockUpdatedValue);
 

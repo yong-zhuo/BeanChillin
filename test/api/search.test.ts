@@ -38,7 +38,8 @@ describe('GET request to search API', () => {
             emailVerified: null,
             imageUrl: null,
             imagePublicId: null,
-            isOnboard: false
+            isOnboard: false,
+            latestViewedPosts: [],
         };
 
         prismaMock.group.findMany.mockResolvedValueOnce([mockGroupData]);

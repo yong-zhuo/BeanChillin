@@ -11,7 +11,8 @@ const data1 = {
     emailVerified: null,
     imageUrl: null,
     imagePublicId: null,
-    isOnboard: true
+    isOnboard: true,
+    latestViewedPosts: []
 };
 
 const email = data1.email;
