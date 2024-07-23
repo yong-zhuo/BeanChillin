@@ -24,7 +24,7 @@ const page = async () => {
         Feed
         <Image src="/misc/feed.svg" alt="group" width={30} height={30} />
       </h2>
-      <Tabs defaultValue="for-you" className="mt-2 mb-2">
+      <Tabs defaultValue="recent" className="mt-2 mb-2">
         <TabsList className="flex w-full items-center justify-start   bg-white shadow">
           <TabsTrigger value="for-you" className="flex gap-1">
             For You <SquareUserRound className="h-4 w-4 hidden xl:block" />
