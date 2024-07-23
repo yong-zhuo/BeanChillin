@@ -37,20 +37,34 @@ export async function GET(req: Request) {
                     email: session?.user?.email!,
                 },
             });
-            try {
-                if ((history?.latestViewedPosts.length ?? 0) > 0) {
-                    const reco = await fetch('https://beanchillin-ml.onrender.com/recommend_posts', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
+            if ((history?.latestViewedPosts.length ?? 0) > 0) {
+                const reco = await fetch('https://beanchillin-ml.onrender.com/recommend_posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: history?.latestViewedPosts,
+                        offset: parseInt(offset),
+                        limit: parseInt(limit),
+                    }),
+                });
+                if (!reco.ok) {
+                    const posts = await prisma.post.findMany({
+                        take: parseInt(limit),
+                        skip: parseInt(offset),
+                        orderBy: {
+                            createdAt: 'desc',
                         },
-                        body: JSON.stringify({
-                            id: history?.latestViewedPosts,
-                            offset: parseInt(offset),
-                            limit: parseInt(limit),
-                        }),
+                        include: {
+                            votes: true,
+                            author: true,
+                            comments: true,
+                            group: true
+                        }
                     });
-
+                    return new Response(JSON.stringify(posts));
+                } else {
                     const recoPosts = await reco.json();
                     const posts = await prisma.post.findMany({
                         where: {
@@ -67,24 +81,22 @@ export async function GET(req: Request) {
                         take: parseInt(limit),
                     });
                     return new Response(JSON.stringify(posts));
-                } else {
-                    const posts = await prisma.post.findMany({
-                        take: parseInt(limit),
-                        skip: parseInt(offset),
-                        orderBy: {
-                            createdAt: 'desc',
-                        },
-                        include: {
-                            votes: true,
-                            author: true,
-                            comments: true,
-                            group: true
-                        }
-                    });
-                    return new Response(JSON.stringify(posts));
                 }
-            } catch (error) {
-                return new Response('Could not fetch posts', { status: 500 });
+            } else {
+                const posts = await prisma.post.findMany({
+                    take: parseInt(limit),
+                    skip: parseInt(offset),
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                    include: {
+                        votes: true,
+                        author: true,
+                        comments: true,
+                        group: true
+                    }
+                });
+                return new Response(JSON.stringify(posts));
             }
         }
         if (feedType === "group") {
