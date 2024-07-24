@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         const data = await req.json();
         console.log(data);
         const { title, groupId, content } = createPostSchema.parse(data);
-        
+
         if (!session?.user) {
             return new Response("Unauthorized", { status: 401 });
         }
@@ -37,8 +37,15 @@ export async function POST(req: Request) {
             },
         });
 
+        await fetch('https://beanchillin-ml.onrender.com/update_posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
         return new Response('OK')
-  
+
 
     } catch (error) {
         console.log(error);
@@ -46,7 +53,7 @@ export async function POST(req: Request) {
             return new Response(error.message, { status: 400 });
         }
 
-        return new Response (
+        return new Response(
             'An unexpected error occurred. Try again later.',
             { status: 500 }
         )
