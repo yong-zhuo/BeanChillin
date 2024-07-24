@@ -59,7 +59,6 @@ export async function groupCloudUpload(file: File | undefined, groupName:string,
   }
   const form = new FormData();
   form.append('file', file);
-  form.append('public_id', `${groupName + groupUploadType}`);
   form.append('upload_preset', 'group_picture')
   const data = await fetch(
     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
