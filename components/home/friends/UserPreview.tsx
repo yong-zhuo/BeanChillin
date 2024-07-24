@@ -39,7 +39,7 @@ const UserPreview = (props: UserPreviewProps) => {
                     <Badge className="bg-pri">{props.friends} Friends</Badge>
                   </div>
               </div>
-              <div className="1xl:ml-4 text-md font-light truncate">
+              <div className="1xl:ml-4 text-md font-light truncate lg:max-w-[180px] xl:max-w-[200px] 2xl:max-w-[420px] max-w-[30vh]">
                 {props.otherUser?.bio}
               </div>
             </div>

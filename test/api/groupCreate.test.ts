@@ -34,7 +34,7 @@ describe('POST /api/group/join', () => {
     req.json = jest.fn().mockResolvedValue(req.body);
     prismaMock.group.findFirst.mockResolvedValueOnce(null);
     prismaMock.group.create.mockResolvedValueOnce(req.body);
-    prismaMock.membership.create.mockResolvedValueOnce({userId: 'test1', groupId: 'testgroup1'});
+    prismaMock.membership.create.mockResolvedValueOnce({userId: 'test1', groupId: 'testgroup1', lastVisitedAt: new Date()});
     const res = await POST(req as any);
     expect(res.status).toBe(200);
     const data = await res.json();

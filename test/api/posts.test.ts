@@ -45,7 +45,8 @@ describe('GET /api/posts', () => {
             emailVerified: null,
             imageUrl: null,
             imagePublicId: null,
-            isOnboard: false
+            isOnboard: false,
+            latestViewedPosts: [],
         });
 
         const mockData = {
@@ -62,6 +63,8 @@ describe('GET /api/posts', () => {
                 name: 'Test Group',
                 // Other properties of the group object
             },
+            lastVisitedAt: new Date()
+
         }
         prismaMock.membership.findMany.mockResolvedValueOnce([mockData]);
 

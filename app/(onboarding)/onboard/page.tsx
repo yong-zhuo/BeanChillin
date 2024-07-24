@@ -8,7 +8,7 @@ export default async function OnboardRoute() {
   if (res === 'login') {
     redirect('/login');
   } else if (res === 'home') {
-    redirect('/home');
+    redirect('/feed');
   } else if (res === 'register') {
     redirect('/register');
   } else if (res !== 'ok') {
