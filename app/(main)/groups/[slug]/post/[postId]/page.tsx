@@ -178,7 +178,6 @@ const page = async ({ params }: PageProps) => {
                   {!isCurrUserMod &&
                   post.group.creatorId !== user?.id &&
                   post.author.id !== user?.id &&
-                  post.author.id !== post.group.creatorId &&
                   !isCurrUserBanned ? (
                     <span className="flex flex-row px-1">
                       •
