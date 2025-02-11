@@ -10,11 +10,13 @@ import prisma from "@/lib/prisma";
 import { Oauth } from "@/lib/users/OAuth";
 import { getServerSession } from "next-auth";
 import SuggestedFriendPreview from "./SuggestedFriendPreview";
-import { UserSearch } from "lucide-react";
+import { Construction, UserSearch } from "lucide-react";
 import SuggestedGroupPreview from "./SuggestedGroupPreview";
 import { group } from "console";
 
+ 
 const RightSideBar = async () => {
+  /**
   const session = await getServerSession(Oauth);
   const [groupsCount, userCount] = await Promise.all([
     prisma.group.count(),
@@ -40,6 +42,8 @@ const RightSideBar = async () => {
     }
   });
   const groups_joined = groupsJoined.map((group) => group.groupId);
+
+  
   let users;
   let groups;
   const groupQuery = `https://beanchillin-ml.onrender.com/recommend_groups`;
@@ -103,6 +107,7 @@ const RightSideBar = async () => {
     });
   }
 
+  */
 
   return (
     <div className="sticky mb-2 mt-10 hidden w-1/4 flex-col justify-start space-y-16 pt-12 lg:block">
@@ -113,12 +118,13 @@ const RightSideBar = async () => {
           </CardTitle>
           <Separator className="my-2 bg-pri" />
         </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[200px] w-full">
+        <CardContent className="font-semibold flex flex-row items-center justify-center gap-1">
+          Under Maintenance <Construction className="h-5 w-5" />
+          {/*<ScrollArea className="h-[200px] w-full">
             {groups.map((group) => (
               <SuggestedGroupPreview group={group} key={group.id} />
             ))}
-          </ScrollArea>
+          </ScrollArea>*/}
         </CardContent>
       </Card>
       <Card className="">
@@ -128,12 +134,13 @@ const RightSideBar = async () => {
           </CardTitle>
           <Separator className="mt-2 bg-pri" />
         </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[200px] w-full">
+        <CardContent className="font-semibold flex flex-row items-center justify-center gap-1">
+        Under Maintenance <Construction className="h-5 w-5" />
+          {/*<ScrollArea className="h-[200px] w-full">
             {users.map((user) => (
               <SuggestedFriendPreview otherUser={user} key={user.id} />
             ))}
-          </ScrollArea>
+          </ScrollArea>*/}
         </CardContent>
       </Card>
     </div>
