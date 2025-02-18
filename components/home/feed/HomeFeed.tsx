@@ -9,7 +9,7 @@ import { Card } from '@/components/common-ui/shadcn-ui/card'
 import { Construction } from 'lucide-react'
 
 const HomeFeed = async () => {
-    /** 
+
     const session = await getServerSession(Oauth);
 
     let posts: DetailedPost[] = [];
@@ -75,17 +75,13 @@ const HomeFeed = async () => {
             },
         });
     }
-*/
 
-        {/** <PostFeed initPosts={posts} feedType='home' /> */}
+
+        
     return (
         
         <div>
-            <Card>
-                <div className="flex items-center justify-center">
-                    <h2 className="text-lg font-semibold flex flex-row justify-center items-center p-5">Under Maintenance <Construction className="h-5 w-5" /></h2>
-                </div>
-            </Card>
+            {<PostFeed initPosts={posts} feedType='home' />}
         </div>
 
     )
