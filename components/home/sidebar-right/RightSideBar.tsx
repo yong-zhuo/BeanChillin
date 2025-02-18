@@ -16,6 +16,52 @@ import { group } from "console";
 
  
 const RightSideBar = async () => {
+
+  const session = await getServerSession(Oauth);
+  const [groupsCount, userCount] = await Promise.all([
+    prisma.group.count(),
+    prisma.user.count(),
+  ]);
+  const maxGroupSkip = Math.max(0, groupsCount - 7);
+  const maxUserSkip = Math.max(0, userCount - 7);
+  const groupSkip =
+    maxGroupSkip > 0 ? Math.floor(Math.random() * maxGroupSkip) : 0;
+  const userSkip = maxUserSkip > 0 ? Math.floor(Math.random() * maxUserSkip) : 0;
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+  });
+
+  const groupsJoined = await prisma.membership.findMany({
+    where: {
+      userId: user?.id,
+    },
+    select: {
+      groupId: true
+    }
+  });
+  const groups_joined = groupsJoined.map((group) => group.groupId);
+
+  
+  let users;
+  let groups;
+
+  groups = await prisma.group.findMany({
+    skip: groupSkip,
+    take: 6,
+  });
+
+  users = await prisma.user.findMany({
+    skip: userSkip,
+    take: 6,
+    where: {
+      id: {
+        not: user?.id,
+      },
+    },
+  });
+
   /**
   const session = await getServerSession(Oauth);
   const [groupsCount, userCount] = await Promise.all([
@@ -119,12 +165,11 @@ const RightSideBar = async () => {
           <Separator className="my-2 bg-pri" />
         </CardHeader>
         <CardContent className="font-semibold flex flex-row items-center justify-center gap-1">
-          Under Maintenance <Construction className="h-5 w-5" />
-          {/*<ScrollArea className="h-[200px] w-full">
+          {<ScrollArea className="h-[200px] w-full">
             {groups.map((group) => (
               <SuggestedGroupPreview group={group} key={group.id} />
             ))}
-          </ScrollArea>*/}
+          </ScrollArea>}
         </CardContent>
       </Card>
       <Card className="">
@@ -135,12 +180,11 @@ const RightSideBar = async () => {
           <Separator className="mt-2 bg-pri" />
         </CardHeader>
         <CardContent className="font-semibold flex flex-row items-center justify-center gap-1">
-        Under Maintenance <Construction className="h-5 w-5" />
-          {/*<ScrollArea className="h-[200px] w-full">
+          {<ScrollArea className="h-[200px] w-full">
             {users.map((user) => (
               <SuggestedFriendPreview otherUser={user} key={user.id} />
             ))}
-          </ScrollArea>*/}
+          </ScrollArea>}
         </CardContent>
       </Card>
     </div>
