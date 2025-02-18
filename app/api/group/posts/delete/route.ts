@@ -19,6 +19,8 @@ export async function POST(req: Request) {
             },
         });
 
+        //Disable due to faulty Render API
+        /**
         await fetch('https://beanchillin-ml.onrender.com/update_posts', {
             method: 'POST',
             headers: {
@@ -29,6 +31,7 @@ export async function POST(req: Request) {
         if (!postExists) {
             return new Response("Post does not exists", { status: 409 });
         }
+        */
 
         //delete post
         await prisma.post.delete({

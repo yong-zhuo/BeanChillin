@@ -37,12 +37,15 @@ export async function POST(req: Request) {
             },
         });
 
+        //Disable due to faulty Render API
+        /** 
         await fetch('https://beanchillin-ml.onrender.com/update_posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
         });
+        */
 
         return new Response('OK')
 
